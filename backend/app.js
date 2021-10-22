@@ -5,8 +5,22 @@ require('dotenv/config')
 
 const api = process.env.API_URL
 
-app.get(api + '/products', (req, res) => {
-  res.send('Welcome to Eshop')
+app.use(express.json())
+
+app.get(`${api}/products`, (req, res) => {
+  res.json({
+    id: '12345',
+    name: 'laptop',
+    price: 1000,
+    description: 'Better than a Mac',
+    rating: 5,
+    numReviews: 4000,
+  })
+})
+app.post(`${api}/products`, (req, res) => {
+  const newProduct = req.body
+  console.log(newProduct)
+  res.send(newProduct)
 })
 
 app.listen(3000, () => {
