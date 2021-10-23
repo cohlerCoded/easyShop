@@ -1,3 +1,4 @@
+require('./Models/ProductModel')
 const express = require('express')
 const app = express()
 const morgan = require('morgan')
@@ -21,10 +22,22 @@ app.get(`${api}/products`, (req, res) => {
     numReviews: 4000,
   })
 })
-app.post(`${api}/products`, (req, res) => {
-  const newProduct = req.body
-  console.log(newProduct)
-  res.send(newProduct)
+app.post(`${api}/products`, async (req, res) => {
+  try {
+    const { name, image, countInStock } = req.body
+    const product = new Product({
+      name,
+      image,
+      countInStock,
+    })
+    const savedProduct = await product.save()
+    res.status(201).json(savedProduct)
+  } catch (error) {
+    res.status(500).json({
+      error,
+      success: false,
+    })
+  }
 })
 
 mongoose
