@@ -11,7 +11,6 @@ const productSchema = mongoose.Schema({
   },
   countInStock: {
     type: Number,
-    default: 0,
   },
 })
 
