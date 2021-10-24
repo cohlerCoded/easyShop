@@ -27,15 +27,9 @@ app.listen(3000, () => {
   console.log('Server listening on port 3000')
 })
 
-app.get(`${api}/products`, (req, res) => {
-  res.json({
-    id: '12345',
-    name: 'laptop',
-    price: 1000,
-    description: 'Better than a Mac',
-    rating: 5,
-    numReviews: 4000,
-  })
+app.get(`${api}/products`, async (req, res) => {
+  const productList = await Product.find({})
+  res.json(productList)
 })
 app.post(`${api}/products`, async (req, res) => {
   try {
