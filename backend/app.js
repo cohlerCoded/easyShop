@@ -28,8 +28,12 @@ app.listen(3000, () => {
 })
 
 app.get(`${api}/products`, async (req, res) => {
-  const productList = await Product.find({})
-  res.json(productList)
+  try {
+    const productList = await Product.find()
+    res.send(productList)
+  } catch (error) {
+    res.status(500).json({ success: false })
+  }
 })
 app.post(`${api}/products`, async (req, res) => {
   try {
