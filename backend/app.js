@@ -1,15 +1,16 @@
 const express = require('express')
-const mongoose = require('mongoose')
 const app = express()
+const mongoose = require('mongoose')
 const morgan = require('morgan')
-
+const cors = require('cors')
 require('dotenv/config')
-const mongoUrl = process.env.MONGODB_URL
 
 //Middleware
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(morgan('tiny'))
+app.use(cors())
+app.options('*', cors())
 
 //Routers
 const categoryRoutes = require('./routes/categoryRoutes')
@@ -23,6 +24,8 @@ app.use(`${api}/categories`, categoryRoutes)
 app.use(`${api}/orders`, orderRoutes)
 app.use(`${api}/products`, productRoutes)
 app.use(`${api}/users`, userRoutes)
+
+const mongoUrl = process.env.MONGODB_URL
 
 mongoose
   .connect(mongoUrl, {
