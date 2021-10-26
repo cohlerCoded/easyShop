@@ -4,10 +4,7 @@ const app = express()
 const morgan = require('morgan')
 
 require('dotenv/config')
-const api = process.env.API_URL
 const mongoUrl = process.env.MONGODB_URL
-
-const productRouter = require('./routes/productRoutes')
 
 //Middleware
 app.use(express.urlencoded({ extended: true }))
@@ -15,7 +12,17 @@ app.use(express.json())
 app.use(morgan('tiny'))
 
 //Routers
-app.use(`${api}/products`, productRouter)
+const categoryRoutes = require('./routes/categoryRoutes')
+const orderRoutes = require('./routes/orderRoutes')
+const productRoutes = require('./routes/productRoutes')
+const userRoutes = require('./routes/userRoutes')
+
+const api = process.env.API_URL
+
+app.use(`${api}/categories`, categoryRoutes)
+app.use(`${api}/orders`, orderRoutes)
+app.use(`${api}/products`, productRoutes)
+app.use(`${api}/users`, userRoutes)
 
 mongoose
   .connect(mongoUrl, {
