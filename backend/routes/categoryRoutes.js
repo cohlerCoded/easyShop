@@ -26,4 +26,13 @@ router.post('/', async (req, res) => {
   }
 })
 
+router.delete('/:id', async (req, res) => {
+  try {
+    await Category.findByIdAndRemove(req.params.id)
+    res.send('deleted!')
+  } catch (error) {
+    res.status(error.status).json({ success: false, message: error.message })
+  }
+})
+
 module.exports = router
