@@ -11,4 +11,19 @@ router.get(`/`, async (req, res) => {
   }
 })
 
+router.post('/', async (req, res) => {
+  try {
+    const { name, icon, color } = req.body
+    let category = new Category({
+      name,
+      icon,
+      color,
+    })
+    category = await category.save()
+    res.send(category)
+  } catch (error) {
+    res.status(500).json({ success: false })
+  }
+})
+
 module.exports = router
