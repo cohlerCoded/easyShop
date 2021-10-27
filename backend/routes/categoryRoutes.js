@@ -29,6 +29,7 @@ router.post('/', async (req, res) => {
 router.delete('/:id', async (req, res) => {
   try {
     await Category.findByIdAndRemove(req.params.id)
+    res.status(200).json({ success: true, message: error.message })
     res.send('deleted!')
   } catch (error) {
     res.status(error.status).json({ success: false, message: error.message })
