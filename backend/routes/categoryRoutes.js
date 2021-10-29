@@ -28,11 +28,12 @@ router.post('/', async (req, res) => {
 
 router.delete('/:id', async (req, res) => {
   try {
+    const id = await Category.findById(req.params.id)
+    if (id) res.status(200).json({ success: true, message: 'deleted!' })
+    else res.status(404).json({ success: false, message: 'Category not found' })
     await Category.findByIdAndRemove(req.params.id)
-    res.status(200).json({ success: true, message: error.message })
-    res.send('deleted!')
   } catch (error) {
-    res.status(error.status).json({ success: false, message: error.message })
+    res.status(400).json({ success: false, message: error.message })
   }
 })
 
