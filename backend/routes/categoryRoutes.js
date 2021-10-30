@@ -5,7 +5,21 @@ const { Category } = require('../models/Category')
 router.get(`/`, async (req, res) => {
   try {
     const categoryList = await Category.find()
-    res.send(categoryList)
+    res.status(200).send(categoryList)
+  } catch (error) {
+    res.status(500).json({ success: false })
+  }
+})
+
+router.get(`/:id`, async (req, res) => {
+  try {
+    const category = await Category.findById(req.params.id)
+    if (!category) {
+      res
+        .status(404)
+        .send({ message: 'Category with given Id not found', success: false })
+    }
+    res.status(200).send(category)
   } catch (error) {
     res.status(500).json({ success: false })
   }
