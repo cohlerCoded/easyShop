@@ -12,6 +12,20 @@ router.get(`/`, async (req, res) => {
   }
 })
 
+router.get(`/:id`, async (req, res) => {
+  try {
+    const product = await Product.findById(req.params.id)
+    if (!product) {
+      res
+        .status(404)
+        .send({ message: 'Product with given Id not found', success: false })
+    }
+    res.status(200).send(product)
+  } catch (error) {
+    res.status(500).json({ success: false })
+  }
+})
+
 router.post(`/`, async (req, res) => {
   try {
     const {
