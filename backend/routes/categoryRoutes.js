@@ -25,6 +25,29 @@ router.get(`/:id`, async (req, res) => {
   }
 })
 
+router.put(`/:id`, async (req, res) => {
+  const { name, icon, color } = req.body
+  try {
+    const updatedCategory = await Category.findByIdAndUpdate(
+      req.params.id,
+      {
+        name,
+        icon,
+        color,
+      },
+      { new: true }
+    )
+    if (!updatedCategory) {
+      res
+        .status(404)
+        .send({ message: 'Category with given Id not found', success: false })
+    }
+    res.status(200).send(updatedCategory)
+  } catch (error) {
+    res.status(500).json({ success: false })
+  }
+})
+
 router.post('/', async (req, res) => {
   try {
     const { name, icon, color } = req.body
