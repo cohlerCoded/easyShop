@@ -5,7 +5,7 @@ const { Product } = require('../models/Product')
 
 router.get(`/`, async (req, res) => {
   try {
-    const productList = await Product.find().select('name image')
+    const productList = await Product.find().select('name image -_id')
     res.send(productList)
   } catch (error) {
     res.status(500).json({ success: false })
