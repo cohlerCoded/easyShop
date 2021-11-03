@@ -1,4 +1,5 @@
 const express = require('express')
+const mongoose = require('mongoose')
 const { Category } = require('../models/Category')
 const router = express.Router()
 const { Product } = require('../models/Product')
@@ -60,10 +61,14 @@ router.post(`/`, async (req, res) => {
 //UPDATE A PRODUCT
 
 router.put(`/:id`, async (req, res) => {
+  if (!mongoose.isValidObjectId(req.params.id)) {
+    return res.status(400).send('Invalid Product Id')
+  }
   try {
     const category = await Category.findById(req.body.category)
-    if (!category) return res.status(400).send('Invalid Category')
-
+    if (!category) {
+      return res.status(400).send('Invalid Category Id')
+    }
     const updatedProduct = await Product.findByIdAndUpdate(
       req.params.id,
       {
@@ -83,13 +88,14 @@ router.put(`/:id`, async (req, res) => {
       { new: true }
     )
     if (!updatedProduct) {
-      res
-        .status(404)
-        .send({ message: 'Product with given Id not found', success: false })
+      return res
+        .status(500)
+        .send({ message: 'Product can not be updated', success: false })
     }
     res.status(200).send(updatedProduct)
   } catch (error) {
-    res.status(500).json({ success: false })
+    console.log(error)
+    res.status(500).json({ success: false, message: error.message })
   }
 })
 
