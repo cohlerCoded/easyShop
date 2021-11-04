@@ -4,9 +4,16 @@ const { Category } = require('../models/Category')
 const router = express.Router()
 const { Product } = require('../models/Product')
 
+//GET ALL PRODUCTS
+
 router.get(`/`, async (req, res) => {
+  //FILTER PRODUCTS
+  let filter = {}
+  if (req.query.categories) {
+    filter = { category: req.query.categories.split(',') }
+  }
   try {
-    const productList = await Product.find().populate('category')
+    const productList = await Product.find(filter).populate('category')
     res.send(productList)
   } catch (error) {
     res.status(500).json({ success: false })
