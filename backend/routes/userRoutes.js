@@ -11,4 +11,40 @@ router.get(`/`, async (req, res) => {
   }
 })
 
+// CREATE NEW USER
+
+router.post('/', async (req, res) => {
+  try {
+    const {
+      name,
+      email,
+      passwordHash,
+      street,
+      apartment,
+      city,
+      zip,
+      country,
+      phone,
+      isAdmin,
+    } = req.body
+    let user = new Category({
+      name,
+      email,
+      passwordHash,
+      street,
+      apartment,
+      city,
+      zip,
+      country,
+      phone,
+      isAdmin,
+    })
+    user = await user.save()
+    !user && res.status(400).send('The user could not be created')
+    res.send(user)
+  } catch (error) {
+    res.status(500).json({ success: false })
+  }
+})
+
 module.exports = router
