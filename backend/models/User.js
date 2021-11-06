@@ -46,10 +46,6 @@ const userSchema = mongoose.Schema({
     type: Boolean,
     required: true,
   },
-  name: {
-    type: String,
-    required: true,
-  },
 })
 
 productSchema.virtual('id').get(function () {
