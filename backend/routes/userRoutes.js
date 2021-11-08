@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const { User } = require('../models/User')
+const bcrypt = require('bcryptjs')
 
 router.get(`/`, async (req, res) => {
   try {
@@ -18,7 +19,7 @@ router.post('/', async (req, res) => {
     let user = new User({
       name: req.body.name,
       email: req.body.email,
-      passwordHash: req.body.passwordHash,
+      password: req.body.password,
       street: req.body.street,
       apartment: req.body.apartment,
       city: req.body.city,
