@@ -27,7 +27,7 @@ router.post('/', async (req, res) => {
       phone,
       isAdmin,
     } = req.body
-    let user = new Category({
+    let user = new User({
       name,
       email,
       passwordHash,
