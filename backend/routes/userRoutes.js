@@ -3,10 +3,28 @@ const router = express.Router()
 const { User } = require('../models/User')
 const bcrypt = require('bcryptjs')
 
+// GET ALL USERS
+
 router.get(`/`, async (req, res) => {
   try {
-    const userList = await User.find()
+    const userList = await User.find().select('-password')
     res.send(userList)
+  } catch (error) {
+    res.status(500).json({ success: false })
+  }
+})
+
+// GET A SINGLE USER
+
+router.get(`/:id`, async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id).select('-password')
+    if (!user) {
+      res
+        .status(404)
+        .send({ message: 'User with given Id not found', success: false })
+    }
+    res.status(200).send(user)
   } catch (error) {
     res.status(500).json({ success: false })
   }
