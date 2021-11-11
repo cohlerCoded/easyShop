@@ -1,14 +1,14 @@
 const express = require('express')
 const router = express.Router()
 const { User } = require('../models/User')
-const bcrypt = require('bcryptjs')
+const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 
 // GET ALL USERS
 
 router.get(`/`, async (req, res) => {
   try {
-    const userList = await User.find().select('-password')
+    const userList = await User.find().select()
     res.send(userList)
   } catch (error) {
     res.status(500).json({ success: false })
@@ -51,34 +51,37 @@ router.post('/', async (req, res) => {
     !user && res.status(400).send('The user could not be created')
     res.send(user)
   } catch (error) {
-    res.status(500).json({ success: false })
+    res.status(500).json({ success: false, message: error.message })
   }
 })
 
 // USER LOGIN
 router.post('/login', async (req, res) => {
-  const user = await User.findOne({ email: req.body.email })
+  try {
+    const user = await User.findOne({ email: req.body.email })
 
-  if (!user) {
-    return res.status(400).send('Something went wrong with login')
+    if (!user) {
+      return res.status(400).send('Something went wrong with login')
+    }
+    if (user && bcrypt.compareSync(req.body.password, user.password)) {
+      const token = jwt.sign(
+        {
+          userId: user.id,
+        },
+        process.env.JWT_SECRET,
+        {
+          expiresIn: '1w',
+        }
+      )
+      res.status(200).send({ user: user.email, token })
+    } else {
+      return res.status(400).send('Something went wrong with login')
+    }
+
+    return res.status(200).send(user)
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message })
   }
-
-  if (user && bcrypt.compareSync(req.body.password, user.password)) {
-    const token = jwt.sign(
-      {
-        userId: user.id,
-      },
-      process.env.JWT_SECRET,
-      {
-        expiresIn: '1w',
-      }
-    )
-    res.status(200).send({ user: user.email, token })
-  } else {
-    return res.status(400).send('Something went wrong with login')
-  }
-
-  return res.status(200).send(user)
 })
 
 module.exports = router
