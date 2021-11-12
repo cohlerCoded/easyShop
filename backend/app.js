@@ -3,12 +3,14 @@ const app = express()
 const mongoose = require('mongoose')
 const morgan = require('morgan')
 const cors = require('cors')
+const protect = require('./utils/jwt')
 require('dotenv/config')
 
 //Middleware
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(morgan('tiny'))
+app.use(protect())
 app.use(cors())
 app.options('*', cors())
 
@@ -17,6 +19,7 @@ const categoryRoutes = require('./routes/categoryRoutes')
 const orderRoutes = require('./routes/orderRoutes')
 const productRoutes = require('./routes/productRoutes')
 const userRoutes = require('./routes/userRoutes')
+const authJwt = require('./utils/jwt')
 
 const api = process.env.API_URL
 
