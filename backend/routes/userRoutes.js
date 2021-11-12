@@ -77,8 +77,6 @@ router.post('/login', async (req, res) => {
     } else {
       return res.status(400).send('Something went wrong with login')
     }
-
-    return res.status(200).send(user)
   } catch (error) {
     res.status(500).json({ success: false, message: error.message })
   }
