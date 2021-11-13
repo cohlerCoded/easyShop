@@ -4,7 +4,7 @@ const mongoose = require('mongoose')
 const morgan = require('morgan')
 const cors = require('cors')
 const protect = require('./utils/jwt')
-const { errorHandler } = require('./utils/errorHandler')
+const errorHandler = require('./utils/error-handler')
 require('dotenv/config')
 
 app.use(cors())
@@ -15,7 +15,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(morgan('tiny'))
 app.use(protect())
-app.use(errorHandler())
+app.use(errorHandler)
 
 //Routers
 const categoryRoutes = require('./routes/categoryRoutes')
