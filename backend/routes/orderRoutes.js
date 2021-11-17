@@ -7,7 +7,7 @@ const { OrderItem } = require('../models/OrderItem')
 
 router.get(`/`, async (req, res) => {
   try {
-    const orderList = await Order.find()
+    const orderList = await Order.find().populate('user')
     res.send(orderList)
   } catch (error) {
     res.status(500).json({ success: false })
