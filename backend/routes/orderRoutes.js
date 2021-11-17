@@ -16,6 +16,23 @@ router.get(`/`, async (req, res) => {
   }
 })
 
+// GET A SINGLE ORDER ORDERS
+
+router.get(`/:id`, async (req, res) => {
+  try {
+    const order = await Order.findById(req.params.id)
+      .populate('user', 'name')
+      .populate({
+        path: 'orderItems',
+        populate: { path: 'product', populate: 'category' },
+      })
+    !order && res.status(400).send('Order not found')
+    res.send(order)
+  } catch (error) {
+    res.status(500).json({ success: false })
+  }
+})
+
 // POST A NEW ORDER
 
 router.post('/', async (req, res) => {
