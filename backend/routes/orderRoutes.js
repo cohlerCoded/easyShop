@@ -68,4 +68,26 @@ router.post('/', async (req, res) => {
   }
 })
 
+// UPDATE AN ORDER STATUS
+
+router.put(`/:id`, async (req, res) => {
+  try {
+    const order = await Order.findByIdAndUpdate(
+      req.params.id,
+      {
+        status: req.body.status,
+      },
+      { new: true }
+    )
+    if (!order) {
+      res
+        .status(404)
+        .send({ message: 'Order with given Id not found', success: false })
+    }
+    res.status(200).send(order)
+  } catch (error) {
+    res.status(500).json({ success: false })
+  }
+})
+
 module.exports = router
