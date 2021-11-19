@@ -96,9 +96,10 @@ router.delete('/:id', async (req, res) => {
   try {
     const id = await Order.findById(req.params.id)
     if (id) {
-      req.body.orderItems.forEach(
-        async (itemId) => await findByIdAndRemove(itemId)
-      )
+      id.orderItems.forEach(async (itemId) => {
+        const itemId = await OrderItem.findById(itemId)
+        await Order.findByIdAndRemove(itemId)
+      })
       res.status(200).json({ success: true, message: 'Deleted!' })
     } else {
       res.status(404).json({ success: false, message: 'Order not found' })
