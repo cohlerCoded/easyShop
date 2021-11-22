@@ -94,12 +94,17 @@ router.put(`/:id`, async (req, res) => {
 
 router.delete('/:id', async (req, res) => {
   try {
-    const id = await Order.findById(req.params.id)
-    if (id) {
-      id.orderItems.forEach(async (id) => {
-        const itemId = await OrderItem.findById(id)
-        await Order.findByIdAndRemove(itemId)
-      })
+    const order = await Order.findById(req.params.id)
+    if (order) {
+      for (let orderItem of order.orderItems) {
+        if (orderItem._id) {
+          await OrderItem.findByIdAndRemove(orderItem._id)
+        } else {
+          res
+            .status(404)
+            .json({ success: false, message: 'Order Item not found' })
+        }
+      }
       res.status(200).json({ success: true, message: 'Deleted!' })
     } else {
       res.status(404).json({ success: false, message: 'Order not found' })
