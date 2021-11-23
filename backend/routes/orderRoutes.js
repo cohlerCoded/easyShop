@@ -99,6 +99,7 @@ router.delete('/:id', async (req, res) => {
       for (let orderItem of order.orderItems) {
         if (orderItem._id) {
           await OrderItem.findByIdAndRemove(orderItem._id)
+          await Order.findByIdAndRemove(order._id)
         } else {
           res
             .status(404)
@@ -109,7 +110,6 @@ router.delete('/:id', async (req, res) => {
     } else {
       res.status(404).json({ success: false, message: 'Order not found' })
     }
-    await Order.findByIdAndRemove(id)
   } catch (error) {
     res.status(400).json({ success: false, message: error.message })
   }
