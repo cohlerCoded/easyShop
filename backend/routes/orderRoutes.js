@@ -40,9 +40,12 @@ router.post('/', async (req, res) => {
   try {
     const orderItemsIds = await Promise.all(
       req.body.orderItems.map(async (item) => {
+        const price = await Product.findById(item.product).populate('price')
+          .price
         let newOrderItem = new OrderItem({
           quantity: item.quantity,
           product: item.product,
+          price,
         })
         newOrderItem = await newOrderItem.save()
         return newOrderItem._id
