@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const { Order } = require('../models/Order')
 const { OrderItem } = require('../models/OrderItem')
+const { Product } = require('../models/Product')
 
 // GET ALL ORDERS
 
@@ -48,6 +49,19 @@ router.post('/', async (req, res) => {
       })
     )
 
+    const totalPrices = await Promise.all(
+      orderItemsIds.map(async (orderItemId) => {
+        const orderItem = await OrderItem.findById(orderItemId).populate(
+          'product',
+          'price'
+        )
+        const toatlPrice = orderItem.product.price * orderItem.quantity
+        return toatlPrice
+      })
+    )
+
+    console.log(totalPrices)
+
     let order = new Order({
       orderItems: orderItemsIds,
       user: req.body.user,
@@ -65,6 +79,7 @@ router.post('/', async (req, res) => {
     res.send(order)
   } catch (error) {
     res.status(500).json({ success: false })
+    console.log(error)
   }
 })
 
