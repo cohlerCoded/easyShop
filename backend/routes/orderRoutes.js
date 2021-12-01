@@ -138,20 +138,10 @@ router.delete('/:id', async (req, res) => {
 
 router.get('/get/totalsales', async (req, res) => {
   try {
-    const orderList = await Order.find({})
+    const orderList = await Order.find({}).populate('totalPrice')
     res.send(orderList)
     // const totalPriceList = orderList.map((item) => item.totalPrice)
     // res.send(totalPriceList)
-  } catch (error) {
-    console.log(error)
-    res.status(500).json({ success: false })
-  }
-})
-router.delete('/', async (req, res) => {
-  try {
-    await Order.deleteMany()
-    await OrderItem.deleteMany()
-    res.send('All Clear')
   } catch (error) {
     console.log(error)
     res.status(500).json({ success: false })

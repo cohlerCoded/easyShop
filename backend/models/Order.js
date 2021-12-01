@@ -46,7 +46,7 @@ const orderSchema = mongoose.Schema({
     required: true,
     default: 'Pending',
   },
-  toatlPrice: {
+  totalPrice: {
     type: Number,
   },
   dateOrdered: {
