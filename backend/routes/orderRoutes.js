@@ -138,10 +138,13 @@ router.delete('/:id', async (req, res) => {
 
 router.get('/get/totalsales', async (req, res) => {
   try {
-    const orderList = await Order.find({}).populate('totalPrice')
-    res.send(orderList)
-    // const totalPriceList = orderList.map((item) => item.totalPrice)
-    // res.send(totalPriceList)
+    let ordersPrices = await Order.find({}).select('totalPrice')
+    ordersPrices = ordersPrices.map((item) => item.totalPrice)
+    const totalRevenue = ordersPrices.reduce(
+      (sum, orderTotal) => (sum += orderTotal),
+      0
+    )
+    res.json({ totalRevenue })
   } catch (error) {
     console.log(error)
     res.status(500).json({ success: false })
