@@ -63,7 +63,7 @@ router.post('/', async (req, res) => {
       })
     )
 
-    console.log(totalPrices)
+    const totalPricesSum = totalPrices.reduce((sum, price) => (sum += price), 0)
 
     let order = new Order({
       orderItems: orderItemsIds,
@@ -75,8 +75,9 @@ router.post('/', async (req, res) => {
       country: req.body.country,
       phone: req.body.phone,
       status: req.body.status,
-      toatlPrice: req.body.toatlPrice,
+      toatlPrice: totalPricesSum,
     })
+
     order = await order.save()
     !order && res.status(400).send('Order could not be created')
     res.send(order)
