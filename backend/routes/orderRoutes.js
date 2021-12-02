@@ -158,4 +158,15 @@ router.get('/get/totalsales', async (req, res) => {
   }
 })
 
+//get order count
+
+router.get(`/get/count`, async (req, res) => {
+  try {
+    const orderCount = await Order.countDocuments()
+    res.send({ orderCount })
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message })
+  }
+})
+
 module.exports = router
