@@ -138,13 +138,20 @@ router.delete('/:id', async (req, res) => {
 
 router.get('/get/totalsales', async (req, res) => {
   try {
-    let ordersPrices = await Order.find({}).select('totalPrice')
-    ordersPrices = ordersPrices.map((item) => item.totalPrice)
-    const totalRevenue = ordersPrices.reduce(
-      (sum, orderTotal) => (sum += orderTotal),
-      0
-    )
-    res.json({ totalRevenue })
+    //My solution
+    // let ordersPrices = await Order.find({}).select('totalPrice')
+    // ordersPrices = ordersPrices.map((item) => item.totalPrice)
+    // const totalRevenue = ordersPrices.reduce(
+    //   (sum, orderTotal) => (sum += orderTotal),
+    //   0
+    // )
+    // res.json({ totalRevenue })
+    //aggregate
+    const totalSales = await Order.aggregate([
+      { $group: { _id: null, totalsales: { $sum: '$totalPrice' } } },
+    ])
+    !totalSales && res.status(400).send('The order sales can not be generated')
+    res.send({ totalsales: totalSales.pop().totalsales })
   } catch (error) {
     console.log(error)
     res.status(500).json({ success: false })
