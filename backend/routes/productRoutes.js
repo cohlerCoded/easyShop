@@ -194,4 +194,48 @@ router.get(`/get/featured/:count`, async (req, res) => {
   }
 })
 
+//UPLOAD IMAGE GALLERY
+router.put(
+  '/gallery-images/:id',
+  uploadOptions.array('images', 10),
+  async (req, res) => {
+    if (!mongoose.isValidObjectId(req.params.id)) {
+      return res.status(400).send('Invalid Product Id')
+    }
+    try {
+      const product = await Product.findById(req.params.id)
+      !product && res.status(400).send('Invalid Product')
+
+      const files = req.files
+      const basePath = `${req.protocol}://${req.get('host')}/public/uploads/`
+      let imagesPaths = []
+
+      if (files) {
+        files.map((file) => {
+          imagesPaths.push(`${basePath}${file.filename}`)
+        })
+      } else {
+        imagePath = product.image
+      }
+
+      const updatedProduct = await Product.findByIdAndUpdate(
+        req.params.id,
+        {
+          images: imagesPaths,
+        },
+        { new: true }
+      )
+      if (!updatedProduct) {
+        return res
+          .status(500)
+          .send({ message: 'Product can not be updated', success: false })
+      }
+      res.status(200).send(updatedProduct)
+    } catch (error) {
+      console.log(error)
+      res.status(500).json({ success: false, message: error.message })
+    }
+  }
+)
+
 module.exports = router
