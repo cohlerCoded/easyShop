@@ -17,6 +17,22 @@ router.get(`/`, async (req, res) => {
   }
 })
 
+// GET USER ORDERS
+
+router.get(`/get/userorders/:id`, async (req, res) => {
+  try {
+    const userOrderList = await Order.find({ user: req.params.id })
+      .populate({
+        path: 'orderItems',
+        populate: { path: 'product', populate: 'category' },
+      })
+      .sort({ dateOrdered: -1 })
+    res.send(userOrderList)
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message })
+  }
+})
+
 // GET A SINGLE ORDER ORDERS
 
 router.get(`/:id`, async (req, res) => {
