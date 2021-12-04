@@ -8,11 +8,11 @@ const multer = require('multer')
 //DISK STORAGE FOR MULTER
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, '/public/uploads')
+    cb(null, 'public/uploads')
   },
   filename: function (req, file, cb) {
-    const fileName = file.originalname.replaceAll(' ', '-')
-    cb(null, fileName + '-' + Date.now())
+    const fileName = file.originalname.replace(' ', '-')
+    cb(null, `${fileName}-${Date.now()}.${extension}`)
   },
 })
 
@@ -55,7 +55,7 @@ router.post(`/`, uploadOptions.single('image'), async (req, res) => {
 
     const fileName = req.file.filename
     const basePath = `${req.protocol}://${req.get('host')}/public/uploads/`
-
+    console.log(`${basePath}${fileName}`)
     const product = new Product({
       name: req.body.name,
       description: req.body.description,
