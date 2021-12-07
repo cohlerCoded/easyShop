@@ -10,7 +10,7 @@ require('dotenv/config')
 app.use(cors())
 app.options('*', cors())
 
-//Middleware
+//Middleware//
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(morgan('tiny'))
