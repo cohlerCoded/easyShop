@@ -1,16 +1,15 @@
 import React from 'react'
 import { StyleSheet, Text, View, ActivityIndicator } from 'react-native'
 
-const ProductsContainer = () => {
+const ProductContainer = () => {
   return (
-    <View style={[styles.container, styles.horizontal]}>
-      <ActivityIndicator wi color='#0000ff' />
-      {/* <Text>Products Screen</Text> */}
+    <View>
+      <Text>Product Container</Text>
     </View>
   )
 }
 
-export default ProductsContainer
+export default ProductContainer
 
 const styles = StyleSheet.create({
   container: {
