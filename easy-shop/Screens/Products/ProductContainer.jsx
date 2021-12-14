@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   StyleSheet,
   Text,
@@ -9,8 +9,17 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native'
-import products from '../../assets/products.json'
+import data from '../../assets/products.json'
+
 const ProductContainer = () => {
+  const [products, setProducts] = useState([])
+  useEffect(() => {
+    setProducts(data)
+    return () => {
+      setProducts([])
+    }
+  }, [])
+
   const renderItem = ({ item }) => (
     <View style={{ padding: 0 }}>
       <Text>{item.name}</Text>
@@ -20,10 +29,12 @@ const ProductContainer = () => {
       </TouchableOpacity>
     </View>
   )
+
   return (
     <View style={[styles.container, { height: '100%', marginVertical: '50%' }]}>
       <Text>Product Container</Text>
       <FlatList
+        horizontal
         data={products}
         renderItem={renderItem}
         keyExtractor={(item) => item._id.$oid}
@@ -41,6 +52,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   productImage: {
+    resizeMode: 'center',
     width: 250,
     height: 250,
   },
