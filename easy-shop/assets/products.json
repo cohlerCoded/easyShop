@@ -21,7 +21,7 @@
     "_id": {
       "$oid": "5f15d92ee520d44421ed8e9b"
     },
-    "image": "",
+    "image": "https://www.ikea.com/us/en/images/products/kloeven-deck-chair-outdoor-dark-brown__0691033_pe723638_s5.jpg?f=xl",
     "brand": "IKEA",
     "price": 350.9,
     "rating": 5,
@@ -39,7 +39,7 @@
     "_id": {
       "$oid": "5f15d964e520d44421ed8e9c"
     },
-    "image": "",
+    "image": "https://images.obi.de/product/CZ/415x415/111009_1.jpg",
     "brand": "OBI",
     "price": 1350.9,
     "rating": 5,
@@ -75,7 +75,7 @@
     "_id": {
       "$oid": "5f15da13e520d44421ed8e9e"
     },
-    "image": "https://lh3.googleusercontent.com/proxy/ZqRo12bOfeU7xg7mTMfgENdMop_Zl9srLYDKeFilLCZkych8UO4ldDlRzT-8q5scq35krZsqxprZA85RdGLEVvejnPY4RRfNZ1eXDUJRoqHHRWBB5iMCx7UxT4l6iA",
+    "image": "https://media.moebelix.com/i/moebelix/PIaayr7jh0925Qil8wDjedfw/?fmt=auto&w=840&h=0&upscale=false",
     "brand": "Mobilix",
     "price": 1000,
     "rating": 5,
