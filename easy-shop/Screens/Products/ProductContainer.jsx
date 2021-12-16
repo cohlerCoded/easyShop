@@ -35,6 +35,7 @@ const ProductContainer = () => {
       <Text>Product Container</Text>
       <FlatList
         horizontal
+        numColumns={2}
         data={products}
         renderItem={renderItem}
         keyExtractor={(item) => item._id.$oid}
