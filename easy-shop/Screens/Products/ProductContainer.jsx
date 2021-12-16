@@ -21,15 +21,15 @@ const ProductContainer = () => {
     }
   }, [])
 
-  const renderItem = ({ item }) => (
-    <View style={{ padding: 0 }}>
-      <Text>{item.name}</Text>
-      {console.log(item.image)}
-      <TouchableOpacity>
-        <Image source={{ uri: item.image }} style={styles.productImage} />
-      </TouchableOpacity>
-    </View>
-  )
+  // const renderItem = ({ item }) => (
+  //   <View style={{ padding: 0 }}>
+  //     <Text>{item.name}</Text>
+  //     {console.log(item.image)}
+  //     <TouchableOpacity>
+  //       <Image source={{ uri: item.image }} style={styles.productImage} />
+  //     </TouchableOpacity>
+  //   </View>
+  // )
 
   return (
     <View style={{ backgroundColor: 'gainsboro' }}>
