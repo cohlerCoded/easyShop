@@ -32,8 +32,7 @@ const ProductContainer = () => {
   )
 
   return (
-    <View style={[styles.container, { height: '100%', marginVertical: '50%' }]}>
-      <Text>Product Container</Text>
+    <View style={{ backgroundColor: 'gainsboro' }}>
       <FlatList
         numColumns={2}
         data={products}
