@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
 } from 'react-native'
 import data from '../../assets/products.json'
+import ProductList from './ProductList'
 
 const ProductContainer = () => {
   const [products, setProducts] = useState([])
@@ -34,10 +35,9 @@ const ProductContainer = () => {
     <View style={[styles.container, { height: '100%', marginVertical: '50%' }]}>
       <Text>Product Container</Text>
       <FlatList
-        horizontal
         numColumns={2}
         data={products}
-        renderItem={renderItem}
+        renderItem={({ item }) => <ProductList key={item.id} item={item} />}
         keyExtractor={(item) => item._id.$oid}
       />
     </View>

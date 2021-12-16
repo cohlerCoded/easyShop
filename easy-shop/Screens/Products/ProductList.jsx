@@ -17,5 +17,3 @@ const ProductList = (props) => {
 }
 
 export default ProductList
-
-const styles = StyleSheet.create({})
