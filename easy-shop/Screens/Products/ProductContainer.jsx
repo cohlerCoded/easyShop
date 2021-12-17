@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import {
   StyleSheet,
-  Text,
   View,
   ActivityIndicator,
   FlatList,
   SafeAreaView,
   Image,
   TouchableOpacity,
+  Dimensions,
 } from 'react-native'
 import data from '../../assets/products.json'
 import ProductList from './ProductList'
+import { Container, Icon, Item, Input, Text, Heading } from 'native-base'
 
 const ProductContainer = () => {
   const [products, setProducts] = useState([])
@@ -32,18 +33,23 @@ const ProductContainer = () => {
   // )
 
   return (
-    <View style={{ backgroundColor: 'gainsboro' }}>
-      <FlatList
-        numColumns={2}
-        data={products}
-        renderItem={({ item }) => <ProductList key={item.id} item={item} />}
-        keyExtractor={(item) => item._id.$oid}
-      />
-    </View>
+    <Container>
+      {/* <Heading>
+        <Item>
+          <Icon name='ios-search' />
+        </Item>
+      </Heading> */}
+      <View style={{ backgroundColor: 'gainsboro' }}>
+        <FlatList
+          numColumns={2}
+          data={products}
+          renderItem={({ item }) => <ProductList key={item.id} item={item} />}
+          keyExtractor={(item) => item._id.$oid}
+        />
+      </View>
+    </Container>
   )
 }
-
-export default ProductContainer
 
 const styles = StyleSheet.create({
   container: {
@@ -57,3 +63,5 @@ const styles = StyleSheet.create({
     height: 250,
   },
 })
+
+export default ProductContainer
