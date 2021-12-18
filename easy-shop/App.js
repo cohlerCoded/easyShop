@@ -8,20 +8,20 @@ import ProductContainer from './Screens/Products/ProductContainer'
 export default function App() {
   return (
     <NativeBaseProvider>
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <Header />
         <ProductContainer />
-      </View>
+      </SafeAreaView>
     </NativeBaseProvider>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
+    marginTop: 120,
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 80,
   },
 })

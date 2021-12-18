@@ -11,7 +11,20 @@ import {
 } from 'react-native'
 import data from '../../assets/products.json'
 import ProductList from './ProductList'
-import { Container, Icon, Item, Input, Text, Heading } from 'native-base'
+import {
+  Container,
+  Center,
+  Icon,
+  Item,
+  Input,
+  Text,
+  Heading,
+  VStack,
+  Box,
+  Divider,
+} from 'native-base'
+import { Ionicons, MaterialIcons } from '@expo/vector-icons'
+import { FontAwesome5 } from '@expo/vector-icons'
 
 const ProductContainer = () => {
   const [products, setProducts] = useState([])
@@ -33,12 +46,44 @@ const ProductContainer = () => {
   // )
 
   return (
-    <Container>
-      {/* <Heading>
-        <Item>
-          <Icon name='ios-search' />
-        </Item>
-      </Heading> */}
+    <SafeAreaView>
+      <VStack
+        alignSelf='center'
+        marginY={5}
+        space={5}
+        width='80%'
+        divider={
+          <Box px='2'>
+            <Divider />
+          </Box>
+        }
+      >
+        <VStack width='100%' space={5} alignItems='center'>
+          <Input
+            placeholder='Search'
+            variant='filled'
+            width='100%'
+            bg='#eee'
+            borderRadius='10'
+            py='1'
+            px='2'
+            placeholderTextColor='gray.500'
+            _hover={{ bg: 'gray.200', borderWidth: 0 }}
+            borderWidth='0'
+            _web={{
+              _focus: { style: { boxShadow: 'none' } },
+            }}
+            InputLeftElement={
+              <Icon
+                ml='2'
+                size='5'
+                color='gray.500'
+                as={<Ionicons name='ios-search' />}
+              />
+            }
+          />
+        </VStack>
+      </VStack>
       <View style={{ backgroundColor: 'gainsboro' }}>
         <FlatList
           numColumns={2}
@@ -47,7 +92,7 @@ const ProductContainer = () => {
           keyExtractor={(item) => item._id.$oid}
         />
       </View>
-    </Container>
+    </SafeAreaView>
   )
 }
 
