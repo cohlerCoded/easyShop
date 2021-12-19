@@ -63,7 +63,7 @@ const ProductContainer = () => {
             placeholder='Search'
             variant='filled'
             width='100%'
-            bg='#eee'
+            bg='#6B6B6B'
             borderRadius='10'
             py='1'
             px='2'
