@@ -28,22 +28,15 @@ import { FontAwesome5 } from '@expo/vector-icons'
 
 const ProductContainer = () => {
   const [products, setProducts] = useState([])
+  const [productsFiltered, setProductsFiltered] = useState([])
+
   useEffect(() => {
     setProducts(data)
+    setProductsFiltered(data)
     return () => {
-      setProducts([])
+      setProducts([setProductsFiltered])
     }
   }, [])
-
-  // const renderItem = ({ item }) => (
-  //   <View style={{ padding: 0 }}>
-  //     <Text>{item.name}</Text>
-  //     {console.log(item.image)}
-  //     <TouchableOpacity>
-  //       <Image source={{ uri: item.image }} style={styles.productImage} />
-  //     </TouchableOpacity>
-  //   </View>
-  // )
 
   return (
     <SafeAreaView>
@@ -61,6 +54,7 @@ const ProductContainer = () => {
         <VStack width='100%' space={5} alignItems='center'>
           <Input
             placeholder='Search'
+            fontSize='16'
             variant='filled'
             width='100%'
             bg='#707070'
@@ -80,6 +74,11 @@ const ProductContainer = () => {
                 color='#b8b8b8'
                 as={<Ionicons name='ios-search' />}
               />
+            }
+            onChangeText={(text) =>
+              setProductsFiltered(
+                products.filter((product) => product.name.includes(text))
+              )
             }
           />
         </VStack>
