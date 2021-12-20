@@ -63,11 +63,11 @@ const ProductContainer = () => {
             placeholder='Search'
             variant='filled'
             width='100%'
-            bg='#6B6B6B'
+            bg='#707070'
             borderRadius='10'
             py='1'
             px='2'
-            placeholderTextColor='gray.500'
+            placeholderTextColor='#eee'
             _hover={{ bg: 'gray.200', borderWidth: 0 }}
             borderWidth='0'
             _web={{
@@ -77,7 +77,7 @@ const ProductContainer = () => {
               <Icon
                 ml='2'
                 size='5'
-                color='gray.500'
+                color='#b8b8b8'
                 as={<Ionicons name='ios-search' />}
               />
             }
