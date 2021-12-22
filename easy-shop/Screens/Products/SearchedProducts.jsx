@@ -1,33 +1,44 @@
 import React from 'react'
-import { StyleSheet, View } from 'react-native'
-import { Content, Left, Body, ListItem, Thumbnail, Text } from 'native-base'
+import { StyleSheet, View, Dimensions } from 'react-native'
+import { Text, VStack, HStack, Image, Divider } from 'native-base'
 
-const SearchedProducts = () => {
+const { width } = Dimensions.get('window')
+
+const SearchedProducts = ({ productsFiltered }) => {
+  console.log(productsFiltered)
   return (
-    <Content style={{ width: width }}>
+    <VStack style={{ width: width }}>
       {productsFiltered.length > 0 ? (
         productsFiltered.map((item) => (
-          <ListItem
+          <VStack
             onPress={() => {
               props.navigation.navigate('Product Detail', { item: item })
             }}
             key={item._id.$oid}
             avatar
           >
-            <Left>
-              <Thumbnail
+            <HStack>
+              <Image
+                borderWidth='2'
+                borderColor='#eee'
+                margin='5'
+                size='12'
                 source={{
                   uri: item.image
                     ? item.image
                     : 'https://cdn.pixabay.com/photo/2012/04/01/17/29/box-23649_960_720.png',
                 }}
+                alt={item.name}
               />
-            </Left>
-            <Body>
-              <Text>{item.name}</Text>
-              <Text note>{item.description}</Text>
-            </Body>
-          </ListItem>
+              <VStack alignSelf='center'>
+                <Text bold>{item.name}</Text>
+                <VStack>
+                  <Text fontSize='xs'>{item.description}</Text>
+                </VStack>
+              </VStack>
+            </HStack>
+            <Divider />
+          </VStack>
         ))
       ) : (
         <View style={styles.center}>
@@ -36,11 +47,9 @@ const SearchedProducts = () => {
           </Text>
         </View>
       )}
-    </Content>
+    </VStack>
   )
 }
-
-export default SearchedProducts
 
 const styles = StyleSheet.create({
   center: {
@@ -49,3 +58,4 @@ const styles = StyleSheet.create({
     height: 100,
   },
 })
+export default SearchedProducts

@@ -9,8 +9,6 @@ import {
   TouchableOpacity,
   Dimensions,
 } from 'react-native'
-import data from '../../assets/products.json'
-import ProductList from './ProductList'
 import {
   Container,
   Center,
@@ -23,20 +21,34 @@ import {
   Box,
   Divider,
 } from 'native-base'
+import data from '../../assets/products.json'
+import ProductList from './ProductList'
+import SearchedProducts from './SearchedProducts'
 import { Ionicons, MaterialIcons } from '@expo/vector-icons'
 import { FontAwesome5 } from '@expo/vector-icons'
 
 const ProductContainer = () => {
   const [products, setProducts] = useState([])
   const [productsFiltered, setProductsFiltered] = useState([])
+  const [focus, setFocus] = useState()
 
   useEffect(() => {
     setProducts(data)
     setProductsFiltered(data)
+    setFocus(false)
     return () => {
-      setProducts([setProductsFiltered])
+      setProducts([])
+      setProductsFiltered([])
+      setFocus()
     }
   }, [])
+
+  const searchProduct = (text) =>
+    setProductsFiltered(
+      products.filter((product) =>
+        product.name.toLowerCase().includes(text.toLowerCase())
+      )
+    )
 
   return (
     <SafeAreaView>
@@ -75,22 +87,24 @@ const ProductContainer = () => {
                 as={<Ionicons name='ios-search' />}
               />
             }
-            onChangeText={(text) =>
-              setProductsFiltered(
-                products.filter((product) => product.name.includes(text))
-              )
-            }
+            onFocus={() => setFocus(true)}
+            // onBlur={() => setFocus(false)}
+            onChangeText={searchProduct}
           />
         </VStack>
       </VStack>
-      <View style={{ backgroundColor: 'gainsboro' }}>
-        <FlatList
-          numColumns={2}
-          data={products}
-          renderItem={({ item }) => <ProductList key={item.id} item={item} />}
-          keyExtractor={(item) => item._id.$oid}
-        />
-      </View>
+      {/* {focus == true ? ( */}
+      <SearchedProducts productsFiltered={productsFiltered} />
+      {/* ) : (
+        <View style={{ backgroundColor: 'gainsboro' }}>
+          <FlatList
+            numColumns={2}
+            data={products}
+            renderItem={({ item }) => <ProductList key={item.id} item={item} />}
+            keyExtractor={(item) => item._id.$oid}
+          />
+        </View>
+      )} */}
     </SafeAreaView>
   )
 }
