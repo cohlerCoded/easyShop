@@ -7,7 +7,7 @@ const { width } = Dimensions.get('window')
 const SearchedProducts = ({ productsFiltered }) => {
   console.log(productsFiltered)
   return (
-    <ScrollView style={{ width: width }}>
+    <ScrollView style={{ width: width }} keyboardShouldPersistTaps='never'>
       {productsFiltered.length > 0 ? (
         productsFiltered.map((item) => (
           <VStack

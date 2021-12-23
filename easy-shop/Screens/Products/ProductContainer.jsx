@@ -8,6 +8,7 @@ import {
   Image,
   TouchableOpacity,
   Dimensions,
+  Keyboard,
 } from 'react-native'
 import {
   Container,
@@ -67,13 +68,15 @@ const ProductContainer = () => {
           <Input
             placeholder='Search'
             fontSize='16'
+            selectionColor='#eee'
+            color='#eee'
             variant='filled'
             width='100%'
             bg='#707070'
             borderRadius='10'
             py='1'
             px='2'
-            placeholderTextColor='#eee'
+            placeholderTextColor='#b8b8b8'
             _hover={{ bg: 'gray.200', borderWidth: 0 }}
             borderWidth='0'
             _web={{
@@ -86,6 +89,20 @@ const ProductContainer = () => {
                 color='#b8b8b8'
                 as={<Ionicons name='ios-search' />}
               />
+            }
+            InputRightElement={
+              focus && (
+                <Icon
+                  mr='2'
+                  size='5'
+                  color='#b8b8b8'
+                  as={<Ionicons name='ios-close' />}
+                  onPress={() => {
+                    Keyboard.dismiss()
+                    setFocus(false)
+                  }}
+                />
+              )
             }
             onFocus={() => setFocus(true)}
             // onBlur={() => setFocus(false)}
