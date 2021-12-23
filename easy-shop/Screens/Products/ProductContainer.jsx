@@ -27,6 +27,7 @@ import ProductList from './ProductList'
 import SearchedProducts from './SearchedProducts'
 import { Ionicons, MaterialIcons } from '@expo/vector-icons'
 import { FontAwesome5 } from '@expo/vector-icons'
+import Banner from '../../Components/Banner'
 
 const ProductContainer = () => {
   const [products, setProducts] = useState([])
@@ -64,7 +65,7 @@ const ProductContainer = () => {
           </Box>
         }
       >
-        <VStack width='100%' space={5} alignItems='center'>
+        <VStack width='100%' alignItems='center'>
           <Input
             placeholder='Search'
             fontSize='16'
@@ -114,6 +115,7 @@ const ProductContainer = () => {
         <SearchedProducts productsFiltered={productsFiltered} />
       ) : (
         <View style={{ backgroundColor: 'gainsboro' }}>
+          <Banner />
           <FlatList
             numColumns={2}
             data={products}
