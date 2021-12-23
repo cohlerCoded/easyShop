@@ -93,9 +93,9 @@ const ProductContainer = () => {
           />
         </VStack>
       </VStack>
-      {/* {focus == true ? ( */}
-      <SearchedProducts productsFiltered={productsFiltered} />
-      {/* ) : (
+      {focus == true ? (
+        <SearchedProducts productsFiltered={productsFiltered} />
+      ) : (
         <View style={{ backgroundColor: 'gainsboro' }}>
           <FlatList
             numColumns={2}
@@ -104,7 +104,7 @@ const ProductContainer = () => {
             keyExtractor={(item) => item._id.$oid}
           />
         </View>
-      )} */}
+      )}
     </SafeAreaView>
   )
 }

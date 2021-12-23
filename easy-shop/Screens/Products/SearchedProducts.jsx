@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, View, Dimensions } from 'react-native'
+import { StyleSheet, View, Dimensions, ScrollView } from 'react-native'
 import { Text, VStack, HStack, Image, Divider } from 'native-base'
 
 const { width } = Dimensions.get('window')
@@ -7,7 +7,7 @@ const { width } = Dimensions.get('window')
 const SearchedProducts = ({ productsFiltered }) => {
   console.log(productsFiltered)
   return (
-    <VStack style={{ width: width }}>
+    <ScrollView style={{ width: width }}>
       {productsFiltered.length > 0 ? (
         productsFiltered.map((item) => (
           <VStack
@@ -47,7 +47,7 @@ const SearchedProducts = ({ productsFiltered }) => {
           </Text>
         </View>
       )}
-    </VStack>
+    </ScrollView>
   )
 }
 
