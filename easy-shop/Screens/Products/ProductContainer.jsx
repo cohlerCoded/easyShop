@@ -23,6 +23,7 @@ import {
   Divider,
 } from 'native-base'
 import data from '../../assets/products.json'
+import categories from '../../assets/categories.json'
 import ProductList from './ProductList'
 import SearchedProducts from './SearchedProducts'
 import { Ionicons, MaterialIcons } from '@expo/vector-icons'
@@ -32,16 +33,25 @@ import Banner from '../../Components/Banner'
 const ProductContainer = () => {
   const [products, setProducts] = useState([])
   const [productsFiltered, setProductsFiltered] = useState([])
+  const [catagories, setCatagories] = useState([])
   const [focus, setFocus] = useState()
+  const [active, setActive] = useState()
+  const [initialState, setInitialState] = useState([])
 
   useEffect(() => {
     setProducts(data)
     setProductsFiltered(data)
     setFocus(false)
+    setCatagories(catagories)
+    setActive(-1)
+    setInitialState(data)
     return () => {
       setProducts([])
       setProductsFiltered([])
       setFocus()
+      setCatagories([])
+      setActive()
+      setInitialState()
     }
   }, [])
 
