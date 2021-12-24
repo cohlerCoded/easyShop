@@ -29,6 +29,7 @@ import SearchedProducts from './SearchedProducts'
 import { Ionicons, MaterialIcons } from '@expo/vector-icons'
 import { FontAwesome5 } from '@expo/vector-icons'
 import Banner from '../../Components/Banner'
+import CategoryFilter from './CategoryFilter'
 
 const ProductContainer = () => {
   const [products, setProducts] = useState([])
@@ -126,6 +127,9 @@ const ProductContainer = () => {
       ) : (
         <View style={{ backgroundColor: 'gainsboro' }}>
           <Banner />
+          <View>
+            <CategoryFilter />
+          </View>
           <FlatList
             numColumns={2}
             data={products}
