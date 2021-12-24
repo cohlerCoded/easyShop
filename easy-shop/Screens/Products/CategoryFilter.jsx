@@ -14,8 +14,17 @@ const CategoryFilter = () => {
     return (
       <View style={{ margin: 0, padding: 0, borderRadius: 0 }}>
         <TouchableOpacity key={1}>
-          <Badge style={[styles.center, { margin: 5 }]}>
-            <Text>{item.name}</Text>
+          <Badge
+            rounded='999px'
+            colorScheme='info'
+            style={[styles.center, { margin: 5 }]}
+            variant='solid'
+            _text={{
+              fontSize: 14,
+              padding: 1,
+            }}
+          >
+            {item.name}
           </Badge>
         </TouchableOpacity>
       </View>
