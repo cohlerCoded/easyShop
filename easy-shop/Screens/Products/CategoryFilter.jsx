@@ -9,11 +9,14 @@ import {
 import { Badge, Text } from 'native-base'
 import categories from '../../assets/categories.json'
 
-const CategoryFilter = () => {
+const CategoryFilter = ({ filterProducts }) => {
   const renderItem = ({ item }) => {
     return (
       <View style={{ margin: 0, padding: 0, borderRadius: 0 }}>
-        <TouchableOpacity key={1}>
+        <TouchableOpacity
+          key={item._id.$oid}
+          onPress={() => filterProducts(item._id.$oid)}
+        >
           <Badge
             rounded='999px'
             colorScheme='info'

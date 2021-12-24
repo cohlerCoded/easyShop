@@ -5,7 +5,6 @@ import { Text, VStack, HStack, Image, Divider } from 'native-base'
 const { width } = Dimensions.get('window')
 
 const SearchedProducts = ({ productsFiltered }) => {
-  console.log(productsFiltered)
   return (
     <ScrollView style={{ width: width }} keyboardShouldPersistTaps='never'>
       {productsFiltered.length > 0 ? (

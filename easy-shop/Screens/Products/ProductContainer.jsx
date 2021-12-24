@@ -63,6 +63,13 @@ const ProductContainer = () => {
       )
     )
 
+  const filterByCategory = (id) => {
+    setProductsFiltered(
+      products.filter((product) => product.category.$oid === id)
+    )
+    console.log(productsFiltered.map((product) => product.name))
+  }
+
   return (
     <SafeAreaView>
       <VStack
@@ -128,7 +135,7 @@ const ProductContainer = () => {
         <View style={{ backgroundColor: 'gainsboro' }}>
           <Banner />
           <View>
-            <CategoryFilter />
+            <CategoryFilter filterProducts={filterByCategory} />
           </View>
           <FlatList
             numColumns={2}
