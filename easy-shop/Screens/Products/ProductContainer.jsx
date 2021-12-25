@@ -30,12 +30,14 @@ import { Ionicons, MaterialIcons } from '@expo/vector-icons'
 import { FontAwesome5 } from '@expo/vector-icons'
 import Banner from '../../Components/Banner'
 import CategoryFilter from './CategoryFilter'
+import productCategories from '../../assets/categories.json'
 
 const ProductContainer = () => {
   const [products, setProducts] = useState([])
   const [productsFiltered, setProductsFiltered] = useState([])
   const [catagories, setCatagories] = useState([])
   const [focus, setFocus] = useState()
+  const [productsCtg, setProductsCtg] = useState([])
   const [active, setActive] = useState()
   const [initialState, setInitialState] = useState([])
 
@@ -43,7 +45,7 @@ const ProductContainer = () => {
     setProducts(data)
     setProductsFiltered(data)
     setFocus(false)
-    setCatagories(catagories)
+    setCatagories(productCategories)
     setActive(-1)
     setInitialState(data)
     return () => {
@@ -63,11 +65,19 @@ const ProductContainer = () => {
       )
     )
 
+  //Categories
+
   const filterByCategory = (id) => {
-    setProductsFiltered(
-      products.filter((product) => product.category.$oid === id)
-    )
-    console.log(productsFiltered.map((product) => product.name))
+    {
+      id === 'all'
+        ? [setProductsCtg(initialState), setActive(true)]
+        : [
+            setProductsCtg(
+              products.filter((product) => product.category._id.$oid === id)
+            ),
+            setActive(true),
+          ]
+    }
   }
 
   return (
@@ -135,7 +145,13 @@ const ProductContainer = () => {
         <View style={{ backgroundColor: 'gainsboro' }}>
           <Banner />
           <View>
-            <CategoryFilter filterProducts={filterByCategory} />
+            <CategoryFilter
+              filterProducts={filterByCategory}
+              categories={catagories}
+              productsCtg={productsCtg}
+              active={active}
+              setActive={setActive}
+            />
           </View>
           <FlatList
             numColumns={2}
