@@ -35,7 +35,7 @@ import productCategories from '../../assets/categories.json'
 const ProductContainer = () => {
   const [products, setProducts] = useState([])
   const [productsFiltered, setProductsFiltered] = useState([])
-  const [catagories, setCatagories] = useState([])
+  const [categories, setCategories] = useState([])
   const [focus, setFocus] = useState()
   const [productsCtg, setProductsCtg] = useState([])
   const [active, setActive] = useState()
@@ -45,14 +45,14 @@ const ProductContainer = () => {
     setProducts(data)
     setProductsFiltered(data)
     setFocus(false)
-    setCatagories(productCategories)
+    setCategories(productCategories)
     setActive(-1)
     setInitialState(data)
     return () => {
       setProducts([])
       setProductsFiltered([])
       setFocus()
-      setCatagories([])
+      setCategories([])
       setActive()
       setInitialState()
     }
@@ -147,7 +147,7 @@ const ProductContainer = () => {
           <View>
             <CategoryFilter
               filterProducts={filterByCategory}
-              categories={catagories}
+              categories={categories}
               productsCtg={productsCtg}
               active={active}
               setActive={setActive}
