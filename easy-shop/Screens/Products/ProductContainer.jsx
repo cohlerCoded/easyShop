@@ -55,6 +55,7 @@ const ProductContainer = () => {
       },
       ...productCategories,
     ])
+    setProductsCtg(products)
     setActive(-1)
     setInitialState(data)
     return () => {
@@ -82,7 +83,7 @@ const ProductContainer = () => {
         ? [setProductsCtg(initialState), setActive(true)]
         : [
             setProductsCtg(
-              products.filter((product) => product.category._id.$oid === id)
+              products.filter((product) => product.category.$oid === id)
             ),
             setActive(true),
           ]
@@ -164,7 +165,7 @@ const ProductContainer = () => {
           </View>
           <FlatList
             numColumns={2}
-            data={products}
+            data={productsCtg}
             renderItem={({ item }) => <ProductList key={item.id} item={item} />}
             keyExtractor={(item) => item._id.$oid}
           />
