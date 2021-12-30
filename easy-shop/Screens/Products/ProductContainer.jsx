@@ -45,7 +45,16 @@ const ProductContainer = () => {
     setProducts(data)
     setProductsFiltered(data)
     setFocus(false)
-    setCategories(productCategories)
+    setCategories([
+      {
+        _id: {
+          $oid: 'all',
+        },
+        name: 'All',
+        __v: 0,
+      },
+      ...productCategories,
+    ])
     setActive(-1)
     setInitialState(data)
     return () => {

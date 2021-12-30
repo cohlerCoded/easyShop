@@ -42,25 +42,6 @@ const CategoryFilter = ({ filterProducts, setActive, active, categories }) => {
       style={{ backgroundColor: '#f2f2f2' }}
       contentContainerStyle={{ flexDirection: 'row' }}
     >
-      <TouchableOpacity
-        key={1}
-        onPress={() => {
-          filterProducts('all'), setActive(-1)
-        }}
-      >
-        <Badge
-          rounded='999px'
-          colorScheme='info'
-          style={[styles.center, { margin: 5 }]}
-          variant={active ? 'subtle' : 'solid'}
-          _text={{
-            fontSize: 14,
-            padding: 1,
-          }}
-        >
-          All
-        </Badge>
-      </TouchableOpacity>
       <FlatList
         showsHorizontalScrollIndicator={false}
         horizontal
