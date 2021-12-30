@@ -32,6 +32,8 @@ import Banner from '../../Components/Banner'
 import CategoryFilter from './CategoryFilter'
 import productCategories from '../../assets/categories.json'
 
+const { height } = Dimensions.get('window')
+
 const ProductContainer = () => {
   const [products, setProducts] = useState([])
   const [productsFiltered, setProductsFiltered] = useState([])
@@ -185,6 +187,14 @@ const styles = StyleSheet.create({
     resizeMode: 'center',
     width: 250,
     height: 250,
+  },
+  listContainer: {
+    height: height,
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    flexWrap: 'wrap',
+    backgroundColor: 'gainsboro',
   },
 })
 
