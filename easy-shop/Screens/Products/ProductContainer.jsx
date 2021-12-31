@@ -22,6 +22,7 @@ import {
   VStack,
   Box,
   Divider,
+  KeyboardAvoidingView,
 } from 'native-base'
 import data from '../../assets/products.json'
 import categories from '../../assets/categories.json'
@@ -34,6 +35,7 @@ import CategoryFilter from './CategoryFilter'
 import productCategories from '../../assets/categories.json'
 
 const { height } = Dimensions.get('window')
+const { width } = Dimensions.get('window')
 
 const ProductContainer = ({ navigation }) => {
   const [products, setProducts] = useState([])
@@ -156,7 +158,12 @@ const ProductContainer = ({ navigation }) => {
       {focus == true ? (
         <SearchedProducts productsFiltered={productsFiltered} />
       ) : (
-        <View style={{ backgroundColor: 'gainsboro' }}>
+        <View
+          style={{
+            backgroundColor: 'gainsboro',
+            paddingBottom: 150,
+          }}
+        >
           <FlatList
             ListHeaderComponent={
               <>
@@ -215,7 +222,6 @@ const styles = StyleSheet.create({
   },
   listContainer: {
     height: height,
-    padding: 100,
     flex: 1,
     flexDirection: 'row',
     alignItems: 'flex-start',
