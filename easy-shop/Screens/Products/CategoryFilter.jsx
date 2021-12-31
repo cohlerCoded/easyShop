@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {
   ScrollView,
   StyleSheet,
@@ -9,8 +9,11 @@ import {
 import { Badge, Text } from 'native-base'
 
 const CategoryFilter = ({ filterProducts, setActive, active, categories }) => {
+  useEffect(() => {
+    filterProducts('all')
+    setActive(0)
+  }, [])
   const renderItem = ({ item }) => {
-    console.log(item)
     return (
       <View style={{ margin: 0, padding: 0, borderRadius: 0 }}>
         <TouchableOpacity
