@@ -35,7 +35,7 @@ import productCategories from '../../assets/categories.json'
 
 const { height } = Dimensions.get('window')
 
-const ProductContainer = () => {
+const ProductContainer = ({ navigation }) => {
   const [products, setProducts] = useState([])
   const [productsFiltered, setProductsFiltered] = useState([])
   const [categories, setCategories] = useState([])
@@ -179,6 +179,23 @@ const ProductContainer = () => {
             renderItem={({ item }) => <ProductList key={item.id} item={item} />}
             keyExtractor={(item) => item._id.$oid}
           />
+          {productsCtg.length > 0 ? (
+            <View style={styles.listContainer}>
+              {productsCtg.map((item) => {
+                return (
+                  <ProductList
+                    navigation={navigation}
+                    key={item.name}
+                    item={item}
+                  />
+                )
+              })}
+            </View>
+          ) : (
+            <View style={[styles.center, { height: height / 2 }]}>
+              <Text>No products found</Text>
+            </View>
+          )}
         </View>
       )}
     </SafeAreaView>
@@ -198,6 +215,7 @@ const styles = StyleSheet.create({
   },
   listContainer: {
     height: height,
+    padding: 100,
     flex: 1,
     flexDirection: 'row',
     alignItems: 'flex-start',
