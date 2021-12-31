@@ -161,7 +161,6 @@ const ProductContainer = ({ navigation }) => {
         <View
           style={{
             backgroundColor: 'gainsboro',
-            paddingBottom: 150,
           }}
         >
           <FlatList
@@ -222,6 +221,7 @@ const styles = StyleSheet.create({
   },
   listContainer: {
     height: height,
+    marginBottom: 150,
     flex: 1,
     flexDirection: 'row',
     alignItems: 'flex-start',
