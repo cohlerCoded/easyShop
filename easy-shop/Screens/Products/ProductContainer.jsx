@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   Dimensions,
   Keyboard,
+  ScrollView,
 } from 'react-native'
 import {
   Container,
@@ -67,6 +68,7 @@ const ProductContainer = () => {
       setCategories([])
       setActive()
       setInitialState()
+      setActive()
     }
   }, [])
 
@@ -155,17 +157,23 @@ const ProductContainer = () => {
         <SearchedProducts productsFiltered={productsFiltered} />
       ) : (
         <View style={{ backgroundColor: 'gainsboro' }}>
-          <Banner />
-          <View>
-            <CategoryFilter
-              filterProducts={filterByCategory}
-              categories={categories}
-              productsCtg={productsCtg}
-              active={active}
-              setActive={setActive}
-            />
-          </View>
           <FlatList
+            ListHeaderComponent={
+              <>
+                <View>
+                  <Banner />
+                </View>
+                <View>
+                  <CategoryFilter
+                    filterProducts={filterByCategory}
+                    categories={categories}
+                    productsCtg={productsCtg}
+                    active={active}
+                    setActive={setActive}
+                  />
+                </View>
+              </>
+            }
             numColumns={2}
             data={productsCtg}
             renderItem={({ item }) => <ProductList key={item.id} item={item} />}
