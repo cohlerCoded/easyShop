@@ -72,7 +72,7 @@ const ProductContainer = ({ navigation }) => {
       setInitialState()
       setActive()
     }
-  }, [])
+  }, [products])
 
   const searchProduct = (text) =>
     setProductsFiltered(
