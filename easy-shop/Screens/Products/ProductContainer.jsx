@@ -214,10 +214,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  productImage: {
-    resizeMode: 'center',
-    width: 250,
-    height: 250,
+  center: {
+    alignItems: 'center',
   },
   listContainer: {
     height: height,
