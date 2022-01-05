@@ -28,7 +28,12 @@ const Banner = () => {
     <ScrollView scrollEnabled={false}>
       <View style={styles.container}>
         <View style={styles.swiper}>
-          <Swiper showsButtons={false} autoplay autoplayTimeout={2}>
+          <Swiper
+            showsButtons={false}
+            autoplay
+            autoplayTimeout={2}
+            showsPagination={false}
+          >
             {bannerData.map((url) => (
               <Image
                 key={url}
@@ -49,18 +54,18 @@ export default Banner
 
 const styles = StyleSheet.create({
   container: {
-    height: width * 0.75,
+    height: width * 0.5,
     flex: 1,
     backgroundColor: 'gainsboro',
   },
   swiper: {
-    height: width * 0.75,
+    height: width * 0.5,
     width: width,
     alignItems: 'center',
     marginTop: 10,
   },
   image: {
-    height: width / 2,
+    height: width / 2.25,
     width: width - 40,
     borderRadius: 10,
     marginHorizontal: 20,
