@@ -13,7 +13,7 @@ const Main = () => {
     <Tab.Navigator
       initialRouteName='Home'
       screenOptions={{
-        // tabBarLabel: false,
+        tabBarShowLabel: false,
         tabBarActiveTintColor: '#e91e63',
         tabBarHideOnKeyboard: true,
       }}
