@@ -14,10 +14,8 @@ export default function App() {
   return (
     <NativeBaseProvider>
       <NavigationContainer>
-        <SafeAreaView style={styles.container}>
-          <Header />
-          <ProductContainer />
-        </SafeAreaView>
+        <Header />
+        <Main />
       </NavigationContainer>
     </NativeBaseProvider>
   )
