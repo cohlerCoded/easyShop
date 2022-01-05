@@ -13,7 +13,7 @@ const Main = () => {
     <Tab.Navigator
       initialRouteName='Home'
       screenOptions={{
-        tabBarShowLabel: false,
+        tabBarShowLabel: true,
         tabBarActiveTintColor: '#e91e63',
         tabBarHideOnKeyboard: true,
       }}
@@ -22,6 +22,9 @@ const Main = () => {
         name='Home'
         component={HomeNavigator}
         options={{
+          //   headerTitleContainerStyle: { height: 0 },
+          //   headerStyle: { height: 50 },
+          headerShown: false,
           tabBarIcon: ({ color }) => (
             <Icon name='home' color={color} size={30} />
           ),
@@ -31,6 +34,7 @@ const Main = () => {
         name='Cart'
         component={HomeNavigator}
         options={{
+          headerShown: false,
           tabBarIcon: ({ color }) => (
             <Icon name='shopping-cart' color={color} size={30} />
           ),
@@ -40,6 +44,7 @@ const Main = () => {
         name='Admin'
         component={HomeNavigator}
         options={{
+          headerShown: false,
           tabBarIcon: ({ color }) => (
             <Icon name='cog' color={color} size={30} />
           ),
@@ -49,6 +54,7 @@ const Main = () => {
         name='User'
         component={HomeNavigator}
         options={{
+          headerShown: false,
           tabBarIcon: ({ color }) => (
             <Icon name='user' color={color} size={30} />
           ),

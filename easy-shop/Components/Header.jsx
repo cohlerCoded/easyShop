@@ -3,11 +3,11 @@ import { StyleSheet, Text, Image, SafeAreaView } from 'react-native'
 
 const Header = () => {
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.header}>
       <Image
         source={require('../assets/Logo.png')}
         resizeMode='contain'
-        style={{ height: 70 }}
+        style={{ height: 60 }}
       />
     </SafeAreaView>
   )
@@ -21,6 +21,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignContent: 'center',
     justifyContent: 'center',
-    padding: 20,
+    marginTop: 50,
+    marginBottom: 20,
   },
 })
