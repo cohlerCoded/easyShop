@@ -58,7 +58,8 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     marginBottom: 80,
-    padding: 5,
+    padding: 0,
+    margin: 0,
   },
   image: {
     width: '100%',
