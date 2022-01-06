@@ -182,7 +182,9 @@ const ProductContainer = ({ navigation }) => {
             }
             numColumns={2}
             data={productsCtg}
-            renderItem={({ item }) => <ProductList key={item.id} item={item} />}
+            renderItem={({ item }) => (
+              <ProductList navigation={navigation} key={item.id} item={item} />
+            )}
             keyExtractor={(item) => item._id.$oid}
           />
           {productsCtg.length > 0 ? (
