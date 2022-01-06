@@ -97,7 +97,7 @@ const ProductContainer = ({ navigation }) => {
   }
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.container}>
       <VStack
         alignSelf='center'
         marginY={5}
@@ -156,7 +156,10 @@ const ProductContainer = ({ navigation }) => {
         </VStack>
       </VStack>
       {focus == true ? (
-        <SearchedProducts productsFiltered={productsFiltered} />
+        <SearchedProducts
+          productsFiltered={productsFiltered}
+          navigation={navigation}
+        />
       ) : (
         <View
           style={{
@@ -212,16 +215,13 @@ const ProductContainer = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    marginBottom: 150,
   },
   center: {
     alignItems: 'center',
   },
   listContainer: {
     height: height,
-    marginBottom: 150,
     flex: 1,
     flexDirection: 'row',
     alignItems: 'flex-start',

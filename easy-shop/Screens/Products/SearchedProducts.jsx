@@ -1,43 +1,44 @@
 import React from 'react'
 import { StyleSheet, View, Dimensions, ScrollView } from 'react-native'
 import { Text, VStack, HStack, Image, Divider } from 'native-base'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 
 const { width } = Dimensions.get('window')
 
-const SearchedProducts = ({ productsFiltered }) => {
+const SearchedProducts = ({ productsFiltered, navigation }) => {
   return (
     <ScrollView style={{ width: width }} keyboardShouldPersistTaps='never'>
       {productsFiltered.length > 0 ? (
         productsFiltered.map((item) => (
-          <VStack
+          <TouchableOpacity
             onPress={() => {
-              props.navigation.navigate('Product Detail', { item: item })
+              navigation.navigate('Product Details', { item })
             }}
-            key={item._id.$oid}
-            avatar
           >
-            <HStack>
-              <Image
-                borderWidth='2'
-                borderColor='#eee'
-                margin='5'
-                size='12'
-                source={{
-                  uri: item.image
-                    ? item.image
-                    : 'https://cdn.pixabay.com/photo/2012/04/01/17/29/box-23649_960_720.png',
-                }}
-                alt={item.name}
-              />
-              <VStack alignSelf='center'>
-                <Text bold>{item.name}</Text>
-                <VStack>
-                  <Text fontSize='xs'>{item.description}</Text>
+            <VStack key={item._id.$oid} avatar>
+              <HStack>
+                <Image
+                  borderWidth='2'
+                  borderColor='#eee'
+                  margin='5'
+                  size='12'
+                  source={{
+                    uri: item.image
+                      ? item.image
+                      : 'https://cdn.pixabay.com/photo/2012/04/01/17/29/box-23649_960_720.png',
+                  }}
+                  alt={item.name}
+                />
+                <VStack alignSelf='center'>
+                  <Text bold>{item.name}</Text>
+                  <VStack>
+                    <Text fontSize='xs'>{item.description}</Text>
+                  </VStack>
                 </VStack>
-              </VStack>
-            </HStack>
-            <Divider />
-          </VStack>
+              </HStack>
+              <Divider />
+            </VStack>
+          </TouchableOpacity>
         ))
       ) : (
         <View style={styles.center}>
