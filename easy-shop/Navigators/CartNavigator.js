@@ -1,24 +1,24 @@
 import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import ProductContainer from '../Screens/Products/ProductContainer'
-import ProductDetails from '../Screens/Products/ProductDetails'
+import Cart from '../Screens/Cart/Cart'
+import Checkout from '../Screens/Cart/Checkout'
 
 const Stack = createNativeStackNavigator()
 const MyStack = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name='Home'
-        component={ProductContainer}
+        name='Cart'
+        component={Cart}
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name='Product Details'
-        component={ProductDetails}
+        name='Checkout'
+        component={Checkout}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
   )
 }
 
-export default HomeNavigator = () => <MyStack />
+export default CartNavigator = () => <MyStack />
