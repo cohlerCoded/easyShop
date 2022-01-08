@@ -1,10 +1,15 @@
 import React from 'react'
 import { StyleSheet, Dimensions, View, Image, Text, Button } from 'react-native'
+import { useDispatch, useSelector } from 'react-redux'
 
 const { width } = Dimensions.get('window')
 
 const ProductCard = (props) => {
   const { name, price, image, countInStock } = props
+
+  const dispatch = useDispatch()
+
+  const cart = useSelector((state) => state.cart)
   return (
     <View style={styles.container}>
       <Image
