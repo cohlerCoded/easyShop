@@ -1,12 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import {
-  StyleSheet,
-  Text,
-  View,
-  Dimensions,
-  ScrollView,
-  Image,
-} from 'react-native'
+import { StyleSheet, View, Dimensions, ScrollView, Image } from 'react-native'
 import Swiper from 'react-native-swiper'
 
 const { width } = Dimensions.get('window')
