@@ -14,6 +14,8 @@ const { width } = Dimensions.get('window')
 
 const ProductDetails = (props) => {
   const { item } = props.route.params
+  //Calculate Prices
+  const addDecimals = (num) => (Math.round(num * 100) / 100).toFixed(2)
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scrollView}>
@@ -39,7 +41,7 @@ const ProductDetails = (props) => {
       <View style={styles.bottomContainer}>
         <VStack w='100%'>
           <HStack justifyContent='space-between'>
-            <Text style={styles.price}>${item.price}</Text>
+            <Text style={styles.price}>${addDecimals(item.price)}</Text>
 
             <Button title='Add' />
           </HStack>
