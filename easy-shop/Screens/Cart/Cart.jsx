@@ -7,7 +7,7 @@ const Cart = ({ navigation }) => {
 
   const cart = useSelector((state) => state.cart)
 
-  const { cartItems } = cart
+  //   const { cartItems } = cart
   return (
     <View>
       <Text>Cart Screen</Text>
