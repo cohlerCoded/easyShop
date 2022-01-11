@@ -5,12 +5,15 @@ import { useDispatch, useSelector } from 'react-redux'
 const Cart = ({ navigation }) => {
   const dispatch = useDispatch()
 
-  const cart = useSelector((state) => state.cart)
+  const cartItems = useSelector((state) => state.cartItems)
 
-  //   const { cartItems } = cart
+  console.log(cartItems)
   return (
     <View>
-      <Text>Cart Screen</Text>
+      {cartItems.map((item) => (
+        <Text>{item.name}</Text>
+      ))}
+
       <Button
         title='Checkout'
         onPress={() => navigation.navigate('Checkout')}

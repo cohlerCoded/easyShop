@@ -1,6 +1,7 @@
 import React from 'react'
 import { StyleSheet, Dimensions, View, Image, Text, Button } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
+import { addToCart } from '../../Redux/Actions/cartActions'
 
 const { width } = Dimensions.get('window')
 
@@ -33,7 +34,11 @@ const ProductCard = (props) => {
       <Text style={styles.price}>${addDecimals(price)}</Text>
       {countInStock > 0 ? (
         <View style={{ marginBottom: 60 }}>
-          <Button title='Add' color='green' onPress={() => dispatch(add)} />
+          <Button
+            title='Add'
+            color='green'
+            onPress={() => dispatch(addToCart(props))}
+          />
         </View>
       ) : (
         <Text style={{ marginTop: 20 }}>Out of Stock</Text>
