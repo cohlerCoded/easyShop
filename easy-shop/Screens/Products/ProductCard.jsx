@@ -9,7 +9,7 @@ const ProductCard = (props) => {
 
   const dispatch = useDispatch()
 
-  const cart = useSelector((state) => state.cart)
+  const cartItems = useSelector((state) => state.cartItems)
 
   //Calculate Prices
   const addDecimals = (num) => (Math.round(num * 100) / 100).toFixed(2)
@@ -33,7 +33,7 @@ const ProductCard = (props) => {
       <Text style={styles.price}>${addDecimals(price)}</Text>
       {countInStock > 0 ? (
         <View style={{ marginBottom: 60 }}>
-          <Button title='Add' color='green' />
+          <Button title='Add' color='green' onPress={() => dispatch(add)} />
         </View>
       ) : (
         <Text style={{ marginTop: 20 }}>Out of Stock</Text>
