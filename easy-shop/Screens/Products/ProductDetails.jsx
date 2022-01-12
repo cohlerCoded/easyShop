@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import {
   StyleSheet,
   Text,
@@ -9,11 +10,15 @@ import {
   Dimensions,
 } from 'react-native'
 import { Heading, VStack, HStack, Container, Icon } from 'native-base'
+import { addToCart } from '../../Redux/Actions/cartActions'
 
 const { width } = Dimensions.get('window')
 
 const ProductDetails = (props) => {
   const { item } = props.route.params
+  const dispatch = useDispatch()
+  console.log(item)
+  const cartItems = useSelector((state) => state.cartItems)
   //Calculate Prices
   const addDecimals = (num) => (Math.round(num * 100) / 100).toFixed(2)
   return (
@@ -43,7 +48,11 @@ const ProductDetails = (props) => {
           <HStack justifyContent='space-between'>
             <Text style={styles.price}>${addDecimals(item.price)}</Text>
 
-            <Button title='Add' />
+            <Button
+              title='Add'
+              disabled={item.countInStock === 0}
+              onPress={() => dispatch(addToCart(item))}
+            />
           </HStack>
         </VStack>
       </View>
