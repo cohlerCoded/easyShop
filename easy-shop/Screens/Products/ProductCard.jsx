@@ -37,7 +37,7 @@ const ProductCard = (props) => {
           <Button
             title='Add'
             color='green'
-            onPress={() => dispatch(addToCart(props))}
+            onPress={() => dispatch(addToCart(props, 1))}
           />
         </View>
       ) : (
