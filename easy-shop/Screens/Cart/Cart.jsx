@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux'
 
 const Cart = ({ navigation }) => {
   const dispatch = useDispatch()
-
   const cartItems = useSelector((state) => state.cartItems)
 
   console.log(cartItems)
