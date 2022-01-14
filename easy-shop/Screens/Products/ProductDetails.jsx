@@ -15,10 +15,13 @@ import { addToCart } from '../../Redux/Actions/cartActions'
 const { width } = Dimensions.get('window')
 
 const ProductDetails = (props) => {
+  const [qty, setQty] = useState(0)
   const { item } = props.route.params
   const dispatch = useDispatch()
-  console.log(item)
-  const cartItems = useSelector((state) => state.cartItems)
+
+  const increaseQty = () => setQty(qty + 1)
+  const decreaseQty = () => (qty > 0 ? setQty(qty - 1) : qty)
+
   //Calculate Prices
   const addDecimals = (num) => (Math.round(num * 100) / 100).toFixed(2)
   return (
@@ -49,9 +52,20 @@ const ProductDetails = (props) => {
             <Text style={styles.price}>${addDecimals(item.price)}</Text>
 
             <Button
+              title='-'
+              disabled={item.countInStock === 0}
+              onPress={decreaseQty}
+            />
+            <Text>{qty}</Text>
+            <Button
+              title='+'
+              disabled={item.countInStock === 0}
+              onPress={increaseQty}
+            />
+            <Button
               title='Add'
               disabled={item.countInStock === 0}
-              onPress={() => dispatch(addToCart(item))}
+              onPress={() => dispatch(addToCart(item, qty))}
             />
           </HStack>
         </VStack>
