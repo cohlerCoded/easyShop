@@ -2,7 +2,6 @@ import { ADD_TO_CART, REMOVE_FROM_CART, CLEAR_CART } from '../constants'
 
 export const addToCart = (payload, qty) => (dispatch, getState) => {
   const cart = getState().cartItems
-  console.log(cart)
   for (const item of cart) {
     if (item._id === payload._id) {
       return dispatch({

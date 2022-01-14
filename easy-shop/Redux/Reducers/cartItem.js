@@ -6,7 +6,6 @@ const cartItems = (state = [], action) => {
         for (const item of state) {
           if (item._id === action.payload.id) {
             item.qtyInCart += action.payload.qty
-            return state
           }
         }
       } else {
