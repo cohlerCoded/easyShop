@@ -8,6 +8,7 @@ import {
   ScrollView,
   Button,
   Dimensions,
+  TextInput,
 } from 'react-native'
 import { Heading, VStack, HStack, Container, Icon } from 'native-base'
 import { addToCart } from '../../Redux/Actions/cartActions'
@@ -24,6 +25,7 @@ const ProductDetails = (props) => {
 
   //Calculate Prices
   const addDecimals = (num) => (Math.round(num * 100) / 100).toFixed(2)
+
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scrollView}>
@@ -56,7 +58,11 @@ const ProductDetails = (props) => {
               disabled={item.countInStock === 0}
               onPress={decreaseQty}
             />
-            <Text>{qty}</Text>
+            <TextInput
+              value={qty.toString()}
+              keyboardType='numeric'
+              onChangeText={(text) => setQty(text)}
+            />
             <Button
               title='+'
               disabled={item.countInStock === 0}
