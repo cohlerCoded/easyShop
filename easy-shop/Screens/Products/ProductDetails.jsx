@@ -9,6 +9,7 @@ import {
   Button,
   Dimensions,
   TextInput,
+  Pressable,
 } from 'react-native'
 import { Heading, VStack, HStack, Container, Icon } from 'native-base'
 import { addToCart } from '../../Redux/Actions/cartActions'
@@ -53,21 +54,25 @@ const ProductDetails = (props) => {
           <HStack justifyContent='space-between'>
             <Text style={styles.price}>${addDecimals(item.price)}</Text>
 
-            <Button
-              title='-'
+            <Pressable
+              style={styles.qtyButtons}
               disabled={item.countInStock === 0}
               onPress={decreaseQty}
-            />
+            >
+              <Text style={styles.qtyButtonsText}>-</Text>
+            </Pressable>
             <TextInput
               value={qty.toString()}
               keyboardType='numeric'
               onChangeText={(text) => setQty(text)}
             />
-            <Button
-              title='+'
+            <Pressable
+              style={styles.qtyButtons}
               disabled={item.countInStock === 0}
               onPress={increaseQty}
-            />
+            >
+              <Text style={styles.qtyButtonsText}>+</Text>
+            </Pressable>
             <Button
               title='Add'
               disabled={item.countInStock === 0}
@@ -123,5 +128,15 @@ const styles = StyleSheet.create({
     fontSize: 24,
     margin: 20,
     color: 'red',
+  },
+  qtyButtons: {
+    backgroundColor: '#929292',
+    height: '100%',
+    width: 40,
+    justifyContent: 'center',
+  },
+  qtyButtonsText: {
+    textAlign: 'center',
+    fontSize: 30,
   },
 })
