@@ -62,7 +62,8 @@ const ProductDetails = (props) => {
               <Text style={styles.qtyButtonsText}>-</Text>
             </TouchableOpacity>
             <TextInput
-              style={{ height: 50 }}
+              style={styles.qtyInput}
+              maxLength={4}
               value={qty.toString()}
               keyboardType='numeric'
               onChangeText={(text) => setQty(text)}
@@ -94,6 +95,7 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   scrollView: {
+    marginTop: 20,
     marginBottom: 80,
     padding: 0,
     margin: 0,
@@ -141,5 +143,11 @@ const styles = StyleSheet.create({
   qtyButtonsText: {
     textAlign: 'center',
     fontSize: 30,
+  },
+  qtyInput: {
+    width: 50,
+    height: 50,
+    textAlign: 'center',
+    fontSize: 20,
   },
 })
