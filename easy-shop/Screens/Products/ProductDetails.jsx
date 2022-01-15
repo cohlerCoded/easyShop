@@ -62,6 +62,7 @@ const ProductDetails = (props) => {
               <Text style={styles.qtyButtonsText}>-</Text>
             </TouchableOpacity>
             <TextInput
+              onBlur={() => setQty(qty / 1)}
               style={styles.qtyInput}
               maxLength={4}
               value={qty.toString()}
