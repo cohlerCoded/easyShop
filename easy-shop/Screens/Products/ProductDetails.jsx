@@ -9,7 +9,7 @@ import {
   Button,
   Dimensions,
   TextInput,
-  Pressable,
+  TouchableOpacity,
 } from 'react-native'
 import { Heading, VStack, HStack, Container, Icon } from 'native-base'
 import { addToCart } from '../../Redux/Actions/cartActions'
@@ -54,25 +54,26 @@ const ProductDetails = (props) => {
           <HStack justifyContent='space-between'>
             <Text style={styles.price}>${addDecimals(item.price)}</Text>
 
-            <Pressable
+            <TouchableOpacity
               style={styles.qtyButtons}
               disabled={item.countInStock === 0}
               onPress={decreaseQty}
             >
               <Text style={styles.qtyButtonsText}>-</Text>
-            </Pressable>
+            </TouchableOpacity>
             <TextInput
+              style={{ height: 50 }}
               value={qty.toString()}
               keyboardType='numeric'
               onChangeText={(text) => setQty(text)}
             />
-            <Pressable
+            <TouchableOpacity
               style={styles.qtyButtons}
               disabled={item.countInStock === 0}
               onPress={increaseQty}
             >
               <Text style={styles.qtyButtonsText}>+</Text>
-            </Pressable>
+            </TouchableOpacity>
             <Button
               title='Add'
               disabled={item.countInStock === 0}
@@ -117,6 +118,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   bottomContainer: {
+    height: 50,
     flexDirection: 'row',
     position: 'absolute',
     alignContent: 'space-between',
@@ -126,12 +128,13 @@ const styles = StyleSheet.create({
   },
   price: {
     fontSize: 24,
-    margin: 20,
+    marginLeft: 20,
+    alignSelf: 'center',
     color: 'red',
   },
   qtyButtons: {
     backgroundColor: '#929292',
-    height: '100%',
+    height: 50,
     width: 40,
     justifyContent: 'center',
   },
