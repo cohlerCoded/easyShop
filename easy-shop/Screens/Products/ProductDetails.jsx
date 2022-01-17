@@ -76,11 +76,13 @@ const ProductDetails = (props) => {
             >
               <Text style={styles.qtyButtonsText}>+</Text>
             </TouchableOpacity>
-            <Button
-              title='Add'
+            <TouchableOpacity
+              style={styles.addToCartBtn}
               disabled={item.countInStock === 0}
               onPress={() => dispatch(addToCart(item, qty))}
-            />
+            >
+              <Text style={styles.addToCartBtnText}>Add To Cart</Text>
+            </TouchableOpacity>
           </HStack>
         </VStack>
       </View>
@@ -124,16 +126,16 @@ const styles = StyleSheet.create({
     height: 50,
     flexDirection: 'row',
     position: 'absolute',
-    alignContent: 'space-between',
     bottom: 0,
     left: 0,
     backgroundColor: 'white',
   },
   price: {
+    width: 100,
     fontSize: 24,
-    marginLeft: 20,
+    marginLeft: 10,
     alignSelf: 'center',
-    color: 'red',
+    color: 'green',
   },
   qtyButtons: {
     backgroundColor: '#929292',
@@ -148,7 +150,20 @@ const styles = StyleSheet.create({
   qtyInput: {
     width: 50,
     height: 50,
+    fontSize: 16,
     textAlign: 'center',
-    fontSize: 20,
+  },
+  addToCartBtn: {
+    width: 100,
+    marginHorizontal: 0,
+    paddingHorizontal: 0,
+    backgroundColor: 'green',
+    justifyContent: 'center',
+    borderRadius: 5,
+  },
+  addToCartBtnText: {
+    color: 'white',
+    fontSize: 16,
+    textAlign: 'center',
   },
 })
