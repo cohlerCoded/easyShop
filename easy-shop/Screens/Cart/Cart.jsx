@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   StyleSheet,
   Text,
@@ -6,11 +6,12 @@ import {
   Button,
   TouchableOpacity,
   Dimensions,
+  TextInput,
 } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import { addToCart } from '../../Redux/Actions/cartActions'
 
-import { Icon } from 'react-native-vector-icons/FontAwesome'
+import { FontAwesome } from 'react-native-vector-icons'
 import {
   Image,
   Container,
@@ -18,13 +19,18 @@ import {
   HStack,
   VStack,
   Divider,
-  Box,
+  Icon,
+  ScrollView,
 } from 'native-base'
 
 const { height, width } = Dimensions.get('window')
 
 const Cart = ({ navigation }) => {
+  const [qty, setQty] = useState(0)
   const dispatch = useDispatch()
+
+  const increaseQty = () => setQty(qty + 1)
+  const decreaseQty = () => (qty > 0 ? setQty(qty - 1) : qty)
   const cartItems = useSelector((state) => state.cartItems)
 
   return (
@@ -39,18 +45,29 @@ const Cart = ({ navigation }) => {
           </TouchableOpacity>
         </>
       ) : (
-        <>
+        <ScrollView>
           <Heading style={{ alignSelf: 'center' }}>Cart</Heading>
           {cartItems.map((item, i) => (
             <VStack key={i} space={3}>
+              <TouchableOpacity
+                style={{
+                  position: 'absolute',
+                  right: 0,
+                  marginRight: 10,
+                  marginTop: 10,
+                }}
+              >
+                <Icon as={FontAwesome} name='trash' />
+              </TouchableOpacity>
               <HStack
-                alignItems='center'
+                alignItems='flex-start'
                 marginTop='3'
                 marginLeft='3'
                 marginRight='3'
               >
                 <Image
-                  size='sm'
+                  resizeMode='contain'
+                  size='xl'
                   source={
                     item.image
                       ? { uri: item.image }
@@ -59,9 +76,41 @@ const Cart = ({ navigation }) => {
                         }
                   }
                 />
-                <VStack>
-                  <Text style={{ marginLeft: 5 }}>{item.name}</Text>
-                  <Text style={{ marginLeft: 5 }}>${item.price}</Text>
+                <VStack alignContent='flex-start'>
+                  <Text
+                    style={{ marginLeft: 5, fontSize: 24, fontWeight: 'bold' }}
+                  >
+                    {item.name}
+                  </Text>
+                  <Text
+                    style={{ marginLeft: 5, fontSize: 16, fontWeight: 'bold' }}
+                  >
+                    ${item.price}
+                  </Text>
+                  <HStack style={{ marginLeft: 5 }}>
+                    <TouchableOpacity
+                      style={styles.qtyButtons}
+                      disabled={item.countInStock === 0}
+                      onPress={decreaseQty}
+                    >
+                      <Text style={styles.qtyButtonsText}>-</Text>
+                    </TouchableOpacity>
+                    <TextInput
+                      onBlur={() => setQty(qty / 1)}
+                      style={styles.qtyInput}
+                      maxLength={4}
+                      value={qty.toString()}
+                      keyboardType='numeric'
+                      onChangeText={(text) => setQty(text)}
+                    />
+                    <TouchableOpacity
+                      style={styles.qtyButtons}
+                      disabled={item.countInStock === 0}
+                      onPress={increaseQty}
+                    >
+                      <Text style={styles.qtyButtonsText}>+</Text>
+                    </TouchableOpacity>
+                  </HStack>
                 </VStack>
               </HStack>
               <Divider />
@@ -71,7 +120,7 @@ const Cart = ({ navigation }) => {
             title='Checkout'
             onPress={() => navigation.navigate('Checkout')}
           />
-        </>
+        </ScrollView>
       )}
     </View>
   )
@@ -106,5 +155,26 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: 'white',
     fontSize: 20,
+  },
+  qtyButtons: {
+    backgroundColor: '#dadada',
+    height: 50,
+    width: 40,
+    justifyContent: 'center',
+    borderColor: '#000',
+    borderWidth: 1,
+  },
+  qtyButtonsText: {
+    textAlign: 'center',
+    fontSize: 30,
+  },
+  qtyInput: {
+    width: 50,
+    height: 50,
+    fontSize: 16,
+    textAlign: 'center',
+    borderColor: '#000',
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
   },
 })
