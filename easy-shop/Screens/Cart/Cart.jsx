@@ -1,7 +1,27 @@
 import React, { useEffect } from 'react'
-import { StyleSheet, Text, View, Button, TouchableOpacity } from 'react-native'
+import {
+  StyleSheet,
+  Text,
+  View,
+  Button,
+  TouchableOpacity,
+  Dimensions,
+} from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import { addToCart } from '../../Redux/Actions/cartActions'
+
+import { Icon } from 'react-native-vector-icons/FontAwesome'
+import {
+  Image,
+  Container,
+  Heading,
+  HStack,
+  VStack,
+  Divider,
+  Box,
+} from 'native-base'
+
+const { height, width } = Dimensions.get('window')
 
 const Cart = ({ navigation }) => {
   const dispatch = useDispatch()
@@ -19,16 +39,39 @@ const Cart = ({ navigation }) => {
           </TouchableOpacity>
         </>
       ) : (
-        cartItems.map((item) => (
-          <View style={{ flexDirection: 'row' }}>
-            <Text>Item: {item.name} </Text>
-            <Text>Qty:{item.qtyInCart}</Text>
-            <Button
-              title='Checkout'
-              onPress={() => navigation.navigate('Checkout')}
-            />
-          </View>
-        ))
+        <>
+          <Heading style={{ alignSelf: 'center' }}>Cart</Heading>
+          {cartItems.map((item, i) => (
+            <VStack key={i} space={3}>
+              <HStack
+                alignItems='center'
+                marginTop='3'
+                marginLeft='3'
+                marginRight='3'
+              >
+                <Image
+                  size='sm'
+                  source={
+                    item.image
+                      ? { uri: item.image }
+                      : {
+                          uri: 'https://cdn.pixabay.com/photo/2012/04/01/17/29/box-23649_960_720.png',
+                        }
+                  }
+                />
+                <VStack>
+                  <Text style={{ marginLeft: 5 }}>{item.name}</Text>
+                  <Text style={{ marginLeft: 5 }}>${item.price}</Text>
+                </VStack>
+              </HStack>
+              <Divider />
+            </VStack>
+          ))}
+          <Button
+            title='Checkout'
+            onPress={() => navigation.navigate('Checkout')}
+          />
+        </>
       )}
     </View>
   )
@@ -37,6 +80,11 @@ const Cart = ({ navigation }) => {
 export default Cart
 
 const styles = StyleSheet.create({
+  emptyContainer: {
+    height: height,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   emptyCartText: {
     textAlign: 'center',
     marginTop: 20,
