@@ -53,29 +53,30 @@ const ProductDetails = (props) => {
         <VStack w='100%'>
           <HStack justifyContent='space-between'>
             <Text style={styles.price}>${addDecimals(item.price)}</Text>
-
-            <TouchableOpacity
-              style={styles.qtyButtons}
-              disabled={item.countInStock === 0}
-              onPress={decreaseQty}
-            >
-              <Text style={styles.qtyButtonsText}>-</Text>
-            </TouchableOpacity>
-            <TextInput
-              onBlur={() => setQty(qty / 1)}
-              style={styles.qtyInput}
-              maxLength={4}
-              value={qty.toString()}
-              keyboardType='numeric'
-              onChangeText={(text) => setQty(text)}
-            />
-            <TouchableOpacity
-              style={styles.qtyButtons}
-              disabled={item.countInStock === 0}
-              onPress={increaseQty}
-            >
-              <Text style={styles.qtyButtonsText}>+</Text>
-            </TouchableOpacity>
+            <HStack>
+              <TouchableOpacity
+                style={styles.qtyButtons}
+                disabled={item.countInStock === 0}
+                onPress={decreaseQty}
+              >
+                <Text style={styles.qtyButtonsText}>-</Text>
+              </TouchableOpacity>
+              <TextInput
+                onBlur={() => setQty(qty / 1)}
+                style={styles.qtyInput}
+                maxLength={4}
+                value={qty.toString()}
+                keyboardType='numeric'
+                onChangeText={(text) => setQty(text)}
+              />
+              <TouchableOpacity
+                style={styles.qtyButtons}
+                disabled={item.countInStock === 0}
+                onPress={increaseQty}
+              >
+                <Text style={styles.qtyButtonsText}>+</Text>
+              </TouchableOpacity>
+            </HStack>
             <TouchableOpacity
               style={styles.addToCartBtn}
               disabled={item.countInStock === 0}
@@ -133,15 +134,17 @@ const styles = StyleSheet.create({
   price: {
     width: 100,
     fontSize: 24,
-    marginLeft: 10,
+    marginLeft: 5,
     alignSelf: 'center',
     color: 'green',
   },
   qtyButtons: {
-    backgroundColor: '#929292',
+    backgroundColor: '#dadada',
     height: 50,
     width: 40,
     justifyContent: 'center',
+    borderColor: '#000',
+    borderWidth: 1,
   },
   qtyButtonsText: {
     textAlign: 'center',
@@ -152,11 +155,13 @@ const styles = StyleSheet.create({
     height: 50,
     fontSize: 16,
     textAlign: 'center',
+    borderColor: '#000',
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
   },
   addToCartBtn: {
     width: 100,
-    marginHorizontal: 0,
-    paddingHorizontal: 0,
+    marginRight: 10,
     backgroundColor: 'green',
     justifyContent: 'center',
     borderRadius: 5,
