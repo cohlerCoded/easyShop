@@ -106,7 +106,7 @@ const Cart = ({ navigation }) => {
                       onBlur={() => setQty(qty / 1)}
                       style={styles.qtyInput}
                       maxLength={4}
-                      value={qty.toString()}
+                      value={item.qtyInCart.toString()}
                       keyboardType='numeric'
                       onChangeText={(text) => setQty(text)}
                     />
