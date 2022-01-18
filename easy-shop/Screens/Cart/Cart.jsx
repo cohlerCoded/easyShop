@@ -95,26 +95,28 @@ const Cart = ({ navigation }) => {
                       style={styles.qtyButtons}
                       disabled={item.countInStock === 0}
                       onPress={() =>
-                        dispatch(changeQtyInCart(item._id, item.qtyInCart - 1))
+                        dispatch(changeQtyInCart(item, item.qtyInCart - 1))
                       }
                     >
                       <Text style={styles.qtyButtonsText}>-</Text>
                     </TouchableOpacity>
                     <TextInput
                       onBlur={() =>
-                        dispatch(changeQtyInCart(item.qtyInCart / 1))
+                        dispatch(changeQtyInCart(item, item.qtyInCart / 1))
                       }
                       style={styles.qtyInput}
                       maxLength={4}
                       value={item.qtyInCart.toString()}
                       keyboardType='numeric'
-                      onChangeText={(text) => dispatch(changeQtyInCart(text))}
+                      onChangeText={(text) =>
+                        dispatch(changeQtyInCart(item, text))
+                      }
                     />
                     <TouchableOpacity
                       style={styles.qtyButtons}
                       disabled={item.countInStock === 0}
                       onPress={() =>
-                        dispatch(changeQtyInCart(item._id, item.qtyInCart + 1))
+                        dispatch(changeQtyInCart(item, item.qtyInCart + 1))
                       }
                     >
                       <Text style={styles.qtyButtonsText}>+</Text>
