@@ -33,6 +33,9 @@ const Cart = ({ navigation }) => {
   const decreaseQty = () => (qty > 0 ? setQty(qty - 1) : qty)
   const cartItems = useSelector((state) => state.cartItems)
 
+  //Calculate Prices
+  const addDecimals = (num) => (Math.round(num * 100) / 100).toFixed(2)
+
   return (
     <View>
       {!cartItems.length ? (
@@ -53,15 +56,14 @@ const Cart = ({ navigation }) => {
                 style={{
                   position: 'absolute',
                   right: 0,
-                  marginRight: 10,
-                  marginTop: 10,
+                  margin: 10,
                 }}
               >
                 <Icon as={FontAwesome} name='trash' />
               </TouchableOpacity>
               <HStack
                 alignItems='flex-start'
-                marginTop='3'
+                marginTop='10'
                 marginLeft='3'
                 marginRight='3'
               >
@@ -83,9 +85,14 @@ const Cart = ({ navigation }) => {
                     {item.name}
                   </Text>
                   <Text
-                    style={{ marginLeft: 5, fontSize: 16, fontWeight: 'bold' }}
+                    style={{
+                      marginLeft: 5,
+                      marginVertical: 10,
+                      fontSize: 16,
+                      fontWeight: 'bold',
+                    }}
                   >
-                    ${item.price}
+                    ${addDecimals(item.price)}/Item
                   </Text>
                   <HStack style={{ marginLeft: 5 }}>
                     <TouchableOpacity
@@ -111,6 +118,16 @@ const Cart = ({ navigation }) => {
                       <Text style={styles.qtyButtonsText}>+</Text>
                     </TouchableOpacity>
                   </HStack>
+                  <Text
+                    style={{
+                      marginLeft: 5,
+                      marginTop: 20,
+                      fontSize: 20,
+                      fontWeight: 'bold',
+                    }}
+                  >
+                    Subtotal: ${addDecimals(item.price * item.qtyInCart)}
+                  </Text>
                 </VStack>
               </HStack>
               <Divider />
