@@ -5,9 +5,22 @@ import {
   CHANGE_QTY_IN_CART,
 } from '../constants'
 
+export const changeQtyInCart = (payload, qty) => (dispatch, getState) => {
+  const cart = getState().cartItems
+  for (const item of cart) {
+    if (item._id === payload._id) {
+      return dispatch({
+        type: CHANGE_QTY_IN_CART,
+        payload: { id: payload._id, qty },
+      })
+    }
+  }
+}
+
 export const addToCart = (payload, qty) => (dispatch, getState) => {
   const cart = getState().cartItems
   for (const item of cart) {
+    console.log('item._id = ', item._id, 'payload._id = ', payload._id)
     if (item._id === payload._id) {
       return dispatch({
         type: ADD_TO_CART,
@@ -23,18 +36,6 @@ export const addToCart = (payload, qty) => (dispatch, getState) => {
       qtyInCart: qty,
     },
   })
-}
-
-export const changeQtyInCart = (payload, qty) => (dispatch, getState) => {
-  const cart = getState().cartItems
-  for (const item of cart) {
-    if (item._id === payload._id) {
-      return dispatch({
-        type: CHANGE_QTY_IN_CART,
-        payload: { id: payload._id, qty },
-      })
-    }
-  }
 }
 
 export const removeFromCart = (payload) => {

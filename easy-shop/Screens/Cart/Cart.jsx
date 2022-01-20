@@ -9,7 +9,11 @@ import {
   TextInput,
 } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
-import { addToCart, changeQtyInCart } from '../../Redux/Actions/cartActions'
+import {
+  addToCart,
+  changeQtyInCart,
+  removeFromCart,
+} from '../../Redux/Actions/cartActions'
 
 import { FontAwesome } from 'react-native-vector-icons'
 import {
@@ -27,8 +31,8 @@ const { height, width } = Dimensions.get('window')
 
 const Cart = ({ navigation }) => {
   const dispatch = useDispatch()
-  const cartItems = useSelector((state) => state.cartItems)
-
+  let cartItems = useSelector((state) => state.cartItems)
+  console.log(cartItems)
   //Calculate Prices
   const addDecimals = (num) => (Math.round(num * 100) / 100).toFixed(2)
 
@@ -54,6 +58,7 @@ const Cart = ({ navigation }) => {
                   right: 0,
                   margin: 10,
                 }}
+                onPress={() => dispatch(removeFromCart(item))}
               >
                 <Icon as={FontAwesome} name='trash' />
               </TouchableOpacity>
