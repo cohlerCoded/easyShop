@@ -41,7 +41,10 @@ const Cart = ({ navigation }) => {
       {!cartItems.length ? (
         <>
           <Text style={styles.emptyCartText}>Your cart is empty &#128577;</Text>
-          <TouchableOpacity style={styles.startShoppingBtn}>
+          <TouchableOpacity
+            style={styles.startShoppingBtn}
+            onPress={() => navigation.navigate('Home')}
+          >
             <Text style={styles.startShoppingBtnText}>&#x1F6D2;</Text>
             <Text style={styles.startShoppingBtnText}>Start Shopping!</Text>
             <Text style={styles.startShoppingBtnText}>&#x1F6D2;</Text>
