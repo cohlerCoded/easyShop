@@ -145,10 +145,25 @@ const Cart = ({ navigation }) => {
               <Divider />
             </VStack>
           ))}
-          <Button
-            title='Checkout'
-            onPress={() => navigation.navigate('Checkout')}
-          />
+          <VStack style={styles.bottomContainer}>
+            <HStack>
+              <Text style={styles.price}>$ {totalPrice}</Text>
+            </HStack>
+            <HStack>
+              <EasyButton danger medium>
+                <Text style={{ color: 'white' }}>Clear</Text>
+              </EasyButton>
+            </HStack>
+            <HStack>
+              <EasyButton
+                primary
+                medium
+                onPress={() => navigation.navigate('Checkout')}
+              >
+                <Text style={{ color: 'white' }}>Checkout</Text>
+              </EasyButton>
+            </HStack>
+          </VStack>
         </ScrollView>
       )}
     </View>
