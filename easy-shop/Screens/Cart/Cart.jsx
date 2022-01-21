@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import {
   addToCart,
   changeQtyInCart,
+  clearCart,
   removeFromCart,
 } from '../../Redux/Actions/cartActions'
 
@@ -179,7 +180,7 @@ const Cart = ({ navigation }) => {
               </VStack>
             </HStack>
             <HStack>
-              <EasyButton danger medium>
+              <EasyButton danger medium onPress={() => dispatch(clearCart())}>
                 <Text style={{ color: 'white' }}>Clear</Text>
               </EasyButton>
             </HStack>
