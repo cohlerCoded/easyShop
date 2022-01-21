@@ -90,6 +90,7 @@ const Cart = ({ navigation }) => {
                             uri: 'https://cdn.pixabay.com/photo/2012/04/01/17/29/box-23649_960_720.png',
                           }
                     }
+                    alt={item.name}
                   />
                   <VStack alignContent='flex-start'>
                     <Text
