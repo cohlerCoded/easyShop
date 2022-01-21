@@ -26,6 +26,7 @@ import {
   Icon,
   ScrollView,
 } from 'native-base'
+import EasyButton from '../../Components/EasyButton'
 
 const { height, width } = Dimensions.get('window')
 
@@ -35,6 +36,12 @@ const Cart = ({ navigation }) => {
   console.log(cartItems)
   //Calculate Prices
   const addDecimals = (num) => (Math.round(num * 100) / 100).toFixed(2)
+  let totalPrice = addDecimals(
+    cartItems.reduce(
+      (sumPrice, item) => sumPrice + item.price * item.qtyInCart,
+      0
+    )
+  )
 
   return (
     <View>
@@ -51,103 +58,125 @@ const Cart = ({ navigation }) => {
           </TouchableOpacity>
         </>
       ) : (
-        <ScrollView>
-          <Heading style={{ alignSelf: 'center' }}>Cart</Heading>
-          {cartItems.map((item, i) => (
-            <VStack key={i} space={3}>
-              <TouchableOpacity
-                style={{
-                  position: 'absolute',
-                  right: 0,
-                  margin: 10,
-                }}
-                onPress={() => dispatch(removeFromCart(item))}
-              >
-                <Icon as={FontAwesome} name='trash' />
-              </TouchableOpacity>
-              <HStack
-                alignItems='flex-start'
-                marginTop='10'
-                marginLeft='3'
-                marginRight='3'
-              >
-                <Image
-                  resizeMode='contain'
-                  size='xl'
-                  source={
-                    item.image
-                      ? { uri: item.image }
-                      : {
-                          uri: 'https://cdn.pixabay.com/photo/2012/04/01/17/29/box-23649_960_720.png',
+        <View>
+          <ScrollView style={{ marginBottom: 60 }}>
+            <Heading style={{ alignSelf: 'center' }}>Cart</Heading>
+            {cartItems.map((item, i) => (
+              <VStack key={i} space={3}>
+                <TouchableOpacity
+                  style={{
+                    position: 'absolute',
+                    right: 0,
+                    margin: 10,
+                  }}
+                  onPress={() => dispatch(removeFromCart(item))}
+                >
+                  <Icon as={FontAwesome} name='trash' />
+                </TouchableOpacity>
+                <HStack
+                  alignItems='flex-start'
+                  marginTop='10'
+                  marginLeft='3'
+                  marginRight='3'
+                >
+                  <Image
+                    resizeMode='contain'
+                    size='xl'
+                    source={
+                      item.image
+                        ? { uri: item.image }
+                        : {
+                            uri: 'https://cdn.pixabay.com/photo/2012/04/01/17/29/box-23649_960_720.png',
+                          }
+                    }
+                  />
+                  <VStack alignContent='flex-start'>
+                    <Text
+                      style={{
+                        marginLeft: 5,
+                        fontSize: 24,
+                        fontWeight: 'bold',
+                      }}
+                    >
+                      {item.name}
+                    </Text>
+                    <Text
+                      style={{
+                        marginLeft: 5,
+                        marginVertical: 10,
+                        fontSize: 16,
+                        fontWeight: 'bold',
+                      }}
+                    >
+                      ${addDecimals(item.price)}/Item
+                    </Text>
+                    <HStack style={{ marginLeft: 5 }}>
+                      <TouchableOpacity
+                        style={styles.qtyButtons}
+                        disabled={item.countInStock === 0}
+                        onPress={() =>
+                          dispatch(changeQtyInCart(item, item.qtyInCart - 1))
                         }
-                  }
-                />
-                <VStack alignContent='flex-start'>
-                  <Text
-                    style={{ marginLeft: 5, fontSize: 24, fontWeight: 'bold' }}
-                  >
-                    {item.name}
-                  </Text>
-                  <Text
-                    style={{
-                      marginLeft: 5,
-                      marginVertical: 10,
-                      fontSize: 16,
-                      fontWeight: 'bold',
-                    }}
-                  >
-                    ${addDecimals(item.price)}/Item
-                  </Text>
-                  <HStack style={{ marginLeft: 5 }}>
-                    <TouchableOpacity
-                      style={styles.qtyButtons}
-                      disabled={item.countInStock === 0}
-                      onPress={() =>
-                        dispatch(changeQtyInCart(item, item.qtyInCart - 1))
-                      }
+                      >
+                        <Text style={styles.qtyButtonsText}>-</Text>
+                      </TouchableOpacity>
+                      <TextInput
+                        onBlur={() =>
+                          dispatch(changeQtyInCart(item, item.qtyInCart / 1))
+                        }
+                        style={styles.qtyInput}
+                        maxLength={4}
+                        value={item.qtyInCart.toString()}
+                        keyboardType='numeric'
+                        onChangeText={(text) =>
+                          dispatch(changeQtyInCart(item, text))
+                        }
+                      />
+                      <TouchableOpacity
+                        style={styles.qtyButtons}
+                        disabled={item.countInStock === 0}
+                        onPress={() =>
+                          dispatch(changeQtyInCart(item, item.qtyInCart + 1))
+                        }
+                      >
+                        <Text style={styles.qtyButtonsText}>+</Text>
+                      </TouchableOpacity>
+                    </HStack>
+                    <Text
+                      style={{
+                        marginLeft: 5,
+                        marginTop: 20,
+                        fontSize: 20,
+                        fontWeight: 'bold',
+                      }}
                     >
-                      <Text style={styles.qtyButtonsText}>-</Text>
-                    </TouchableOpacity>
-                    <TextInput
-                      onBlur={() =>
-                        dispatch(changeQtyInCart(item, item.qtyInCart / 1))
-                      }
-                      style={styles.qtyInput}
-                      maxLength={4}
-                      value={item.qtyInCart.toString()}
-                      keyboardType='numeric'
-                      onChangeText={(text) =>
-                        dispatch(changeQtyInCart(item, text))
-                      }
-                    />
-                    <TouchableOpacity
-                      style={styles.qtyButtons}
-                      disabled={item.countInStock === 0}
-                      onPress={() =>
-                        dispatch(changeQtyInCart(item, item.qtyInCart + 1))
-                      }
-                    >
-                      <Text style={styles.qtyButtonsText}>+</Text>
-                    </TouchableOpacity>
-                  </HStack>
-                  <Text
-                    style={{
-                      marginLeft: 5,
-                      marginTop: 20,
-                      fontSize: 20,
-                      fontWeight: 'bold',
-                    }}
-                  >
-                    Subtotal: ${addDecimals(item.price * item.qtyInCart)}
-                  </Text>
-                </VStack>
-              </HStack>
-              <Divider />
-            </VStack>
-          ))}
+                      Subtotal: ${addDecimals(item.price * item.qtyInCart)}
+                    </Text>
+                  </VStack>
+                </HStack>
+                <Divider />
+              </VStack>
+            ))}
+          </ScrollView>
           <VStack style={styles.bottomContainer}>
             <HStack>
-              <Text style={styles.price}>$ {totalPrice}</Text>
+              <VStack
+                style={{
+                  marginLeft: 10,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <Text
+                  style={{
+                    fontSize: 14,
+                    fontWeight: 'bold',
+                  }}
+                >
+                  Cart Subtotal
+                </Text>
+                <Text style={styles.price}>$ {totalPrice}</Text>
+              </VStack>
             </HStack>
             <HStack>
               <EasyButton danger medium>
@@ -164,7 +193,7 @@ const Cart = ({ navigation }) => {
               </EasyButton>
             </HStack>
           </VStack>
-        </ScrollView>
+        </View>
       )}
     </View>
   )
@@ -220,5 +249,18 @@ const styles = StyleSheet.create({
     borderColor: '#000',
     borderTopWidth: 1,
     borderBottomWidth: 1,
+  },
+  bottomContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    position: 'absolute',
+    width: width,
+    height: 60,
+    bottom: 0,
+    left: 0,
+  },
+  price: {
+    fontSize: 20,
+    color: 'green',
   },
 })
