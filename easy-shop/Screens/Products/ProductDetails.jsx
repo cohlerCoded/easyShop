@@ -17,7 +17,7 @@ import { addToCart } from '../../Redux/Actions/cartActions'
 const { width } = Dimensions.get('window')
 
 const ProductDetails = (props) => {
-  const [qty, setQty] = useState(0)
+  const [qty, setQty] = useState(1)
   const { item } = props.route.params
   const dispatch = useDispatch()
 
