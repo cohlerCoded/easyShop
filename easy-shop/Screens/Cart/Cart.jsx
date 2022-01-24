@@ -80,18 +80,24 @@ const Cart = ({ navigation }) => {
                   marginLeft='3'
                   marginRight='3'
                 >
-                  <Image
-                    resizeMode='contain'
-                    size='xl'
-                    source={
-                      item.image
-                        ? { uri: item.image }
-                        : {
-                            uri: 'https://cdn.pixabay.com/photo/2012/04/01/17/29/box-23649_960_720.png',
-                          }
+                  <TouchableOpacity
+                    onPress={() =>
+                      navigation.navigate('Product Details', { item })
                     }
-                    alt={item.name}
-                  />
+                  >
+                    <Image
+                      resizeMode='contain'
+                      size='xl'
+                      source={
+                        item.image
+                          ? { uri: item.image }
+                          : {
+                              uri: 'https://cdn.pixabay.com/photo/2012/04/01/17/29/box-23649_960_720.png',
+                            }
+                      }
+                      alt={item.name}
+                    />
+                  </TouchableOpacity>
                   <VStack alignContent='flex-start'>
                     <Text
                       style={{
