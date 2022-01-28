@@ -60,7 +60,7 @@ const Cart = ({ navigation }) => {
           </TouchableOpacity>
         </>
       ) : (
-        <View>
+        <View style={{ height: height - 155 }}>
           <ScrollView style={{ marginBottom: 60 }}>
             <Heading style={{ alignSelf: 'center' }}>Cart</Heading>
             {cartItems.map((item, i) => (
