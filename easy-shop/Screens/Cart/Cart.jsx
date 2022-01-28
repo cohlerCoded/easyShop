@@ -64,7 +64,7 @@ const Cart = ({ navigation }) => {
           <ScrollView style={{ marginBottom: 60 }}>
             <Heading style={{ alignSelf: 'center' }}>Cart</Heading>
             {cartItems.map((item, i) => (
-              <CartItem item={item} key={i} />
+              <CartItem item={item} key={i} navigation={navigation} />
             ))}
           </ScrollView>
           <VStack style={styles.bottomContainer}>
