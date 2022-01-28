@@ -49,11 +49,11 @@ const CartItem = ({ navigation, item }) => {
         style={{
           position: 'absolute',
           right: 0,
-          margin: 10,
+          margin: 20,
         }}
         onPress={() => dispatch(removeFromCart(item))}
       >
-        <Icon as={FontAwesome} name='trash' />
+        <Icon as={FontAwesome} name='trash' size={5} />
       </TouchableOpacity>
       <HStack
         alignItems='flex-start'
