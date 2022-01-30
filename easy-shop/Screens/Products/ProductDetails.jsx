@@ -81,11 +81,7 @@ const ProductDetails = (props) => {
             <TouchableOpacity
               style={styles.addToCartBtn}
               disabled={item.countInStock === 0}
-              onPress={() =>
-                item.qtyInCart
-                  ? console.log((item, item.qtyInCart + qty))
-                  : dispatch(addToCart(item, qty))
-              }
+              onPress={() => dispatch(addToCart(item, qty))}
             >
               <Text style={styles.addToCartBtnText}>Add To Cart</Text>
             </TouchableOpacity>

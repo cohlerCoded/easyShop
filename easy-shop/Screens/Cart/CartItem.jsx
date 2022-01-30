@@ -32,7 +32,6 @@ const CartItem = ({ navigation, item }) => {
           margin: 20,
         }}
         onPress={() => {
-          console.log('object')
           dispatch(removeFromCart(item))
         }}
       >

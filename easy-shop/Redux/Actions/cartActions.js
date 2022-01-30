@@ -8,10 +8,11 @@ import {
 export const changeQtyInCart = (payload, qty) => (dispatch, getState) => {
   const cart = getState().cartItems
   for (const item of cart) {
-    if (item._id === payload._id) {
+    console.log(item._id.$oid === payload._id.$oid)
+    if (item._id.$oid === payload._id.$oid) {
       return dispatch({
         type: CHANGE_QTY_IN_CART,
-        payload: { id: payload._id, qty },
+        payload: { id: payload._id.$oid, qty },
       })
     }
   }

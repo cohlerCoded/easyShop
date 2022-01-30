@@ -19,7 +19,7 @@ const cartItems = (state = [], action) => {
 
     case CHANGE_QTY_IN_CART:
       for (const item of state) {
-        if (item._id === action.payload.id) {
+        if (item._id.$oid === action.payload.id) {
           item.qtyInCart = action.payload.qty
         }
       }
