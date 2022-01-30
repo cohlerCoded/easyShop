@@ -38,6 +38,10 @@ const Cart = ({ navigation }) => {
   const dispatch = useDispatch()
   let cartItems = useSelector((state) => state.cartItems)
 
+  useEffect(() => {
+    console.log(cartItems.map((item) => item.name))
+  }, [cartItems])
+
   //Calculate Prices
   const addDecimals = (num) => (Math.round(num * 100) / 100).toFixed(2)
   let totalPrice = addDecimals(

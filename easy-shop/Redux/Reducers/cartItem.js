@@ -25,7 +25,7 @@ const cartItems = (state = [], action) => {
       }
 
     case REMOVE_FROM_CART:
-      return state.filter((item) => item !== action.payload)
+      return state.filter((item) => item.name !== action.payload.name)
 
     case CLEAR_CART:
       return []

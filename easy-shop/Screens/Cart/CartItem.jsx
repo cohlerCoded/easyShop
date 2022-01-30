@@ -31,7 +31,10 @@ const CartItem = ({ navigation, item }) => {
           right: 0,
           margin: 20,
         }}
-        onPress={() => dispatch(removeFromCart(item))}
+        onPress={() => {
+          console.log('object')
+          dispatch(removeFromCart(item))
+        }}
       >
         <Icon as={FontAwesome} name='trash' size={5} />
       </TouchableOpacity>
