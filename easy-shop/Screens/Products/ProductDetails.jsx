@@ -12,13 +12,14 @@ import {
   TouchableOpacity,
 } from 'react-native'
 import { Heading, VStack, HStack, Container, Icon } from 'native-base'
-import { addToCart } from '../../Redux/Actions/cartActions'
+import { addToCart, changeQtyInCart } from '../../Redux/Actions/cartActions'
 
 const { width } = Dimensions.get('window')
 
 const ProductDetails = (props) => {
   const [qty, setQty] = useState(1)
   const { item } = props.route.params
+  let cartItems = useSelector((state) => state.cartItems)
   const dispatch = useDispatch()
 
   const increaseQty = () => setQty(qty + 1)
@@ -80,7 +81,11 @@ const ProductDetails = (props) => {
             <TouchableOpacity
               style={styles.addToCartBtn}
               disabled={item.countInStock === 0}
-              onPress={() => dispatch(addToCart(item, qty))}
+              onPress={() =>
+                item.qtyInCart
+                  ? console.log((item, item.qtyInCart + qty))
+                  : dispatch(addToCart(item, qty))
+              }
             >
               <Text style={styles.addToCartBtnText}>Add To Cart</Text>
             </TouchableOpacity>

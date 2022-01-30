@@ -26,6 +26,7 @@ import {
   Divider,
   Icon,
   ScrollView,
+  FlatList,
 } from 'native-base'
 import EasyButton from '../../Components/EasyButton'
 import CartItem from './CartItem'
@@ -33,9 +34,10 @@ import CartItem from './CartItem'
 const { height, width } = Dimensions.get('window')
 
 const Cart = ({ navigation }) => {
+  const [products, setProducts] = useState([])
   const dispatch = useDispatch()
   let cartItems = useSelector((state) => state.cartItems)
-  console.log(cartItems)
+
   //Calculate Prices
   const addDecimals = (num) => (Math.round(num * 100) / 100).toFixed(2)
   let totalPrice = addDecimals(
@@ -44,7 +46,6 @@ const Cart = ({ navigation }) => {
       0
     )
   )
-
   return (
     <View>
       {!cartItems.length ? (
@@ -61,11 +62,21 @@ const Cart = ({ navigation }) => {
         </>
       ) : (
         <View style={{ height: height - 155 }}>
+          <View style={200}>
+            <FlatList
+              horizontal
+              data={cartItems}
+              keyExtractor={(item) => item._id.$oid}
+              renderItem={({ item }) => {
+                return <CartItem item={item} navigation={navigation} />
+              }}
+            />
+          </View>
           <ScrollView style={{ marginBottom: 60 }}>
             <Heading style={{ alignSelf: 'center' }}>Cart</Heading>
-            {cartItems.map((item, i) => (
-              <CartItem item={item} key={i} navigation={navigation} />
-            ))}
+            {cartItems.map((item, i) => {
+              return <CartItem item={item} key={i} navigation={navigation} />
+            })}
           </ScrollView>
           <VStack style={styles.bottomContainer}>
             <HStack>
