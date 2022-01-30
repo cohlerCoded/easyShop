@@ -38,10 +38,6 @@ const Cart = ({ navigation }) => {
   const dispatch = useDispatch()
   let cartItems = useSelector((state) => state.cartItems)
 
-  useEffect(() => {
-    console.log(cartItems.map((item) => item.name))
-  }, [cartItems])
-
   //Calculate Prices
   const addDecimals = (num) => (Math.round(num * 100) / 100).toFixed(2)
   let totalPrice = addDecimals(
@@ -66,9 +62,9 @@ const Cart = ({ navigation }) => {
         </>
       ) : (
         <View style={{ height: height - 155 }}>
-          <View style={200}>
+          <Heading style={{ alignSelf: 'center' }}>Cart</Heading>
+          <View style={{ marginBottom: 100 }}>
             <FlatList
-              horizontal
               data={cartItems}
               keyExtractor={(item) => item._id.$oid}
               renderItem={({ item }) => {
@@ -76,12 +72,6 @@ const Cart = ({ navigation }) => {
               }}
             />
           </View>
-          <ScrollView style={{ marginBottom: 60 }}>
-            <Heading style={{ alignSelf: 'center' }}>Cart</Heading>
-            {cartItems.map((item, i) => {
-              return <CartItem item={item} key={i} navigation={navigation} />
-            })}
-          </ScrollView>
           <VStack style={styles.bottomContainer}>
             <HStack>
               <VStack
