@@ -1,33 +1,14 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import {
   StyleSheet,
   Text,
   View,
-  Button,
   TouchableOpacity,
   Dimensions,
-  TextInput,
 } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
-import {
-  addToCart,
-  changeQtyInCart,
-  clearCart,
-  removeFromCart,
-} from '../../Redux/Actions/cartActions'
-
-import { FontAwesome } from 'react-native-vector-icons'
-import {
-  Image,
-  Container,
-  Heading,
-  HStack,
-  VStack,
-  Divider,
-  Icon,
-  ScrollView,
-  FlatList,
-} from 'native-base'
+import { clearCart } from '../../Redux/Actions/cartActions'
+import { Heading, HStack, VStack, FlatList } from 'native-base'
 import EasyButton from '../../Components/EasyButton'
 import CartItem from './CartItem'
 
