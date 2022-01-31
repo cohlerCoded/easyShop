@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, Dimensions, View, Image, Text, Button } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
-import { addToCart } from '../../Redux/Actions/cartActions'
+import { addToCart, changeQtyInCart } from '../../Redux/Actions/cartActions'
 
 const { width } = Dimensions.get('window')
 
@@ -39,10 +39,10 @@ const ProductCard = (props) => {
             color='green'
             onPress={() => {
               for (const product of cartItems) {
-                if (product._id.$oid === item._id.$oid)
-                  return dispatch(changeQtyInCart(item, 1 + product.qtyInCart))
+                if (product._id.$oid === props._id.$oid)
+                  return dispatch(changeQtyInCart(props, 1 + product.qtyInCart))
               }
-              dispatch(addToCart(item, 1))
+              dispatch(addToCart(props, 1))
             }}
           />
         </View>
