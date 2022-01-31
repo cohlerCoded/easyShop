@@ -23,7 +23,7 @@ const ProductDetails = (props) => {
   const dispatch = useDispatch()
 
   const increaseQty = () => setQty(qty + 1)
-  const decreaseQty = () => (qty > 0 ? setQty(qty - 1) : qty)
+  const decreaseQty = () => (qty > 1 ? setQty(qty - 1) : qty)
 
   //Calculate Prices
   const addDecimals = (num) => (Math.round(num * 100) / 100).toFixed(2)
