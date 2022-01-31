@@ -85,7 +85,7 @@ const ProductDetails = (props) => {
                 for (const product of cartItems) {
                   if (product._id.$oid === item._id.$oid)
                     return dispatch(
-                      changeQtyInCart(item, qty + product.qtyInCart)
+                      changeQtyInCart(item, parseInt(qty) + product.qtyInCart)
                     )
                 }
                 dispatch(addToCart(item, qty))
