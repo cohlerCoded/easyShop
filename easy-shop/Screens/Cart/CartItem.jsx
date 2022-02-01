@@ -8,6 +8,7 @@ import {
 } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import {
+  addToCart,
   changeQtyInCart,
   removeFromCart,
 } from '../../Redux/Actions/cartActions'
@@ -18,10 +19,14 @@ import { Image, HStack, VStack, Divider, Icon } from 'native-base'
 const { height, width } = Dimensions.get('window')
 
 const CartItem = ({ navigation, item }) => {
+  const [qty, setQty] = useState(item.qtyInCart)
   const dispatch = useDispatch()
 
   //Calculate Prices
   const addDecimals = (num) => (Math.round(num * 100) / 100).toFixed(2)
+  useEffect(() => {
+    setQty(item.qtyInCart)
+  }, [item, setQty])
 
   return (
     <VStack space={3}>
@@ -83,26 +88,32 @@ const CartItem = ({ navigation, item }) => {
             <TouchableOpacity
               style={styles.qtyButtons}
               disabled={item.countInStock === 0}
-              onPress={() =>
-                dispatch(changeQtyInCart(item, item.qtyInCart - 1))
-              }
+              onPress={() => {
+                qty > 1 && setQty(qty - 1)
+                dispatch(addToCart(item, -1))
+              }}
             >
               <Text style={styles.qtyButtonsText}>-</Text>
             </TouchableOpacity>
             <TextInput
-              onBlur={() => dispatch(changeQtyInCart(item, item.qtyInCart / 1))}
+              onBlur={() => {
+                !qty
+                  ? setQty(item.qtyInCart)
+                  : dispatch(addToCart(item, parseInt(qty) - item.qtyInCart))
+              }}
               style={styles.qtyInput}
               maxLength={4}
-              value={item.qtyInCart.toString()}
+              value={qty.toString()}
               keyboardType='numeric'
-              onChangeText={(text) => dispatch(changeQtyInCart(item, text))}
+              onChangeText={(text) => setQty(text)}
             />
             <TouchableOpacity
               style={styles.qtyButtons}
               disabled={item.countInStock === 0}
-              onPress={() =>
-                dispatch(changeQtyInCart(item, item.qtyInCart + 1))
-              }
+              onPress={() => {
+                setQty(qty + 1)
+                dispatch(addToCart(item, 1))
+              }}
             >
               <Text style={styles.qtyButtonsText}>+</Text>
             </TouchableOpacity>

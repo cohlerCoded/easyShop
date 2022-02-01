@@ -37,13 +37,7 @@ const ProductCard = (props) => {
           <Button
             title='Add'
             color='green'
-            onPress={() => {
-              for (const product of cartItems) {
-                if (product._id.$oid === props._id.$oid)
-                  return dispatch(changeQtyInCart(props, 1 + product.qtyInCart))
-              }
-              dispatch(addToCart(props, 1))
-            }}
+            onPress={() => dispatch(addToCart(props, 1))}
           />
         </View>
       ) : (

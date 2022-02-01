@@ -5,25 +5,25 @@ import {
   CHANGE_QTY_IN_CART,
 } from '../constants'
 
-export const changeQtyInCart = (payload, qty) => (dispatch, getState) => {
+// export const changeQtyInCart = (payload, qty) => (dispatch, getState) => {
+//   const cart = getState().cartItems
+//   for (const item of cart) {
+//     if (item._id.$oid === payload._id.$oid) {
+//       return dispatch({
+//         type: CHANGE_QTY_IN_CART,
+//         payload: { id: payload._id.$oid, qty },
+//       })
+//     }
+//   }
+// }
+
+export const addToCart = (payload, qty) => (dispatch, getState) => {
   const cart = getState().cartItems
   for (const item of cart) {
     if (item._id.$oid === payload._id.$oid) {
       return dispatch({
         type: CHANGE_QTY_IN_CART,
-        payload: { id: payload._id.$oid, qty },
-      })
-    }
-  }
-}
-
-export const addToCart = (payload, qty) => (dispatch, getState) => {
-  const cart = getState().cartItems
-  for (const item of cart) {
-    if (item._id === payload._id) {
-      return dispatch({
-        type: ADD_TO_CART,
-        payload: { id: payload._id, qty },
+        payload: { id: payload._id.$oid, qty: item.qtyInCart + qty },
       })
     }
   }
