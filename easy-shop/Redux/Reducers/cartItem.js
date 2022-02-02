@@ -9,7 +9,7 @@ const cartItems = (state = [], action) => {
     case ADD_TO_CART:
       if (action.payload.id) {
         for (const item of state) {
-          if (item._id === action.payload.id) {
+          if (item._id.$oid === action.payload.id) {
             item.qtyInCart = action.payload.qty
             if (item.qtyInCart < 1) item.qtyInCart = 1
           }
@@ -18,13 +18,13 @@ const cartItems = (state = [], action) => {
         return [...state, action.payload]
       }
 
-    case CHANGE_QTY_IN_CART:
-      for (const item of state) {
-        if (item._id.$oid === action.payload.id) {
-          item.qtyInCart = action.payload.qty
-          if (item.qtyInCart < 1) item.qtyInCart = 1
-        }
-      }
+    // case CHANGE_QTY_IN_CART:
+    //   for (const item of state) {
+    //     if (item._id.$oid === action.payload.id) {
+    //       item.qtyInCart = action.payload.qty
+    //       if (item.qtyInCart < 1) item.qtyInCart = 1
+    //     }
+    //   }
 
     case REMOVE_FROM_CART:
       return state.filter((item) => item.name !== action.payload.name)
