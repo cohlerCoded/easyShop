@@ -99,7 +99,12 @@ const CartItem = ({ navigation, item }) => {
               onBlur={() => {
                 !qty
                   ? setQty(item.qtyInCart)
-                  : dispatch(addToCart(item, parseInt(qty) - item.qtyInCart))
+                  : dispatch(
+                      addToCart(
+                        item,
+                        Math.ceil(parseInt(qty / 1)) - item.qtyInCart
+                      )
+                    )
               }}
               style={styles.qtyInput}
               maxLength={4}

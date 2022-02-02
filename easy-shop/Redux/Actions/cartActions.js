@@ -22,7 +22,7 @@ export const addToCart = (payload, qty) => (dispatch, getState) => {
   for (const item of cart) {
     if (item._id.$oid === payload._id.$oid) {
       return dispatch({
-        type: CHANGE_QTY_IN_CART,
+        type: ADD_TO_CART,
         payload: { id: payload._id.$oid, qty: item.qtyInCart + qty },
       })
     }
