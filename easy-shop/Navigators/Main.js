@@ -1,10 +1,13 @@
 import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import Icon from 'react-native-vector-icons/FontAwesome'
+import CartIcon from '../Components/CartIcon'
+CartIcon
 
 //Stacks
 import HomeNavigator from './HomeNavigator'
 import CartNavigator from './CartNavigator'
+import { View } from 'native-base'
 
 const Tab = createBottomTabNavigator()
 
@@ -35,7 +38,10 @@ const Main = () => {
         options={{
           headerShown: false,
           tabBarIcon: ({ color }) => (
-            <Icon name='shopping-cart' color={color} size={30} />
+            <View>
+              <Icon name='shopping-cart' color={color} size={30} />
+              <CartIcon />
+            </View>
           ),
         }}
       />
