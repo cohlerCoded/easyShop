@@ -1,10 +1,12 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   StyleSheet,
   Text,
   View,
   TouchableOpacity,
   Dimensions,
+  KeyboardAvoidingView,
+  Platform,
 } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import { clearCart } from '../../Redux/Actions/cartActions'
@@ -27,6 +29,7 @@ const Cart = ({ navigation }) => {
       0
     )
   )
+
   return (
     <View>
       {!cartItems.length ? (
@@ -44,15 +47,23 @@ const Cart = ({ navigation }) => {
       ) : (
         <View style={{ height: height - 155 }}>
           <Heading style={{ alignSelf: 'center' }}>Cart</Heading>
-          <View style={{ marginBottom: 100 }}>
-            <FlatList
-              data={cartItems}
-              keyExtractor={(item) => item._id.$oid}
-              renderItem={({ item }) => {
-                return <CartItem item={item} navigation={navigation} />
-              }}
-            />
-          </View>
+          <KeyboardAvoidingView
+            behavior='padding'
+            keyboardVerticalOffset={Platform.select({
+              ios: () => 60,
+              android: () => 60,
+            })()}
+          >
+            <View style={{ marginBottom: 100 }}>
+              <FlatList
+                data={cartItems}
+                keyExtractor={(item) => item._id.$oid}
+                renderItem={({ item }) => {
+                  return <CartItem item={item} navigation={navigation} />
+                }}
+              />
+            </View>
+          </KeyboardAvoidingView>
           <VStack style={styles.bottomContainer}>
             <HStack>
               <VStack

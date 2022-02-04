@@ -7,11 +7,7 @@ import {
   TextInput,
 } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
-import {
-  addToCart,
-  changeQtyInCart,
-  removeFromCart,
-} from '../../Redux/Actions/cartActions'
+import { addToCart, removeFromCart } from '../../Redux/Actions/cartActions'
 
 import { FontAwesome } from 'react-native-vector-icons'
 import { Image, HStack, VStack, Divider, Icon } from 'native-base'
