@@ -7,7 +7,15 @@ const Checkout = ({ navigation }) => {
   console.log(cartItems)
   return (
     <View>
-      <Text>Checkout</Text>
+      <Text
+        style={{
+          marginTop: 30,
+          fontSize: 30,
+          textAlign: 'center',
+        }}
+      >
+        &#x1F4E6; Checkout &#x1F4E6;
+      </Text>
     </View>
   )
 }

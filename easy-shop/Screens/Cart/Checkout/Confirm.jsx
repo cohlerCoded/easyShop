@@ -4,7 +4,15 @@ import React from 'react'
 const Confirm = () => {
   return (
     <View>
-      <Text>Confirm</Text>
+      <Text
+        style={{
+          marginTop: 30,
+          fontSize: 30,
+          textAlign: 'center',
+        }}
+      >
+        &#x1F4AF; Confirm &#x1F4AF;
+      </Text>
     </View>
   )
 }
