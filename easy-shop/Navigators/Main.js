@@ -17,10 +17,10 @@ const Main = () => {
       initialRouteName='Home'
       screenOptions={{
         tabBarShowLabel: true,
-        tabBarActiveTintColor: '#e91e63',
+        tabBarActiveTintColor: '#7dd3fc',
+        tabBarInactiveTintColor: '#0369a1',
         tabBarHideOnKeyboard: true,
-        tabBarStyle: { height: 60 },
-        tabBarIconStyle: {},
+        tabBarStyle: { paddingTop: 10, height: 55, paddingBottom: 5 },
       }}
     >
       <Tab.Screen
