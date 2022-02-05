@@ -29,6 +29,11 @@ const Cart = ({ navigation }) => {
       0
     )
   )
+  useEffect(() => {
+    for (let i = 0; i < 102; i++) {
+      cartItems.push(i)
+    }
+  }, [])
 
   return (
     <View>

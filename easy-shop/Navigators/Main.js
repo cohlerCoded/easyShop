@@ -19,7 +19,8 @@ const Main = () => {
         tabBarShowLabel: true,
         tabBarActiveTintColor: '#e91e63',
         tabBarHideOnKeyboard: true,
-        tabBarStyle: { height: 50 },
+        tabBarStyle: { height: 60 },
+        tabBarIconStyle: {},
       }}
     >
       <Tab.Screen

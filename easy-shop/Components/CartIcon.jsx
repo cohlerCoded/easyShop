@@ -1,42 +1,44 @@
 import React from 'react'
 import { StyleSheet } from 'react-native'
-import { Badge, Text } from 'native-base'
+import { Badge } from 'native-base'
+import { useSelector } from 'react-redux'
 
 import { connect } from 'react-redux'
 
 const CartIcon = (props) => {
+  let cartItems = useSelector((state) => state.cartItems)
   return (
     <>
-      {props.cartItems.length ? (
+      {cartItems.length ? (
         <Badge // bg="red.400"
           position='absolute'
           colorScheme='danger'
           rounded='full'
-          width={7}
-          height={7}
+          width={cartItems.length > 9 ? 7 : 6}
+          height={6}
           zIndex={1}
           variant='solid'
           right={-15}
-          top={-10}
+          top={-8}
           _text={{
-            marginY: 1,
+            marginY: 0.5,
             textAlign: 'center',
-            fontSize: 8,
+            fontSize: 9,
           }}
         >
-          {props.cartItems.length}
+          {cartItems.length > 99 ? 99 : cartItems.length}
         </Badge>
       ) : null}
     </>
   )
 }
 
-const mapStateToProps = (state) => {
-  const { cartItems } = state
-  return {
-    cartItems: cartItems,
-  }
-}
+// const mapStateToProps = (state) => {
+//   const { cartItems } = state
+//   return {
+//     cartItems: cartItems,
+//   }
+// }
 
 const styles = StyleSheet.create({
   badge: {
@@ -46,8 +48,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     alignContent: 'center',
-    top: -4,
-    right: -15,
+    top: -6,
+    right: -10,
   },
   text: {
     right: 0,
@@ -58,4 +60,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default connect(mapStateToProps)(CartIcon)
+export default CartIcon
