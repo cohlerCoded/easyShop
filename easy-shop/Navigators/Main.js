@@ -8,6 +8,7 @@ CartIcon
 import HomeNavigator from './HomeNavigator'
 import CartNavigator from './CartNavigator'
 import { View } from 'native-base'
+import AnimationSandbox from '../Screens/Admin/AnimationSandbox'
 
 const Tab = createBottomTabNavigator()
 
@@ -48,7 +49,7 @@ const Main = () => {
       />
       <Tab.Screen
         name='Admin'
-        component={HomeNavigator}
+        component={AnimationSandbox}
         options={{
           headerShown: false,
           tabBarIcon: ({ color }) => (
