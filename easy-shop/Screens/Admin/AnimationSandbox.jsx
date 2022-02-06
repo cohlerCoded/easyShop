@@ -1,29 +1,46 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React, { useState, useEffect } from 'react'
+import { StyleSheet, Text, View, Animated } from 'react-native'
+import React, { useState, useEffect, useRef } from 'react'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 
 const AnimationSandbox = () => {
-  const [translation, setTranslation] = useState(0)
+  const translation = useRef(new Animated.Value(0)).current
+  let value = 0
+  const moveSquare = () => {
+    Animated.timing(translation, {
+      toValue: value + 50,
+      useNativeDriver: true,
+    }).start()
+    value += 50
+  }
   useEffect(() => {
-    for (let i = 0; i < 100; i++) {
-      setTimeout(() => {
-        setTranslation(i)
-      }, 25 * i)
-    }
-  }, [])
+    moveSquare()
+  }, [moveSquare])
 
   return (
-    <View style={styles.square} transform={[{ translateX: translation }]}>
-      <Text>AnimationSandbox</Text>
-    </View>
+    <Animated.View
+      style={{
+        width: 100,
+        height: 100,
+        backgroundColor: 'orange',
+        transform: [{ translateX: translation }],
+      }}
+    >
+      <TouchableOpacity
+        style={{
+          width: 100,
+          height: 100,
+          backgroundColor: 'orange',
+        }}
+        onPress={moveSquare}
+      >
+        <Text>AnimationSandbox</Text>
+      </TouchableOpacity>
+    </Animated.View>
   )
 }
 
 export default AnimationSandbox
 
 const styles = StyleSheet.create({
-  square: {
-    width: 100,
-    height: 100,
-    backgroundColor: 'orange',
-  },
+  square: {},
 })
