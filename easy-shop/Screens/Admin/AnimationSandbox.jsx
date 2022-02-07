@@ -1,21 +1,11 @@
-import { StyleSheet, Text, View, Animated, TextInput } from 'react-native'
-import React, { useState, useEffect, useRef } from 'react'
-import { TouchableOpacity } from 'react-native-gesture-handler'
+import { Text, Animated, TextInput } from 'react-native'
+import React, { useState, useRef } from 'react'
 
 const AnimationSandbox = () => {
   const [text, setText] = useState('')
-  const translation = useRef(new Animated.Value(0)).current
   const translationPlaceHolder = useRef(new Animated.Value(0)).current
   const translationPlaceHolderSize = useRef(new Animated.Value(1)).current
   const translationPlaceHolderMargin = useRef(new Animated.Value(0)).current
-  let value = 0
-  //   const moveSquare = () => {
-  //     Animated.timing(translation, {
-  //       toValue: value + 50,
-  //       useNativeDriver: true,
-  //     }).start()
-  //     value += 50
-  //   }
   const movePlaceHolder = () => {
     Animated.timing(translationPlaceHolder, {
       toValue: -20,
@@ -50,21 +40,11 @@ const AnimationSandbox = () => {
       duration: 250,
     }).start()
   }
-  //   useEffect(() => {
-  //     movePlaceHolder()
-  //   }, [movePlaceHolder])
 
   return (
-    <Animated.View
-      style={{ backgroundColor: '#f1eff1' }}
-      //   style={{
-      //     width: 100,
-      //     height: 100,
-      //     backgroundColor: 'orange',
-      //     transform: [{ translateX: translation }],
-      //   }}
-    >
+    <Animated.View style={{ backgroundColor: '#f1eff1' }}>
       <TextInput
+        selectionColor={'lightgrey'}
         value={text}
         onChangeText={(input) => setText(input)}
         style={{
@@ -72,12 +52,14 @@ const AnimationSandbox = () => {
           fontSize: 16,
           margin: 20,
           borderWidth: 1,
+          borderColor: '#000',
           height: 40,
         }}
         onFocus={movePlaceHolder}
         onBlur={movePlaceHolderBack}
       />
       <Animated.View
+        pointerEvents='none'
         style={{
           position: 'absolute',
           margin: 25,
@@ -106,7 +88,3 @@ const AnimationSandbox = () => {
 }
 
 export default AnimationSandbox
-
-const styles = StyleSheet.create({
-  square: {},
-})
