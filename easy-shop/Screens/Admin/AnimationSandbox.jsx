@@ -1,21 +1,6 @@
-import {
-  Text,
-  TextInput,
-  StyleSheet,
-  Animated,
-  Dimensions,
-  View,
-} from 'react-native'
+import { TextInput, StyleSheet, Animated, Dimensions } from 'react-native'
 import React, { useState, useRef } from 'react'
-import Svg, { Line, Path } from 'react-native-svg'
-import { AnimatedSVGPath } from 'react-native-svg-animations'
-import {
-  interpolate,
-  interpolateColor,
-  useAnimatedStyle,
-  useDerivedValue,
-  withTiming,
-} from 'react-native-reanimated'
+import Svg, { Line } from 'react-native-svg'
 
 const { width } = Dimensions.get('window')
 
@@ -62,22 +47,22 @@ const AnimationSandbox = () => {
       Animated.timing(topBorderLine, {
         toValue: 1,
         useNativeDriver: false,
-        duration: 250,
+        duration: 100,
       }),
       Animated.timing(rightBorderLine, {
         toValue: 1,
         useNativeDriver: false,
-        duration: 250,
+        duration: 100,
       }),
       Animated.timing(bottomBorderLine, {
         toValue: 1,
         useNativeDriver: false,
-        duration: 250,
+        duration: 100,
       }),
       Animated.timing(leftBorderLine, {
         toValue: 1,
         useNativeDriver: false,
-        duration: 250,
+        duration: 100,
       }),
     ]).start()
   }
@@ -149,7 +134,7 @@ const AnimationSandbox = () => {
             y1='0%'
             x2={topBorder}
             y2='0%'
-            stroke='red'
+            stroke='#7dd3fc'
             strokeWidth='4'
           />
           <AnimatedLineRightFocus
@@ -157,7 +142,7 @@ const AnimationSandbox = () => {
             y1='0%'
             x2='100%'
             y2={rightBorder}
-            stroke='red'
+            stroke='#7dd3fc'
             strokeWidth='4'
           />
           <AnimatedLineBottomFocus
@@ -165,7 +150,7 @@ const AnimationSandbox = () => {
             y1='100%'
             x2={bottomBorder}
             y2='100%'
-            stroke='red'
+            stroke='#7dd3fc'
             strokeWidth='4'
           />
           <AnimatedLineLeftFocus
@@ -173,7 +158,7 @@ const AnimationSandbox = () => {
             y1='100%'
             x2='0%'
             y2={leftBorder}
-            stroke='red'
+            stroke='#7dd3fc'
             strokeWidth='4'
           />
         </Svg>
