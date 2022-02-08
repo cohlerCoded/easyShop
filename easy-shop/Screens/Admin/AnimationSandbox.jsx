@@ -7,7 +7,7 @@ import {
   View,
 } from 'react-native'
 import React, { useState, useRef } from 'react'
-import Svg, { Line } from 'react-native-svg'
+import Svg, { Line, Path } from 'react-native-svg'
 import { AnimatedSVGPath } from 'react-native-svg-animations'
 import {
   interpolate,
@@ -22,11 +22,20 @@ const { width } = Dimensions.get('window')
 const AnimationSandbox = () => {
   const [text, setText] = useState('')
 
+  const AnimatedLineTopFocus = Animated.createAnimatedComponent(Line)
+  const AnimatedLineRightFocus = Animated.createAnimatedComponent(Line)
+  const AnimatedLineBottomFocus = Animated.createAnimatedComponent(Line)
+  const AnimatedLineLeftFocus = Animated.createAnimatedComponent(Line)
+
   const translationPlaceHolder = useRef(new Animated.Value(0)).current
   const translationPlaceHolderSize = useRef(new Animated.Value(1)).current
   const translationPlaceHolderMargin = useRef(new Animated.Value(0)).current
   const translationPlaceHolderColor = useRef(new Animated.Value(0)).current
-  const topBorderWidth = useRef(new Animated.Value(0)).current
+
+  const topBorderLine = useRef(new Animated.Value(0)).current
+  const rightBorderLine = useRef(new Animated.Value(0)).current
+  const bottomBorderLine = useRef(new Animated.Value(0)).current
+  const leftBorderLine = useRef(new Animated.Value(0)).current
 
   const movePlaceHolder = () => {
     Animated.timing(translationPlaceHolder, {
@@ -49,11 +58,28 @@ const AnimationSandbox = () => {
       useNativeDriver: false,
       duration: 250,
     }).start()
-    Animated.timing(topBorderWidth, {
-      toValue: 1,
-      useNativeDriver: false,
-      duration: 250,
-    }).start()
+    Animated.sequence([
+      Animated.timing(topBorderLine, {
+        toValue: 1,
+        useNativeDriver: false,
+        duration: 250,
+      }),
+      Animated.timing(rightBorderLine, {
+        toValue: 1,
+        useNativeDriver: false,
+        duration: 250,
+      }),
+      Animated.timing(bottomBorderLine, {
+        toValue: 1,
+        useNativeDriver: false,
+        duration: 250,
+      }),
+      Animated.timing(leftBorderLine, {
+        toValue: 1,
+        useNativeDriver: false,
+        duration: 250,
+      }),
+    ]).start()
   }
 
   const movePlaceHolderBack = () => {
@@ -84,12 +110,22 @@ const AnimationSandbox = () => {
     outputRange: ['rgb(125, 211, 252)', 'rgb(3, 105, 161)'],
   })
 
-  const topBorder = topBorderWidth.interpolate({
+  const topBorder = topBorderLine.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0, width - 20],
+  })
+  const rightBorder = rightBorderLine.interpolate({
     inputRange: [0, 1],
     outputRange: ['0%', '100%'],
   })
-
-  console.log(topBorderWidth)
+  const bottomBorder = bottomBorderLine.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['100%', '0%'],
+  })
+  const leftBorder = leftBorderLine.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['100%', '0%'],
+  })
 
   return (
     <Animated.View style={{ backgroundColor: '#f1eff1' }}>
@@ -104,13 +140,45 @@ const AnimationSandbox = () => {
         }}
       >
         <Svg
-          height='100%'
+          height={40}
           width={width - 40}
-          style={{ zIndex: 4, marginLeft: 20 }}
+          style={{ zIndex: 0, marginLeft: 20 }}
         >
-          <Line x1={0} y1='0' x2='100%' y2='0' stroke='red' strokeWidth='4' />
+          <AnimatedLineTopFocus
+            x1='0%'
+            y1='0%'
+            x2={topBorder}
+            y2='0%'
+            stroke='red'
+            strokeWidth='4'
+          />
+          <AnimatedLineRightFocus
+            x1='100%'
+            y1='0%'
+            x2='100%'
+            y2={rightBorder}
+            stroke='red'
+            strokeWidth='4'
+          />
+          <AnimatedLineBottomFocus
+            x1='100%'
+            y1='100%'
+            x2={bottomBorder}
+            y2='100%'
+            stroke='red'
+            strokeWidth='4'
+          />
+          <AnimatedLineLeftFocus
+            x1='0%'
+            y1='100%'
+            x2='0%'
+            y2={leftBorder}
+            stroke='red'
+            strokeWidth='4'
+          />
         </Svg>
       </Animated.View>
+
       <TextInput
         selectionColor={'#7dd3fc'}
         value={text}
@@ -130,6 +198,7 @@ const AnimationSandbox = () => {
       <Animated.View
         pointerEvents='none'
         style={{
+          zIndex: 3,
           position: 'absolute',
           margin: 25,
           backgroundColor: '#f1eff1',
@@ -153,20 +222,6 @@ const AnimationSandbox = () => {
           PlaceHolder
         </Animated.Text>
       </Animated.View>
-      <View>
-        <AnimatedSVGPath
-          strokeColor={'green'}
-          duration={500}
-          strokeWidth={5}
-          //   strokeDashArray={[42.76482137044271, 42.76482137044271]}
-          height={400}
-          width={width}
-          scale={1.5}
-          delay={0}
-          d={d}
-          loop={false}
-        />
-      </View>
     </Animated.View>
   )
 }
@@ -175,19 +230,3 @@ const styles = StyleSheet.create({
 })
 
 export default AnimationSandbox
-
-{
-  /* <svg width="647" height="180" viewBox="0 0 647 180" fill="none" xmlns="http://www.w3.org/2000/svg">
-<mask id="path-1-inside-1_2_4" fill="white">
-<path d="M0 0H647V180H0V0Z"/>
-</mask> */
-}
-const d =
-  'M0 0V-1H-1V0H0ZM274 0H275V-1H274V0ZM274 120V121H275V120H274ZM0 120H-1V121H0V120ZM0 1H274V-1H0V1ZM273 0V120H275V0H273ZM274 119H0V121H274V119ZM1 120V0H-1V120H1Z'
-// // </svg>
-// <svg width="274" height="120" viewBox="0 0 274 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-// <mask id="path-1-inside-1_2_4" fill="white">
-// <path d="M0 0H274V120H0V0Z"/>
-// </mask>
-// <path d="M0 0V-1H-1V0H0ZM274 0H275V-1H274V0ZM274 120V121H275V120H274ZM0 120H-1V121H0V120ZM0 1H274V-1H0V1ZM273 0V120H275V0H273ZM274 119H0V121H274V119ZM1 120V0H-1V120H1Z" fill="black" mask="url(#path-1-inside-1_2_4)"/>
-// </svg>
