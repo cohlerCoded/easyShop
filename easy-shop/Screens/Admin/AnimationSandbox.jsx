@@ -47,22 +47,22 @@ const AnimationSandbox = () => {
       Animated.timing(topBorderLine, {
         toValue: 1,
         useNativeDriver: true,
-        duration: 50,
+        duration: 125,
       }),
       Animated.timing(rightBorderLine, {
         toValue: 1,
         useNativeDriver: true,
-        duration: 50,
+        duration: 25,
       }),
       Animated.timing(bottomBorderLine, {
         toValue: 1,
         useNativeDriver: true,
-        duration: 50,
+        duration: 125,
       }),
       Animated.timing(leftBorderLine, {
         toValue: 1,
         useNativeDriver: true,
-        duration: 50,
+        duration: 25,
       }),
     ]).start()
   }
@@ -92,22 +92,22 @@ const AnimationSandbox = () => {
       Animated.timing(leftBorderLine, {
         toValue: 0,
         useNativeDriver: true,
-        duration: 50,
+        duration: 25,
       }),
       Animated.timing(bottomBorderLine, {
         toValue: 0,
         useNativeDriver: true,
-        duration: 50,
+        duration: 125,
       }),
       Animated.timing(rightBorderLine, {
         toValue: 0,
         useNativeDriver: true,
-        duration: 50,
+        duration: 25,
       }),
       Animated.timing(topBorderLine, {
         toValue: 0,
         useNativeDriver: true,
-        duration: 50,
+        duration: 125,
       }),
     ]).start()
   }
