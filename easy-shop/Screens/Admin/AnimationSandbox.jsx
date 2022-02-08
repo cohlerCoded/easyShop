@@ -25,17 +25,17 @@ const AnimationSandbox = () => {
   const movePlaceHolder = () => {
     Animated.timing(translationPlaceHolder, {
       toValue: -20,
-      useNativeDriver: false,
+      useNativeDriver: true,
       duration: 250,
     }).start()
     Animated.timing(translationPlaceHolderSize, {
       toValue: 0.75,
-      useNativeDriver: false,
+      useNativeDriver: true,
       duration: 250,
     }).start()
     Animated.timing(translationPlaceHolderMargin, {
       toValue: -15,
-      useNativeDriver: false,
+      useNativeDriver: true,
       duration: 250,
     }).start()
     Animated.timing(translationPlaceHolderColor, {
@@ -46,23 +46,23 @@ const AnimationSandbox = () => {
     Animated.sequence([
       Animated.timing(topBorderLine, {
         toValue: 1,
-        useNativeDriver: false,
-        duration: 100,
+        useNativeDriver: true,
+        duration: 50,
       }),
       Animated.timing(rightBorderLine, {
         toValue: 1,
-        useNativeDriver: false,
-        duration: 100,
+        useNativeDriver: true,
+        duration: 50,
       }),
       Animated.timing(bottomBorderLine, {
         toValue: 1,
-        useNativeDriver: false,
-        duration: 100,
+        useNativeDriver: true,
+        duration: 50,
       }),
       Animated.timing(leftBorderLine, {
         toValue: 1,
-        useNativeDriver: false,
-        duration: 100,
+        useNativeDriver: true,
+        duration: 50,
       }),
     ]).start()
   }
@@ -70,17 +70,17 @@ const AnimationSandbox = () => {
   const movePlaceHolderBack = () => {
     Animated.timing(translationPlaceHolder, {
       toValue: !text.length ? 0 : -20,
-      useNativeDriver: false,
+      useNativeDriver: true,
       duration: 250,
     }).start()
     Animated.timing(translationPlaceHolderSize, {
       toValue: !text.length ? 1 : 0.75,
-      useNativeDriver: false,
+      useNativeDriver: true,
       duration: 250,
     }).start()
     Animated.timing(translationPlaceHolderMargin, {
       toValue: !text.length ? 0 : -15,
-      useNativeDriver: false,
+      useNativeDriver: true,
       duration: 250,
     }).start()
     Animated.timing(translationPlaceHolderColor, {
@@ -88,6 +88,28 @@ const AnimationSandbox = () => {
       useNativeDriver: false,
       duration: 250,
     }).start()
+    Animated.sequence([
+      Animated.timing(leftBorderLine, {
+        toValue: 0,
+        useNativeDriver: true,
+        duration: 50,
+      }),
+      Animated.timing(bottomBorderLine, {
+        toValue: 0,
+        useNativeDriver: true,
+        duration: 50,
+      }),
+      Animated.timing(rightBorderLine, {
+        toValue: 0,
+        useNativeDriver: true,
+        duration: 50,
+      }),
+      Animated.timing(topBorderLine, {
+        toValue: 0,
+        useNativeDriver: true,
+        duration: 50,
+      }),
+    ]).start()
   }
 
   const color = translationPlaceHolderColor.interpolate({
