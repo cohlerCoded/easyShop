@@ -4,8 +4,8 @@ import Svg, { Line } from 'react-native-svg'
 
 const { width } = Dimensions.get('window')
 
-const AnimationSandbox = () => {
-  const [text, setText] = useState('')
+const AnimatedInput = (props) => {
+  const [textInput, setTextInput] = useState('')
 
   const AnimatedLineTopFocus = Animated.createAnimatedComponent(Line)
   const AnimatedLineRightFocus = Animated.createAnimatedComponent(Line)
@@ -24,7 +24,7 @@ const AnimationSandbox = () => {
 
   const movePlaceHolder = () => {
     Animated.timing(translationPlaceHolder, {
-      toValue: -20,
+      toValue: props.height / -2 || -20,
       useNativeDriver: true,
       duration: 250,
     }).start()
@@ -69,17 +69,17 @@ const AnimationSandbox = () => {
 
   const movePlaceHolderBack = () => {
     Animated.timing(translationPlaceHolder, {
-      toValue: !text.length ? 0 : -20,
+      toValue: !textInput.length ? 0 : -20,
       useNativeDriver: true,
       duration: 250,
     }).start()
     Animated.timing(translationPlaceHolderSize, {
-      toValue: !text.length ? 1 : 0.75,
+      toValue: !textInput.length ? 1 : 0.75,
       useNativeDriver: true,
       duration: 250,
     }).start()
     Animated.timing(translationPlaceHolderMargin, {
-      toValue: !text.length ? 0 : -15,
+      toValue: !textInput.length ? 0 : -15,
       useNativeDriver: true,
       duration: 250,
     }).start()
@@ -135,7 +135,9 @@ const AnimationSandbox = () => {
   })
 
   return (
-    <Animated.View style={{ backgroundColor: '#f1eff1' }}>
+    <Animated.View
+      style={{ backgroundColor: props.backgroundColor || '#f1eff1' }}
+    >
       <Animated.View
         pointerEvents='none'
         style={{
@@ -147,7 +149,7 @@ const AnimationSandbox = () => {
         }}
       >
         <Svg
-          height={40}
+          height={props.height || 40}
           width={width - 40}
           style={{ zIndex: 0, marginLeft: 20 }}
         >
@@ -188,27 +190,26 @@ const AnimationSandbox = () => {
 
       <TextInput
         selectionColor={'#7dd3fc'}
-        value={text}
-        onChangeText={(input) => setText(input)}
+        value={textInput}
+        onChangeText={(input) => setTextInput(input)}
         style={{
           paddingLeft: 10,
-          fontSize: 16,
+          fontSize: props.fontSize || 16,
           margin: 20,
           borderWidth: 2,
-          borderStartWidth: 1,
           borderColor: '#0369a1',
-          height: 40,
+          height: props.height || 40,
         }}
         onFocus={movePlaceHolder}
         onBlur={movePlaceHolderBack}
-      ></TextInput>
+      />
       <Animated.View
         pointerEvents='none'
         style={{
           zIndex: 3,
           position: 'absolute',
           margin: 25,
-          backgroundColor: '#f1eff1',
+          backgroundColor: props.backgroundColor || '#f1eff1',
 
           transform: [
             { translateY: translationPlaceHolder },
@@ -219,10 +220,10 @@ const AnimationSandbox = () => {
       >
         <Animated.Text
           style={{
-            textAlign: 'center',
-            marginVertical: 5,
-            marginHorizontal: 5,
-            fontSize: 16,
+            backgroundColor: 'green',
+            textAlignVertical: 'center',
+            height: props.height - 10 || 30,
+            fontSize: props.fontSize || 16,
             color: color,
           }}
         >
@@ -236,4 +237,4 @@ const styles = StyleSheet.create({
   text: {},
 })
 
-export default AnimationSandbox
+export default AnimatedInput

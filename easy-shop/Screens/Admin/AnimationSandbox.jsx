@@ -1,7 +1,7 @@
-import { TextInput, StyleSheet, Animated, Dimensions } from 'react-native'
+import { TextInput, StyleSheet, Animated, Dimensions, View } from 'react-native'
 import React, { useState, useRef } from 'react'
 import Svg, { Line } from 'react-native-svg'
-
+import AnimatedInput from '../../Components/AnimatedInput'
 const { width } = Dimensions.get('window')
 
 const AnimationSandbox = () => {
@@ -135,101 +135,104 @@ const AnimationSandbox = () => {
   })
 
   return (
-    <Animated.View style={{ backgroundColor: '#f1eff1' }}>
-      <Animated.View
-        pointerEvents='none'
-        style={{
-          zIndex: 3,
-          marginTop: 20,
-          height: '100%',
-          width: '100%',
-          position: 'absolute',
-        }}
-      >
-        <Svg
-          height={40}
-          width={width - 40}
-          style={{ zIndex: 0, marginLeft: 20 }}
-        >
-          <AnimatedLineTopFocus
-            x1='0%'
-            y1='0%'
-            x2={topBorder}
-            y2='0%'
-            stroke='#7dd3fc'
-            strokeWidth='4'
-          />
-          <AnimatedLineRightFocus
-            x1='100%'
-            y1='0%'
-            x2='100%'
-            y2={rightBorder}
-            stroke='#7dd3fc'
-            strokeWidth='4'
-          />
-          <AnimatedLineBottomFocus
-            x1='100%'
-            y1='100%'
-            x2={bottomBorder}
-            y2='100%'
-            stroke='#7dd3fc'
-            strokeWidth='4'
-          />
-          <AnimatedLineLeftFocus
-            x1='0%'
-            y1='100%'
-            x2='0%'
-            y2={leftBorder}
-            stroke='#7dd3fc'
-            strokeWidth='4'
-          />
-        </Svg>
-      </Animated.View>
-
-      <TextInput
-        selectionColor={'#7dd3fc'}
-        value={text}
-        onChangeText={(input) => setText(input)}
-        style={{
-          paddingLeft: 10,
-          fontSize: 16,
-          margin: 20,
-          borderWidth: 2,
-          borderStartWidth: 1,
-          borderColor: '#0369a1',
-          height: 40,
-        }}
-        onFocus={movePlaceHolder}
-        onBlur={movePlaceHolderBack}
-      ></TextInput>
-      <Animated.View
-        pointerEvents='none'
-        style={{
-          zIndex: 3,
-          position: 'absolute',
-          margin: 25,
-          backgroundColor: '#f1eff1',
-
-          transform: [
-            { translateY: translationPlaceHolder },
-            { scale: translationPlaceHolderSize },
-            { translateX: translationPlaceHolderMargin },
-          ],
-        }}
-      >
-        <Animated.Text
+    <View style={{ backgroundColor: 'blue' }}>
+      <Animated.View style={{ backgroundColor: '#f1eff1' }}>
+        <Animated.View
+          pointerEvents='none'
           style={{
-            textAlign: 'center',
-            marginVertical: 5,
-            marginHorizontal: 5,
-            fontSize: 16,
-            color: color,
+            zIndex: 3,
+            marginTop: 20,
+            height: '100%',
+            width: '100%',
+            position: 'absolute',
           }}
         >
-          PlaceHolder
-        </Animated.Text>
+          <Svg
+            height={40}
+            width={width - 40}
+            style={{ zIndex: 0, marginLeft: 20 }}
+          >
+            <AnimatedLineTopFocus
+              x1='0%'
+              y1='0%'
+              x2={topBorder}
+              y2='0%'
+              stroke='#7dd3fc'
+              strokeWidth='4'
+            />
+            <AnimatedLineRightFocus
+              x1='100%'
+              y1='0%'
+              x2='100%'
+              y2={rightBorder}
+              stroke='#7dd3fc'
+              strokeWidth='4'
+            />
+            <AnimatedLineBottomFocus
+              x1='100%'
+              y1='100%'
+              x2={bottomBorder}
+              y2='100%'
+              stroke='#7dd3fc'
+              strokeWidth='4'
+            />
+            <AnimatedLineLeftFocus
+              x1='0%'
+              y1='100%'
+              x2='0%'
+              y2={leftBorder}
+              stroke='#7dd3fc'
+              strokeWidth='4'
+            />
+          </Svg>
+        </Animated.View>
+
+        <TextInput
+          selectionColor={'#7dd3fc'}
+          value={text}
+          onChangeText={(input) => setText(input)}
+          style={{
+            paddingLeft: 10,
+            fontSize: 16,
+            margin: 20,
+            borderWidth: 2,
+            borderStartWidth: 1,
+            borderColor: '#0369a1',
+            height: 40,
+          }}
+          onFocus={movePlaceHolder}
+          onBlur={movePlaceHolderBack}
+        ></TextInput>
+        <Animated.View
+          pointerEvents='none'
+          style={{
+            zIndex: 3,
+            position: 'absolute',
+            margin: 25,
+            backgroundColor: '#f1eff1',
+
+            transform: [
+              { translateY: translationPlaceHolder },
+              { scale: translationPlaceHolderSize },
+              { translateX: translationPlaceHolderMargin },
+            ],
+          }}
+        >
+          <Animated.Text
+            style={{
+              textAlign: 'center',
+              marginVertical: 5,
+              marginHorizontal: 5,
+              fontSize: 16,
+              color: color,
+            }}
+          >
+            PlaceHolder
+          </Animated.Text>
+        </Animated.View>
+        <AnimatedInput backgroundColor='purple' height={60} fontSize={24} />
       </Animated.View>
-    </Animated.View>
+    </View>
   )
 }
 const styles = StyleSheet.create({
