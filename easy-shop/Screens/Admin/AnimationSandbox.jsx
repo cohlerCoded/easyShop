@@ -230,7 +230,7 @@ const AnimationSandbox = () => {
             PlaceHolder
           </Animated.Text>
         </Animated.View>
-        <AnimatedInput backgroundColor='purple' height={60} fontSize={24} />
+        <AnimatedInput backgroundColor='purple' fontSize={16} borderWidth={2} />
       </Animated.View>
     </View>
   )

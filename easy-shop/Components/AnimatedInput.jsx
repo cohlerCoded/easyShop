@@ -5,6 +5,7 @@ import Svg, { Line } from 'react-native-svg'
 const { width } = Dimensions.get('window')
 
 const AnimatedInput = (props) => {
+  const height = props.fontSize * 1.9
   const [textInput, setTextInput] = useState('')
 
   const AnimatedLineTopFocus = Animated.createAnimatedComponent(Line)
@@ -24,7 +25,7 @@ const AnimatedInput = (props) => {
 
   const movePlaceHolder = () => {
     Animated.timing(translationPlaceHolder, {
-      toValue: props.height / -2 || -20,
+      toValue: height / -1.5 || -20,
       useNativeDriver: true,
       duration: 250,
     }).start()
@@ -69,17 +70,17 @@ const AnimatedInput = (props) => {
 
   const movePlaceHolderBack = () => {
     Animated.timing(translationPlaceHolder, {
-      toValue: !textInput.length ? 0 : -20,
+      toValue: textInput.length < 1 ? 0 : height / -1.5 || -20,
       useNativeDriver: true,
       duration: 250,
     }).start()
     Animated.timing(translationPlaceHolderSize, {
-      toValue: !textInput.length ? 1 : 0.75,
+      toValue: textInput.length < 1 ? 1 : 0.75,
       useNativeDriver: true,
       duration: 250,
     }).start()
     Animated.timing(translationPlaceHolderMargin, {
-      toValue: !textInput.length ? 0 : -15,
+      toValue: textInput.length < 1 ? 0 : -15,
       useNativeDriver: true,
       duration: 250,
     }).start()
@@ -133,7 +134,7 @@ const AnimatedInput = (props) => {
     inputRange: [0, 1],
     outputRange: ['100%', '0%'],
   })
-
+  console.log(textInput.length)
   return (
     <Animated.View
       style={{ backgroundColor: props.backgroundColor || '#f1eff1' }}
@@ -142,14 +143,14 @@ const AnimatedInput = (props) => {
         pointerEvents='none'
         style={{
           zIndex: 3,
-          marginTop: 20,
+          marginTop: height / 2 || 20,
           height: '100%',
           width: '100%',
           position: 'absolute',
         }}
       >
         <Svg
-          height={props.height || 40}
+          height={height || 40}
           width={width - 40}
           style={{ zIndex: 0, marginLeft: 20 }}
         >
@@ -193,12 +194,13 @@ const AnimatedInput = (props) => {
         value={textInput}
         onChangeText={(input) => setTextInput(input)}
         style={{
-          paddingLeft: 10,
+          paddingLeft: props.fontSize / 2,
           fontSize: props.fontSize || 16,
-          margin: 20,
-          borderWidth: 2,
+          marginVertical: height / 2 || 20,
+          marginHorizontal: props.fontSize,
+          borderWidth: props.borderWidth || 2,
           borderColor: '#0369a1',
-          height: props.height || 40,
+          height: height * 1.35 || 40,
         }}
         onFocus={movePlaceHolder}
         onBlur={movePlaceHolderBack}
@@ -207,10 +209,14 @@ const AnimatedInput = (props) => {
         pointerEvents='none'
         style={{
           zIndex: 3,
+          height: height * 1.35 - props.borderWidth * 2,
           position: 'absolute',
-          margin: 25,
+          marginLeft: props.fontSize * 1.5,
+          marginVertical: height / 2 + props.borderWidth || 20,
           backgroundColor: props.backgroundColor || '#f1eff1',
+          backgroundColor: 'rgba(0,0,0,0)',
 
+          justifyContent: 'center',
           transform: [
             { translateY: translationPlaceHolder },
             { scale: translationPlaceHolderSize },
@@ -220,9 +226,9 @@ const AnimatedInput = (props) => {
       >
         <Animated.Text
           style={{
-            backgroundColor: 'green',
-            textAlignVertical: 'center',
-            height: props.height - 10 || 30,
+            // backgroundColor: 'green',
+            paddingHorizontal: props.fontSize / 4,
+            backgroundColor: props.backgroundColor,
             fontSize: props.fontSize || 16,
             color: color,
           }}
