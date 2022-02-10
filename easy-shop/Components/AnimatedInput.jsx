@@ -115,7 +115,10 @@ const AnimatedInput = (props) => {
 
   const color = translationPlaceHolderColor.interpolate({
     inputRange: [0, 1],
-    outputRange: ['rgb(125, 211, 252)', 'rgb(3, 105, 161)'],
+    outputRange: [
+      props.placeHolderColor || 'rgb(125, 211, 252)',
+      props.borderColor || 'rgb(3, 105, 161)',
+    ],
   })
 
   const topBorder = topBorderLine.interpolate({
@@ -150,7 +153,7 @@ const AnimatedInput = (props) => {
         }}
       >
         <Svg
-          height={height || 40}
+          height={height * 1.35 + props.borderWidth || 40}
           width={width - 40}
           style={{ zIndex: 0, marginLeft: 20 }}
         >
@@ -159,47 +162,47 @@ const AnimatedInput = (props) => {
             y1='0%'
             x2={topBorder}
             y2='0%'
-            stroke='#7dd3fc'
-            strokeWidth='4'
+            stroke={props.placeHolderColor || '#7dd3fc'}
+            strokeWidth={props.borderWidth * 4}
           />
           <AnimatedLineRightFocus
             x1='100%'
             y1='0%'
             x2='100%'
             y2={rightBorder}
-            stroke='#7dd3fc'
-            strokeWidth='4'
+            stroke={props.placeHolderColor || '#7dd3fc'}
+            strokeWidth={props.borderWidth * 4}
           />
           <AnimatedLineBottomFocus
             x1='100%'
             y1='100%'
             x2={bottomBorder}
             y2='100%'
-            stroke='#7dd3fc'
-            strokeWidth='4'
+            stroke={props.placeHolderColor || '#7dd3fc'}
+            strokeWidth={props.borderWidth * 4}
           />
           <AnimatedLineLeftFocus
             x1='0%'
             y1='100%'
             x2='0%'
             y2={leftBorder}
-            stroke='#7dd3fc'
-            strokeWidth='4'
+            stroke={props.placeHolderColor || '#7dd3fc'}
+            strokeWidth={props.borderWidth * 4}
           />
         </Svg>
       </Animated.View>
 
       <TextInput
-        selectionColor={'#7dd3fc'}
+        selectionColor={props.placeHolderColor || '#7dd3fc'}
         value={textInput}
         onChangeText={(input) => setTextInput(input)}
         style={{
-          paddingHorizontal: props.fontSize / 4,
+          paddingHorizontal: props.fontSize / 2,
           fontSize: props.fontSize || 16,
           marginVertical: height / 2 || 20,
           marginHorizontal: 20,
           borderWidth: props.borderWidth || 2,
-          borderColor: '#0369a1',
+          borderColor: props.borderColor || '#0369a1',
           height: height * 1.35 || 40,
         }}
         onFocus={movePlaceHolder}
@@ -211,9 +214,8 @@ const AnimatedInput = (props) => {
           zIndex: 3,
           height: height * 1.35 - props.borderWidth * 2,
           position: 'absolute',
-          marginLeft: props.fontSize * 1.5,
+          marginLeft: 30,
           marginVertical: height / 2 + props.borderWidth || 20,
-          backgroundColor: props.backgroundColor || '#f1eff1',
           backgroundColor: 'rgba(0,0,0,0)',
 
           justifyContent: 'center',
@@ -226,9 +228,9 @@ const AnimatedInput = (props) => {
       >
         <Animated.Text
           style={{
-            // backgroundColor: 'green',
             paddingHorizontal: props.fontSize / 4,
-            backgroundColor: props.backgroundColor,
+            backgroundColor: props.backgroundColor || '#f1eff1',
+            // backgroundColor: 'green',
             fontSize: props.fontSize || 16,
             color: color,
           }}

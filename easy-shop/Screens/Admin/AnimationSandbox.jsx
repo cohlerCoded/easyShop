@@ -240,58 +240,65 @@ const AnimationSandbox = () => {
           </Animated.Text>
         </Animated.View>
 
-        <ScrollView style={{ marginBottom: 120 }}>
-          <KeyboardAvoidingView
-            behavior='padding'
-            keyboardVerticalOffset={Platform.select({
-              ios: () => 0,
-              android: () => -30,
-            })()}
-          >
-            <AnimatedInput
-              backgroundColor='purple'
-              fontSize={12}
-              borderWidth={2}
-              placeHolder={'fontsize12'}
-            />
-            <AnimatedInput
-              backgroundColor='purple'
-              fontSize={16}
-              borderWidth={2}
-              placeHolder={'fontsize16'}
-            />
-            <AnimatedInput
-              backgroundColor='purple'
-              fontSize={20}
-              borderWidth={2}
-              placeHolder={'fontsize20'}
-            />
-            <AnimatedInput
-              backgroundColor='purple'
-              fontSize={24}
-              borderWidth={2}
-              placeHolder={'fontsize24'}
-            />
-            <AnimatedInput
-              backgroundColor='purple'
-              fontSize={30}
-              borderWidth={2}
-              placeHolder={'fontsize30'}
-            />
-            <AnimatedInput
-              backgroundColor='purple'
-              fontSize={36}
-              borderWidth={2}
-              placeHolder={'fontsize36'}
-            />
-            <AnimatedInput
-              backgroundColor='purple'
-              fontSize={40}
-              borderWidth={2}
-              placeHolder={'fontsize40'}
-            />
-          </KeyboardAvoidingView>
-        </ScrollView>
+        <KeyboardAvoidingView
+          behavior='height'
+          keyboardVerticalOffset={Platform.select({
+            ios: () => 0,
+            android: () => -110,
+          })()}
+        >
+          <View style={{ marginBottom: 240 }}>
+            <ScrollView>
+              <AnimatedInput
+                backgroundColor='purple'
+                borderColor='red'
+                placeHolderColor='pink'
+                fontSize={12}
+                borderWidth={2}
+                placeHolder={'fontsize12'}
+              />
+              <AnimatedInput
+                fontSize={16}
+                borderWidth={2}
+                placeHolder={'fontsize16'}
+              />
+              <AnimatedInput
+                backgroundColor='rgb(0,25,0)'
+                borderColor='rgb(34,139,34)'
+                placeHolderColor='lightgreen'
+                fontSize={20}
+                borderWidth={2}
+                placeHolder={'fontsize20'}
+              />
+              <AnimatedInput
+                backgroundColor='rgb(10,25,80)'
+                borderColor='rgb(50,60,47)'
+                placeHolderColor='ivory'
+                fontSize={24}
+                borderWidth={4}
+                placeHolder={'fontsize24'}
+              />
+              <AnimatedInput
+                backgroundColor='purple'
+                fontSize={30}
+                borderWidth={2}
+                placeHolder={'fontsize30'}
+              />
+              <AnimatedInput
+                backgroundColor='purple'
+                fontSize={36}
+                borderWidth={2}
+                placeHolder={'fontsize36'}
+              />
+              <AnimatedInput
+                backgroundColor='purple'
+                fontSize={40}
+                borderWidth={2}
+                placeHolder={'fontsize40'}
+              />
+            </ScrollView>
+          </View>
+        </KeyboardAvoidingView>
       </Animated.View>
     </View>
   )
