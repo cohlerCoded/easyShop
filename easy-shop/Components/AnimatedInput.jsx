@@ -194,10 +194,10 @@ const AnimatedInput = (props) => {
         value={textInput}
         onChangeText={(input) => setTextInput(input)}
         style={{
-          paddingLeft: props.fontSize / 2,
+          paddingHorizontal: props.fontSize / 4,
           fontSize: props.fontSize || 16,
           marginVertical: height / 2 || 20,
-          marginHorizontal: props.fontSize,
+          marginHorizontal: 20,
           borderWidth: props.borderWidth || 2,
           borderColor: '#0369a1',
           height: height * 1.35 || 40,
@@ -233,7 +233,7 @@ const AnimatedInput = (props) => {
             color: color,
           }}
         >
-          PlaceHolder
+          {props.placeHolder}
         </Animated.Text>
       </Animated.View>
     </Animated.View>

@@ -1,4 +1,13 @@
-import { TextInput, StyleSheet, Animated, Dimensions, View } from 'react-native'
+import {
+  TextInput,
+  StyleSheet,
+  Animated,
+  Dimensions,
+  View,
+  ScrollView,
+  KeyboardAvoidingView,
+  Platform,
+} from 'react-native'
 import React, { useState, useRef } from 'react'
 import Svg, { Line } from 'react-native-svg'
 import AnimatedInput from '../../Components/AnimatedInput'
@@ -230,7 +239,59 @@ const AnimationSandbox = () => {
             PlaceHolder
           </Animated.Text>
         </Animated.View>
-        <AnimatedInput backgroundColor='purple' fontSize={16} borderWidth={2} />
+
+        <ScrollView style={{ marginBottom: 120 }}>
+          <KeyboardAvoidingView
+            behavior='padding'
+            keyboardVerticalOffset={Platform.select({
+              ios: () => 0,
+              android: () => -30,
+            })()}
+          >
+            <AnimatedInput
+              backgroundColor='purple'
+              fontSize={12}
+              borderWidth={2}
+              placeHolder={'fontsize12'}
+            />
+            <AnimatedInput
+              backgroundColor='purple'
+              fontSize={16}
+              borderWidth={2}
+              placeHolder={'fontsize16'}
+            />
+            <AnimatedInput
+              backgroundColor='purple'
+              fontSize={20}
+              borderWidth={2}
+              placeHolder={'fontsize20'}
+            />
+            <AnimatedInput
+              backgroundColor='purple'
+              fontSize={24}
+              borderWidth={2}
+              placeHolder={'fontsize24'}
+            />
+            <AnimatedInput
+              backgroundColor='purple'
+              fontSize={30}
+              borderWidth={2}
+              placeHolder={'fontsize30'}
+            />
+            <AnimatedInput
+              backgroundColor='purple'
+              fontSize={36}
+              borderWidth={2}
+              placeHolder={'fontsize36'}
+            />
+            <AnimatedInput
+              backgroundColor='purple'
+              fontSize={40}
+              borderWidth={2}
+              placeHolder={'fontsize40'}
+            />
+          </KeyboardAvoidingView>
+        </ScrollView>
       </Animated.View>
     </View>
   )
