@@ -193,6 +193,15 @@ const AnimatedInput = (props) => {
       </Animated.View>
 
       <TextInput
+        placeholder={null}
+        name={props.name}
+        id={props.id}
+        value={props.value}
+        autoCorrect={props.autoCorrect}
+        onChangeText={props.onChangeText}
+        onFocus={props.onFocus}
+        secureTextEntry={props.secureTextEntry}
+        keyboardType={props.keyboardType}
         selectionColor={props.placeHolderColor || '#7dd3fc'}
         value={textInput}
         onChangeText={(input) => setTextInput(input)}
