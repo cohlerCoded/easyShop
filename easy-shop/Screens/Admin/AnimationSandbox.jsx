@@ -11,6 +11,7 @@ import {
 import React, { useState, useRef } from 'react'
 import Svg, { Line } from 'react-native-svg'
 import AnimatedInput from '../../Components/AnimatedInput'
+// import { propsFlattener } from 'native-base/lib/typescript/hooks/useThemeProps/propsFlattener'
 const { width } = Dimensions.get('window')
 
 const AnimationSandbox = () => {
@@ -279,15 +280,20 @@ const AnimationSandbox = () => {
                 placeHolder={'fontsize24'}
               />
               <AnimatedInput
-                backgroundColor='purple'
+                backgroundColor='orange'
+                borderColor='brown'
+                placeHolderColor='tan'
+                textInputColor='green'
                 fontSize={30}
-                borderWidth={2}
+                borderWidth={6}
                 placeHolder={'fontsize30'}
               />
               <AnimatedInput
-                backgroundColor='purple'
+                backgroundColor='rgb(104,71,141)'
+                borderColor='gold'
+                placeHolderColor='yellow'
                 fontSize={36}
-                borderWidth={2}
+                borderWidth={6}
                 placeHolder={'fontsize36'}
               />
               <AnimatedInput
@@ -295,6 +301,7 @@ const AnimationSandbox = () => {
                 fontSize={40}
                 borderWidth={2}
                 placeHolder={'fontsize40'}
+                textInputStyles={{ borderRadius: 60 }}
               />
             </ScrollView>
           </View>

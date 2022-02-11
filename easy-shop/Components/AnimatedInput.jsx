@@ -197,6 +197,7 @@ const AnimatedInput = (props) => {
         value={textInput}
         onChangeText={(input) => setTextInput(input)}
         style={{
+          color: props.textInputColor || props.placeHolderColor,
           paddingHorizontal: props.fontSize / 2,
           fontSize: props.fontSize || 16,
           marginVertical: height / 2 || 20,
@@ -204,6 +205,7 @@ const AnimatedInput = (props) => {
           borderWidth: props.borderWidth || 2,
           borderColor: props.borderColor || '#0369a1',
           height: height * 1.35 || 40,
+          ...props.textInputStyles,
         }}
         onFocus={movePlaceHolder}
         onBlur={movePlaceHolderBack}
