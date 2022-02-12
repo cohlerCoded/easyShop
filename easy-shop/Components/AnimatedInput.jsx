@@ -158,7 +158,7 @@ const AnimatedInput = (props) => {
         <Svg
           height={height * 1.35 + props.borderWidth || 40}
           width='90%'
-          // style={{ /*zIndex: 0,*/ marginLeft: 20 }}
+          style={{ marginLeft: '5%' }}
         >
           <AnimatedLineTopFocus
             x1='0%'
@@ -214,7 +214,7 @@ const AnimatedInput = (props) => {
           paddingHorizontal: props.fontSize / 2,
           fontSize: props.fontSize || 16,
           marginVertical: height / 2 || 20,
-          // marginHorizontal: 20,
+          marginHorizontal: '5%',
           borderWidth: props.borderWidth || 2,
           borderColor: props.borderColor || '#0369a1',
           height: height * 1.35 || 40,
@@ -229,7 +229,7 @@ const AnimatedInput = (props) => {
           zIndex: 3,
           height: height * 1.35 - props.borderWidth * 2,
           position: 'absolute',
-          marginLeft: 10,
+          marginLeft: '10%',
           marginVertical: height / 2 + props.borderWidth || 20,
           backgroundColor: 'rgba(0,0,0,0)',
 
@@ -243,7 +243,7 @@ const AnimatedInput = (props) => {
       >
         <Animated.Text
           style={{
-            paddingHorizontal: props.fontSize / 4,
+            textAlign: 'center',
             backgroundColor: props.backgroundColor || '#f1eff1',
             // backgroundColor: 'green',
             fontSize: props.fontSize || 16,
