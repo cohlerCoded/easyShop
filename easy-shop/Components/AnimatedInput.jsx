@@ -123,7 +123,7 @@ const AnimatedInput = (props) => {
 
   const topBorder = topBorderLine.interpolate({
     inputRange: [0, 1],
-    outputRange: [0, width - 20],
+    outputRange: ['0%', '100%'],
   })
   const rightBorder = rightBorderLine.interpolate({
     inputRange: [0, 1],
@@ -140,7 +140,10 @@ const AnimatedInput = (props) => {
   console.log(textInput.length)
   return (
     <Animated.View
-      style={{ backgroundColor: props.backgroundColor || '#f1eff1' }}
+      style={{
+        backgroundColor: props.backgroundColor || '#f1eff1',
+        width: '100%',
+      }}
     >
       <Animated.View
         pointerEvents='none'
@@ -154,8 +157,8 @@ const AnimatedInput = (props) => {
       >
         <Svg
           height={height * 1.35 + props.borderWidth || 40}
-          width={width - 40}
-          style={{ zIndex: 0, marginLeft: 20 }}
+          width='90%'
+          // style={{ /*zIndex: 0,*/ marginLeft: 20 }}
         >
           <AnimatedLineTopFocus
             x1='0%'
@@ -206,11 +209,12 @@ const AnimatedInput = (props) => {
         value={textInput}
         onChangeText={(input) => setTextInput(input)}
         style={{
+          width: '90%',
           color: props.textInputColor || props.placeHolderColor,
           paddingHorizontal: props.fontSize / 2,
           fontSize: props.fontSize || 16,
           marginVertical: height / 2 || 20,
-          marginHorizontal: 20,
+          // marginHorizontal: 20,
           borderWidth: props.borderWidth || 2,
           borderColor: props.borderColor || '#0369a1',
           height: height * 1.35 || 40,
@@ -225,7 +229,7 @@ const AnimatedInput = (props) => {
           zIndex: 3,
           height: height * 1.35 - props.borderWidth * 2,
           position: 'absolute',
-          marginLeft: 30,
+          marginLeft: 10,
           marginVertical: height / 2 + props.borderWidth || 20,
           backgroundColor: 'rgba(0,0,0,0)',
 
