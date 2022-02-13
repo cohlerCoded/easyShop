@@ -5,6 +5,7 @@ import Svg, { Line } from 'react-native-svg'
 const { width } = Dimensions.get('window')
 
 const AnimatedInput = (props) => {
+  const inputWidth = props.width ? props.width : width
   const height = props.fontSize * 1.9
   const [textInput, setTextInput] = useState('')
 
@@ -157,8 +158,18 @@ const AnimatedInput = (props) => {
       >
         <Svg
           height={height * 1.35 + props.borderWidth || 40}
-          width='90%'
-          style={{ marginLeft: '5%' }}
+          width={
+            props.marginLeft || props.marginRight
+              ? inputWidth - props.marginLeft || props.marginRight
+              : props.marginHorizontal
+              ? inputWidth - props.marginHorizontal * 2
+              : inputWidth
+          }
+          style={{
+            marginHorizontal: props.marginHorizontal,
+            marginLeft: props.marginLeft,
+            marginRight: props.marginRight,
+          }}
         >
           <AnimatedLineTopFocus
             x1='0%'
@@ -209,16 +220,22 @@ const AnimatedInput = (props) => {
         value={textInput}
         onChangeText={(input) => setTextInput(input)}
         style={{
-          width: '90%',
           color: props.textInputColor || props.placeHolderColor,
           paddingHorizontal: props.fontSize / 2,
           fontSize: props.fontSize || 16,
           marginVertical: height / 2 || 20,
-          marginHorizontal: '5%',
           borderWidth: props.borderWidth || 2,
           borderColor: props.borderColor || '#0369a1',
           height: height * 1.35 || 40,
-          ...props.textInputStyles,
+          width:
+            props.marginLeft || props.marginRight
+              ? inputWidth - props.marginLeft || props.marginRight
+              : props.marginHorizontal
+              ? inputWidth - props.marginHorizontal * 2
+              : inputWidth,
+          marginHorizontal: props.marginHorizontal,
+          marginLeft: props.marginLeft,
+          marginRight: props.marginRight,
         }}
         onFocus={movePlaceHolder}
         onBlur={movePlaceHolderBack}
