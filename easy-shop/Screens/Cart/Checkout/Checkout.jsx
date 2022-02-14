@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux'
 import AnimatedInput from '../../../Components/AnimatedInput'
 import FormContainer from '../../../Components/FormContainer'
 import { Picker } from '@react-native-picker/picker'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 const width = Dimensions.get('window')
 
@@ -80,87 +81,94 @@ const Checkout = ({ navigation }) => {
       >
         &#x1F4E6; Checkout &#x1F4E6;
       </Text>
-      <VStack
-        alignItems='center'
-        style={{
-          flexDirection: 'row',
-          backgroundColor: 'green',
-          width: '100%',
-          marginLeft: 15,
-        }}
+      <KeyboardAwareScrollView
+        enableOnAndroid={true}
+        viewIsInsideTabBar={true}
+        extraHeight
       >
-        <HStack width='50%' alignItems='center'>
-          <AnimatedInput
-            width='90%'
-            fontSize={16}
-            borderWidth={2}
-            placeHolder={'First Name'}
-          />
-        </HStack>
-        <HStack width='50%'>
-          <AnimatedInput
-            width='90%'
-            fontSize={16}
-            borderWidth={2}
-            placeHolder={'Last Name'}
-          />
-        </HStack>
-      </VStack>
+        <VStack
+          alignItems='center'
+          marginHorizontal={5}
+          style={{
+            flexDirection: 'row',
+            backgroundColor: 'green',
+            width: '100%',
+          }}
+        >
+          <HStack width='50%' alignItems='center'>
+            <AnimatedInput
+              width='90%'
+              fontSize={16}
+              borderWidth={2}
+              placeHolder={'First Name'}
+            />
+          </HStack>
+          <HStack width='50%' alignItems='center'>
+            <AnimatedInput
+              width='90%'
+              fontSize={16}
+              borderWidth={2}
+              placeHolder={'Last Name'}
+            />
+          </HStack>
+        </VStack>
 
-      <AnimatedInput
-        fontSize={16}
-        borderWidth={2}
-        placeHolder={'Address 1'}
-        marginHorizontal={10}
-      />
-
-      <VStack width='100%'>
         <AnimatedInput
           fontSize={16}
           borderWidth={2}
-          placeHolder={'Address 2'}
-          marginHorizontal={10}
+          placeHolder={'Address 1'}
+          marginHorizontal={5}
         />
-      </VStack>
-      <VStack
-        alignItems='center'
-        style={{
-          flexDirection: 'row',
-          width: '100%',
-        }}
-      >
-        <HStack width='50%' marginHorizontal={10}>
+
+        <VStack width='100%'>
           <AnimatedInput
-            width='90%'
             fontSize={16}
             borderWidth={2}
-            placeHolder={'City'}
+            placeHolder={'Address 2'}
+            marginHorizontal={5}
           />
-        </HStack>
-        <HStack width='50%'>
-          <Select
-            borderColor='#0369a1'
-            borderRadius={0}
-            borderWidth={2}
-            marginTop={-1}
-            height={10}
-            selectedValue={service}
-            minWidth='150'
-            accessibilityLabel='State'
-            placeholder='Choose State'
-            _selectedItem={{
-              bg: 'teal.600',
-              endIcon: <CheckIcon size='5' />,
-            }}
-            mt={1}
-            onValueChange={(itemValue) => setService(itemValue)}
-          >
-            {state.map((state) => (
-              <Select.Item label={state} value={state} />
-            ))}
-          </Select>
-        </HStack>
-      </VStack>
+        </VStack>
+        <VStack
+          alignItems='center'
+          style={{
+            flexDirection: 'row',
+            width: '100%',
+            marginHorizontal: 5,
+          }}
+        >
+          <HStack width='50%'>
+            <AnimatedInput
+              width='90%'
+              fontSize={16}
+              borderWidth={2}
+              placeHolder={'City'}
+            />
+          </HStack>
+          <HStack width='50%'>
+            <Select
+              width='90%'
+              borderColor='#0369a1'
+              borderRadius={0}
+              borderWidth={2}
+              height={10}
+              selectedValue={service}
+              minWidth='150'
+              accessibilityLabel='State'
+              placeholder='Choose State'
+              _selectedItem={{
+                bg: 'teal.600',
+                endIcon: <CheckIcon size='5' />,
+              }}
+              mt={-0.5}
+              onValueChange={(itemValue) => setService(itemValue)}
+            >
+              {state.map((state) => (
+                <Select.Item label={state} value={state} />
+              ))}
+            </Select>
+          </HStack>
+        </VStack>
+      </KeyboardAwareScrollView>
     </FormContainer>
   )
 }

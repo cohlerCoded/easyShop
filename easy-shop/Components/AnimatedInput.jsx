@@ -157,7 +157,7 @@ const AnimatedInput = (props) => {
         }}
       >
         <Svg
-          height={height * 1.35 + props.borderWidth || 40}
+          height={height * 1.3 + props.borderWidth || 40}
           width={
             props.marginLeft || props.marginRight
               ? inputWidth - props.marginLeft || props.marginRight
@@ -226,7 +226,7 @@ const AnimatedInput = (props) => {
           marginVertical: height / 2 || 20,
           borderWidth: props.borderWidth || 2,
           borderColor: props.borderColor || '#0369a1',
-          height: height * 1.35 || 40,
+          height: height * 1.3 || 40,
           width:
             props.marginLeft || props.marginRight
               ? inputWidth - props.marginLeft || props.marginRight
@@ -244,7 +244,7 @@ const AnimatedInput = (props) => {
         pointerEvents='none'
         style={{
           zIndex: 3,
-          height: height * 1.35 - props.borderWidth * 2,
+          height: height * 1.3 - props.borderWidth * 2,
           position: 'absolute',
           marginLeft: '10%',
           marginVertical: height / 2 + props.borderWidth || 20,
