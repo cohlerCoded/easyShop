@@ -84,28 +84,28 @@ const Checkout = ({ navigation }) => {
       <KeyboardAwareScrollView
         enableOnAndroid={true}
         viewIsInsideTabBar={true}
-        extraHeight
+        extraHeight={200}
       >
         <VStack
-          alignItems='center'
-          marginHorizontal={5}
           style={{
             flexDirection: 'row',
+            justifyContent: 'center',
+            marginHorizontal: 5,
             backgroundColor: 'green',
             width: '100%',
           }}
         >
-          <HStack width='50%' alignItems='center'>
+          <HStack width='50%'>
             <AnimatedInput
-              width='90%'
+              width='46%'
               fontSize={16}
               borderWidth={2}
               placeHolder={'First Name'}
             />
           </HStack>
-          <HStack width='50%' alignItems='center'>
+          <HStack width='50%'>
             <AnimatedInput
-              width='90%'
+              width='46%'
               fontSize={16}
               borderWidth={2}
               placeHolder={'Last Name'}
@@ -120,14 +120,12 @@ const Checkout = ({ navigation }) => {
           marginHorizontal={5}
         />
 
-        <VStack width='100%'>
-          <AnimatedInput
-            fontSize={16}
-            borderWidth={2}
-            placeHolder={'Address 2'}
-            marginHorizontal={5}
-          />
-        </VStack>
+        <AnimatedInput
+          marginHorizontal={5}
+          fontSize={16}
+          borderWidth={2}
+          placeHolder={'Address 2'}
+        />
         <VStack
           alignItems='center'
           style={{
@@ -138,7 +136,7 @@ const Checkout = ({ navigation }) => {
         >
           <HStack width='50%'>
             <AnimatedInput
-              width='90%'
+              width='46%'
               fontSize={16}
               borderWidth={2}
               placeHolder={'City'}
@@ -152,7 +150,6 @@ const Checkout = ({ navigation }) => {
               borderWidth={2}
               height={10}
               selectedValue={service}
-              minWidth='150'
               accessibilityLabel='State'
               placeholder='Choose State'
               _selectedItem={{

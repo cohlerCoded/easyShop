@@ -5,7 +5,12 @@ import Svg, { Line } from 'react-native-svg'
 const { width } = Dimensions.get('window')
 
 const AnimatedInput = (props) => {
-  const inputWidth = props.width ? props.width : width
+  const inputWidth =
+    props.width && typeof props.width === 'string'
+      ? (width * parseInt(props.width)) / 100
+      : props.width
+      ? props.width
+      : width
   const height = props.fontSize * 1.9
   const [textInput, setTextInput] = useState('')
 
@@ -227,12 +232,13 @@ const AnimatedInput = (props) => {
           borderWidth: props.borderWidth || 2,
           borderColor: props.borderColor || '#0369a1',
           height: height * 1.3 || 40,
-          width:
-            props.marginLeft || props.marginRight
-              ? inputWidth - props.marginLeft || props.marginRight
-              : props.marginHorizontal
-              ? inputWidth - props.marginHorizontal * 2
-              : inputWidth,
+          width: props.marginLeft
+            ? inputWidth - props.marginLeft
+            : props.marginRight
+            ? inputWidth - props.marginRight
+            : props.marginHorizontal
+            ? inputWidth - props.marginHorizontal * 2
+            : inputWidth,
           marginHorizontal: props.marginHorizontal,
           marginLeft: props.marginLeft,
           marginRight: props.marginRight,
@@ -246,7 +252,7 @@ const AnimatedInput = (props) => {
           zIndex: 3,
           height: height * 1.3 - props.borderWidth * 2,
           position: 'absolute',
-          marginLeft: '10%',
+          marginLeft: props.fontSize,
           marginVertical: height / 2 + props.borderWidth || 20,
           backgroundColor: 'rgba(0,0,0,0)',
 
@@ -260,6 +266,7 @@ const AnimatedInput = (props) => {
       >
         <Animated.Text
           style={{
+            paddingHorizontal: props.fontSize / 4,
             textAlign: 'center',
             backgroundColor: props.backgroundColor || '#f1eff1',
             // backgroundColor: 'green',
