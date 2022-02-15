@@ -71,6 +71,10 @@ const Checkout = ({ navigation }) => {
   const cartItems = useSelector((state) => state.cartItems)
   const [state, setState] = useState('')
   const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
+  const [address1, setAddress1] = useState('')
+  const [address2, setAddress2] = useState('')
+  const [city, setCity] = useState('')
   useEffect(() => {
     setState('')
     setFirstName('')
@@ -120,6 +124,8 @@ const Checkout = ({ navigation }) => {
               fontSize={16}
               borderWidth={2}
               placeHolder={'Last Name'}
+              value={lastName}
+              onChangeText={(text) => setLastName(text)}
             />
           </HStack>
         </VStack>
@@ -129,6 +135,8 @@ const Checkout = ({ navigation }) => {
           borderWidth={2}
           placeHolder={'Address 1'}
           marginHorizontal={5}
+          value={address1}
+          onChangeText={(text) => setAddress1(text)}
         />
 
         <AnimatedInput
@@ -136,6 +144,8 @@ const Checkout = ({ navigation }) => {
           fontSize={16}
           borderWidth={2}
           placeHolder={'Address 2'}
+          value={address2}
+          onChangeText={(text) => setAddress2(text)}
         />
         <VStack
           alignItems='center'
@@ -151,6 +161,8 @@ const Checkout = ({ navigation }) => {
               fontSize={16}
               borderWidth={2}
               placeHolder={'City'}
+              value={city}
+              onChangeText={(text) => setCity(text)}
             />
           </HStack>
           <HStack width='50%'>
