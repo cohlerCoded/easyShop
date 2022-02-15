@@ -1,5 +1,5 @@
 import { HStack, VStack, Select, CheckIcon } from 'native-base'
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { Button, StyleSheet, Text, View, Dimensions } from 'react-native'
 import { useSelector } from 'react-redux'
 import AnimatedInput from '../../../Components/AnimatedInput'
@@ -9,7 +9,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 
 const width = Dimensions.get('window')
 
-const state = [
+const states = [
   'AK - Alaska',
   'AL - Alabama',
   'AR - Arkansas',
@@ -69,8 +69,17 @@ const state = [
 
 const Checkout = ({ navigation }) => {
   const cartItems = useSelector((state) => state.cartItems)
-  const [service, setService] = useState('')
-
+  const [state, setState] = useState('')
+  const [firstName, setFirstName] = useState('')
+  useEffect(() => {
+    setState('')
+    setFirstName('')
+    return () => {
+      setState('')
+      setFirstName('')
+    }
+  }, [])
+  console.log(firstName)
   return (
     <FormContainer>
       <Text
@@ -101,6 +110,8 @@ const Checkout = ({ navigation }) => {
               fontSize={16}
               borderWidth={2}
               placeHolder={'First Name'}
+              value={firstName}
+              onChangeText={(text) => setFirstName(text)}
             />
           </HStack>
           <HStack width='50%'>
@@ -149,7 +160,7 @@ const Checkout = ({ navigation }) => {
               borderRadius={0}
               borderWidth={2}
               height={10}
-              selectedValue={service}
+              selectedValue={state}
               accessibilityLabel='State'
               placeholder='Choose State'
               _selectedItem={{
@@ -157,10 +168,10 @@ const Checkout = ({ navigation }) => {
                 endIcon: <CheckIcon size='5' />,
               }}
               mt={-0.5}
-              onValueChange={(itemValue) => setService(itemValue)}
+              onValueChange={(itemValue) => setState(itemValue)}
             >
-              {state.map((state) => (
-                <Select.Item label={state} value={state} />
+              {states.map((state, i) => (
+                <Select.Item label={state} value={state} key={i} />
               ))}
             </Select>
           </HStack>

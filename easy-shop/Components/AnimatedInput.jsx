@@ -143,7 +143,7 @@ const AnimatedInput = (props) => {
     inputRange: [0, 1],
     outputRange: ['100%', '0%'],
   })
-  console.log(textInput.length)
+
   return (
     <Animated.View
       style={{
@@ -222,8 +222,6 @@ const AnimatedInput = (props) => {
         secureTextEntry={props.secureTextEntry}
         keyboardType={props.keyboardType}
         selectionColor={props.placeHolderColor || '#7dd3fc'}
-        value={textInput}
-        onChangeText={(input) => setTextInput(input)}
         style={{
           color: props.textInputColor || props.placeHolderColor,
           paddingHorizontal: props.fontSize / 2,
