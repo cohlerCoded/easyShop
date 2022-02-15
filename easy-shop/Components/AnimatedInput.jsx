@@ -165,10 +165,11 @@ const AnimatedInput = (props) => {
           height={height * 1.3 + props.borderWidth || 40}
           width={
             props.marginLeft || props.marginRight
-              ? inputWidth - props.marginLeft || props.marginRight
+              ? inputWidth + props.borderWidth - props.marginLeft ||
+                props.marginRight
               : props.marginHorizontal
-              ? inputWidth - props.marginHorizontal * 2
-              : inputWidth
+              ? inputWidth + props.borderWidth - props.marginHorizontal * 2
+              : inputWidth + props.borderWidth
           }
           style={{
             marginHorizontal: props.marginHorizontal,
