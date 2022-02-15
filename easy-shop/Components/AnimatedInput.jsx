@@ -76,17 +76,17 @@ const AnimatedInput = (props) => {
 
   const movePlaceHolderBack = () => {
     Animated.timing(translationPlaceHolder, {
-      toValue: textInput.length < 1 ? 0 : height / -1.5 || -20,
+      toValue: props.value.length < 1 ? 0 : height / -1.5 || -20,
       useNativeDriver: true,
       duration: 250,
     }).start()
     Animated.timing(translationPlaceHolderSize, {
-      toValue: textInput.length < 1 ? 1 : 0.75,
+      toValue: props.value.length < 1 ? 1 : 0.75,
       useNativeDriver: true,
       duration: 250,
     }).start()
     Animated.timing(translationPlaceHolderMargin, {
-      toValue: textInput.length < 1 ? 0 : -15,
+      toValue: props.value.length < 1 ? 0 : -15,
       useNativeDriver: true,
       duration: 250,
     }).start()
