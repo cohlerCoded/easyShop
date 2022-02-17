@@ -6,14 +6,12 @@ import {
   Text,
   View,
   Dimensions,
-  Touchable,
+  TouchableOpacity,
 } from 'react-native'
 import { useSelector } from 'react-redux'
 import AnimatedInput from '../../../Components/AnimatedInput'
 import FormContainer from '../../../Components/FormContainer'
-import { Picker } from '@react-native-picker/picker'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler'
 
 const { width } = Dimensions.get('window')
 
@@ -73,64 +71,6 @@ const states = [
   'WI - Wisconsin',
   'WV - West Virginia',
   'WY - Wyoming',
-]
-
-const statesAbbr = [
-  'AL',
-  'AK',
-  'AR',
-  'AS',
-  'AZ',
-  'CA',
-  'CO',
-  'CT',
-  'DC',
-  'DE',
-  'FL',
-  'GA',
-  'GU',
-  'HI',
-  'IA',
-  'ID',
-  'IL',
-  'IN',
-  'KS',
-  'KY',
-  'LA',
-  'MA',
-  'MD',
-  'ME',
-  'MI',
-  'MN',
-  'MO',
-  'MS',
-  'MT',
-  'NC',
-  'ND',
-  'NE',
-  'NH',
-  'NJ',
-  'NM',
-  'NV',
-  'NY',
-  'OH',
-  'OK',
-  'OR',
-  'PA',
-  'PR',
-  'RI',
-  'SC',
-  'SD',
-  'TN',
-  'TX',
-  'UT',
-  'VA',
-  'VI',
-  'VT',
-  'WA',
-  'WI',
-  'WV',
-  'WY',
 ]
 
 const Checkout = ({ navigation }) => {
@@ -233,10 +173,12 @@ const Checkout = ({ navigation }) => {
               onChangeText={(text) => setCity(text)}
             />
           </HStack>
-          <HStack width='25%' onTouchEndCapture={() => setSelectFocus(true)}>
+          <HStack width='25%'>
             <Select
-              marginLeft={-2.5}
-              width='100%'
+              onOpen={() => setTimeout(() => setSelectFocus(true), 170)}
+              onClose={() => setSelectFocus(false)}
+              marginLeft={-0.5}
+              width='80%'
               borderColor='#0369a1'
               borderRadius={0}
               borderWidth={2}
@@ -250,14 +192,13 @@ const Checkout = ({ navigation }) => {
                 bg: 'teal.600',
                 endIcon: <CheckIcon size='5' />,
               }}
-              mt={-0.5}
               onValueChange={(itemValue) => {
                 setState(itemValue)
+                setSelectFocus(false)
               }}
             >
               {states.map((state, i) => (
                 <Select.Item
-                  onTouchEnd={() => setSelectFocus(false)}
                   label={selectFocus === true ? state : state.slice(0, 2)}
                   value={state}
                   key={i}
