@@ -1,17 +1,25 @@
 import { HStack, VStack, Select, CheckIcon } from 'native-base'
 import React, { useState, useRef, useEffect } from 'react'
-import { Button, StyleSheet, Text, View, Dimensions } from 'react-native'
+import {
+  Button,
+  StyleSheet,
+  Text,
+  View,
+  Dimensions,
+  Touchable,
+} from 'react-native'
 import { useSelector } from 'react-redux'
 import AnimatedInput from '../../../Components/AnimatedInput'
 import FormContainer from '../../../Components/FormContainer'
 import { Picker } from '@react-native-picker/picker'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler'
 
-const width = Dimensions.get('window')
+const { width } = Dimensions.get('window')
 
 const states = [
-  'AK - Alaska',
   'AL - Alabama',
+  'AK - Alaska',
   'AR - Arkansas',
   'AS - American Samoa',
   'AZ - Arizona',
@@ -67,8 +75,67 @@ const states = [
   'WY - Wyoming',
 ]
 
+const statesAbbr = [
+  'AL',
+  'AK',
+  'AR',
+  'AS',
+  'AZ',
+  'CA',
+  'CO',
+  'CT',
+  'DC',
+  'DE',
+  'FL',
+  'GA',
+  'GU',
+  'HI',
+  'IA',
+  'ID',
+  'IL',
+  'IN',
+  'KS',
+  'KY',
+  'LA',
+  'MA',
+  'MD',
+  'ME',
+  'MI',
+  'MN',
+  'MO',
+  'MS',
+  'MT',
+  'NC',
+  'ND',
+  'NE',
+  'NH',
+  'NJ',
+  'NM',
+  'NV',
+  'NY',
+  'OH',
+  'OK',
+  'OR',
+  'PA',
+  'PR',
+  'RI',
+  'SC',
+  'SD',
+  'TN',
+  'TX',
+  'UT',
+  'VA',
+  'VI',
+  'VT',
+  'WA',
+  'WI',
+  'WV',
+  'WY',
+]
+
 const Checkout = ({ navigation }) => {
   const cartItems = useSelector((state) => state.cartItems)
+  const [selectFocus, setSelectFocus] = useState(false)
   const [state, setState] = useState('')
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
@@ -83,7 +150,7 @@ const Checkout = ({ navigation }) => {
       setFirstName('')
     }
   }, [])
-  console.log(firstName)
+  console.log(width)
   return (
     <FormContainer>
       <Text
@@ -165,25 +232,36 @@ const Checkout = ({ navigation }) => {
               onChangeText={(text) => setCity(text)}
             />
           </HStack>
-          <HStack width='50%'>
+          <HStack width='50%' onTouchEndCapture={() => setSelectFocus(true)}>
             <Select
-              width='90%'
+              marginLeft={-2.5}
+              // onTouchStart={() => setSelectFocus(true)}
+              width='45%'
               borderColor='#0369a1'
               borderRadius={0}
               borderWidth={2}
               height={10}
               selectedValue={state}
               accessibilityLabel='State'
-              placeholder='Choose State'
+              placeholderTextColor='rgb(125, 211, 252)'
+              fontSize='16'
+              placeholder='State'
               _selectedItem={{
                 bg: 'teal.600',
                 endIcon: <CheckIcon size='5' />,
               }}
               mt={-0.5}
-              onValueChange={(itemValue) => setState(itemValue)}
+              onValueChange={(itemValue) => {
+                setState(itemValue)
+              }}
             >
               {states.map((state, i) => (
-                <Select.Item label={state} value={state} key={i} />
+                <Select.Item
+                  onTouchEnd={() => setSelectFocus(false)}
+                  label={selectFocus === true ? state : state.slice(0, 2)}
+                  value={state}
+                  key={i}
+                />
               ))}
             </Select>
           </HStack>
