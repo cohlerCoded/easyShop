@@ -142,6 +142,7 @@ const Checkout = ({ navigation }) => {
   const [address1, setAddress1] = useState('')
   const [address2, setAddress2] = useState('')
   const [city, setCity] = useState('')
+  const [zip, setZip] = useState('')
   useEffect(() => {
     setState('')
     setFirstName('')
@@ -232,11 +233,10 @@ const Checkout = ({ navigation }) => {
               onChangeText={(text) => setCity(text)}
             />
           </HStack>
-          <HStack width='50%' onTouchEndCapture={() => setSelectFocus(true)}>
+          <HStack width='25%' onTouchEndCapture={() => setSelectFocus(true)}>
             <Select
               marginLeft={-2.5}
-              // onTouchStart={() => setSelectFocus(true)}
-              width='45%'
+              width='100%'
               borderColor='#0369a1'
               borderRadius={0}
               borderWidth={2}
@@ -264,6 +264,16 @@ const Checkout = ({ navigation }) => {
                 />
               ))}
             </Select>
+          </HStack>
+          <HStack width='25%'>
+            <AnimatedInput
+              width='20%'
+              fontSize={16}
+              borderWidth={2}
+              placeHolder={'Zip'}
+              value={zip}
+              onChangeText={(text) => setZip(text)}
+            />
           </HStack>
         </VStack>
       </KeyboardAwareScrollView>
