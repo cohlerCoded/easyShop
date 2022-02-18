@@ -20,6 +20,7 @@ const Checkout = ({ navigation }) => {
   const [city, setCity] = useState('')
   const [country, setCountry] = useState('')
   const [zip, setZip] = useState('')
+  const [phone, setPhone] = useState('')
 
   const countryList = useMemo(
     () =>
@@ -53,7 +54,6 @@ const Checkout = ({ navigation }) => {
   }, [])
   return (
     <FormContainer title='&#x1F4E6; Checkout &#x1F4E6;'>
-      <Text>{`${countries[0].name}`}</Text>
       <KeyboardAwareScrollView
         enableOnAndroid={true}
         viewIsInsideTabBar={true}
@@ -177,12 +177,11 @@ const Checkout = ({ navigation }) => {
             width: '100%',
           }}
         >
-          <HStack width='50%'>
+          <HStack width='50%' alignItems='center'>
             <Select
               onOpen={() => setTimeout(() => setSelectFocus(true), 180)}
               onClose={() => setSelectFocus(false)}
-              marginLeft={-0.5}
-              width='50%'
+              width='75%'
               borderColor='#0369a1'
               borderRadius={0}
               borderWidth={2}
@@ -209,9 +208,9 @@ const Checkout = ({ navigation }) => {
               width='46%'
               fontSize={16}
               borderWidth={2}
-              placeHolder={'Last Name'}
-              value={lastName}
-              onChangeText={(text) => setLastName(text)}
+              placeHolder={'Phone'}
+              value={phone}
+              onChangeText={(text) => setPhone(text)}
             />
           </HStack>
         </VStack>
