@@ -1,81 +1,13 @@
 import { HStack, VStack, Select, CheckIcon } from 'native-base'
-import React, { useState, useRef, useEffect, useMemo } from 'react'
-import {
-  FlatList,
-  Button,
-  StyleSheet,
-  Text,
-  View,
-  Dimensions,
-  TouchableOpacity,
-  Image,
-} from 'react-native'
+import React, { useState, useEffect, useMemo } from 'react'
+import { FlatList, StyleSheet, Text, Dimensions, Image } from 'react-native'
 import { useSelector } from 'react-redux'
 import AnimatedInput from '../../../Components/AnimatedInput'
 import FormContainer from '../../../Components/FormContainer'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import countries from 'world_countries_lists/data/countries/en/countries.json'
 import flags from 'world_countries_lists/data/flags/24x24/flags-24x24.json'
-
-const { width } = Dimensions.get('window')
-const countryData = countries.concat(flags)
-const states = [
-  'AL - Alabama',
-  'AK - Alaska',
-  'AR - Arkansas',
-  'AS - American Samoa',
-  'AZ - Arizona',
-  'CA - California',
-  'CO - Colorado',
-  'CT - Connecticut',
-  'DC - District of Columbia',
-  'DE - Delaware',
-  'FL - Florida',
-  'GA - Georgia',
-  'GU - Guam',
-  'HI - Hawaii',
-  'IA - Iowa',
-  'ID - Idaho',
-  'IL - Illinois',
-  'IN - Indiana',
-  'KS - Kansas',
-  'KY - Kentucky',
-  'LA - Louisiana',
-  'MA - Massachusetts',
-  'MD - Maryland',
-  'ME - Maine',
-  'MI - Michigan',
-  'MN - Minnesota',
-  'MO - Missouri',
-  'MS - Mississippi',
-  'MT - Montana',
-  'NC - North Carolina',
-  'ND - North Dakota',
-  'NE - Nebraska',
-  'NH - New Hampshire',
-  'NJ - New Jersey',
-  'NM - New Mexico',
-  'NV - Nevada',
-  'NY - New York',
-  'OH - Ohio',
-  'OK - Oklahoma',
-  'OR - Oregon',
-  'PA - Pennsylvania',
-  'PR - Puerto Rico',
-  'RI - Rhode Island',
-  'SC - South Carolina',
-  'SD - South Dakota',
-  'TN - Tennessee',
-  'TX - Texas',
-  'UT - Utah',
-  'VA - Virginia',
-  'VI - Virgin Islands',
-  'VT - Vermont',
-  'WA - Washington',
-  'WI - Wisconsin',
-  'WV - West Virginia',
-  'WY - Wyoming',
-]
+import { states } from '../../../assets/states'
 
 const Checkout = ({ navigation }) => {
   const cartItems = useSelector((state) => state.cartItems)
@@ -88,6 +20,29 @@ const Checkout = ({ navigation }) => {
   const [city, setCity] = useState('')
   const [country, setCountry] = useState('')
   const [zip, setZip] = useState('')
+
+  const countryList = useMemo(
+    () =>
+      countries.map((country, i) => (
+        <Select.Item
+          key={i}
+          leftIcon={
+            <Image
+              source={{ uri: flags[country.alpha2] }}
+              style={{ width: 24, height: 24 }}
+            />
+          }
+          label={
+            selectFocus === true
+              ? `${country.alpha2.toUpperCase()} - ${country.name}`
+              : country.alpha2.toUpperCase()
+          }
+          value={country.alpha2.toUpperCase()}
+        />
+      )),
+    [{ countries }, { flags }]
+  )
+
   useEffect(() => {
     setState('')
     setFirstName('')
@@ -224,7 +179,7 @@ const Checkout = ({ navigation }) => {
         >
           <HStack width='50%'>
             <Select
-              onOpen={() => setTimeout(() => setSelectFocus(true), 400)}
+              onOpen={() => setTimeout(() => setSelectFocus(true), 180)}
               onClose={() => setSelectFocus(false)}
               marginLeft={-0.5}
               width='50%'
@@ -246,27 +201,7 @@ const Checkout = ({ navigation }) => {
                 setSelectFocus(false)
               }}
             >
-              {useMemo(
-                () =>
-                  countries.map((country, i) => (
-                    <Select.Item
-                      key={i}
-                      leftIcon={
-                        <Image
-                          source={{ uri: flags[country.alpha2] }}
-                          style={{ width: 24, height: 24 }}
-                        />
-                      }
-                      label={
-                        selectFocus === true
-                          ? `${country.alpha2.toUpperCase()} - ${country.name}`
-                          : country.alpha2.toUpperCase()
-                      }
-                      value={country.alpha2.toUpperCase()}
-                    />
-                  )),
-                [{ countries }, { flags }]
-              )}
+              {countryList}
             </Select>
           </HStack>
           <HStack width='50%'>
