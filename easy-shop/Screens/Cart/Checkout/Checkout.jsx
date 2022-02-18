@@ -22,26 +22,21 @@ const Checkout = ({ navigation }) => {
   const [zip, setZip] = useState('')
   const [phone, setPhone] = useState('')
 
-  const countryList = useMemo(
-    () =>
-      countries.map((country, i) => (
-        <Select.Item
-          key={i}
-          leftIcon={
-            <Image
-              source={{ uri: flags[country.alpha2] }}
-              style={{ width: 24, height: 24 }}
-            />
-          }
-          label={
-            selectFocus === true
-              ? `${country.alpha2.toUpperCase()} - ${country.name}`
-              : country.alpha2.toUpperCase()
-          }
-          value={country.alpha2.toUpperCase()}
+  const countryList = ({ item }) => (
+    <Select.Item
+      leftIcon={
+        <Image
+          source={{ uri: flags[item.alpha2] }}
+          style={{ width: 24, height: 24 }}
         />
-      )),
-    [{ countries }, { flags }]
+      }
+      label={
+        selectFocus === true
+          ? `${item.alpha2.toUpperCase()} - ${item.name}`
+          : item.alpha2.toUpperCase()
+      }
+      value={item.alpha2.toUpperCase()}
+    />
   )
 
   useEffect(() => {
@@ -54,6 +49,7 @@ const Checkout = ({ navigation }) => {
   }, [])
   return (
     <FormContainer title='&#x1F4E6; Checkout &#x1F4E6;'>
+      <Text>{`${countries[0].name}`}</Text>
       <KeyboardAwareScrollView
         enableOnAndroid={true}
         viewIsInsideTabBar={true}
@@ -200,7 +196,91 @@ const Checkout = ({ navigation }) => {
                 setSelectFocus(false)
               }}
             >
-              {countryList}
+              {countries.map((country, i) => (
+                <Select.Item
+                  key={i}
+                  leftIcon={
+                    <Image
+                      source={{ uri: flags[country.alpha2] }}
+                      style={{ width: 24, height: 24 }}
+                    />
+                  }
+                  label={
+                    selectFocus === true
+                      ? `${country.alpha2.toUpperCase()} - ${country.name}`
+                      : country.alpha2.toUpperCase()
+                  }
+                  value={country.alpha2.toUpperCase()}
+                />
+              ))}
+            </Select>
+          </HStack>
+          <HStack width='50%'>
+            <AnimatedInput
+              width='46%'
+              fontSize={16}
+              borderWidth={2}
+              placeHolder={'Phone'}
+              value={phone}
+              onChangeText={(text) => setPhone(text)}
+            />
+          </HStack>
+        </VStack>
+        <VStack
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'center',
+            marginHorizontal: 5,
+            width: '100%',
+          }}
+        >
+          <HStack width='50%' alignItems='center'>
+            <Select
+              onOpen={() => setTimeout(() => setSelectFocus(true), 180)}
+              onClose={() => setSelectFocus(false)}
+              width='75%'
+              borderColor='#0369a1'
+              borderRadius={0}
+              borderWidth={2}
+              height={10}
+              selectedValue={country}
+              accessibilityLabel='Country'
+              placeholderTextColor='rgb(125, 211, 252)'
+              fontSize='16'
+              placeholder='Country'
+              _selectedItem={{
+                bg: 'teal.600',
+                endIcon: <CheckIcon size='5' />,
+              }}
+              onValueChange={(itemValue) => {
+                setCountry(itemValue)
+                setSelectFocus(false)
+              }}
+            >
+              {
+                <FlatList
+                  keyExtractor={(item) => item.id}
+                  data={countries}
+                  renderItem={countryList}
+                />
+              }
+              {/* {countries.map((country, i) => (
+                <Select.Item
+                  key={i}
+                  leftIcon={
+                    <Image
+                      source={{ uri: flags[country.alpha2] }}
+                      style={{ width: 24, height: 24 }}
+                    />
+                  }
+                  label={
+                    selectFocus === true
+                      ? `${country.alpha2.toUpperCase()} - ${country.name}`
+                      : country.alpha2.toUpperCase()
+                  }
+                  value={country.alpha2.toUpperCase()}
+                />
+              ))} */}
             </Select>
           </HStack>
           <HStack width='50%'>
