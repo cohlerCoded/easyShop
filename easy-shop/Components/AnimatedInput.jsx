@@ -119,6 +119,36 @@ const AnimatedInput = (props) => {
     ]).start()
   }
 
+  const showSelectionList = () => (
+    <Modal
+      animationType='slide'
+      transparent={true}
+      visible={modalVisible}
+      onRequestClose={() => {
+        Alert.alert('Modal has been closed.')
+        setModalVisible(!modalVisible)
+      }}
+    >
+      <View style={styles.centeredView}>
+        <View style={styles.modalView}>
+          <FlatList
+            showsVerticalScrollIndicator={false}
+            style={{ width: '100%' }}
+            keyExtractor={(item, i) => i}
+            data={props.states}
+            renderItem={({ item }) => <Text>{item}</Text>}
+          />
+          <Pressable
+            style={[styles.button, styles.buttonClose]}
+            onPress={() => setModalVisible(!modalVisible)}
+          >
+            <Text style={styles.textStyle}>Hide Modal</Text>
+          </Pressable>
+        </View>
+      </View>
+    </Modal>
+  )
+
   const color = translationPlaceHolderColor.interpolate({
     inputRange: [0, 1],
     outputRange: [
@@ -219,7 +249,6 @@ const AnimatedInput = (props) => {
         value={props.value}
         autoCorrect={props.autoCorrect}
         onChangeText={props.onChangeText}
-        onFocus={props.onFocus}
         secureTextEntry={props.secureTextEntry}
         keyboardType={props.keyboardType}
         selectionColor={props.placeHolderColor || '#7dd3fc'}
@@ -241,9 +270,14 @@ const AnimatedInput = (props) => {
           marginHorizontal: props.marginHorizontal,
           marginLeft: props.marginLeft,
           marginRight: props.marginRight,
+          ...props.style,
         }}
-        onFocus={movePlaceHolder}
+        onFocus={() => {
+          props.onFocus()
+          movePlaceHolder()
+        }}
         onBlur={movePlaceHolderBack}
+        onPressIn={props.onPressIn}
       />
       <Animated.View
         pointerEvents='none'

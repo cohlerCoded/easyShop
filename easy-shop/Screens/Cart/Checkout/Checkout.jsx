@@ -49,7 +49,6 @@ const Checkout = ({ navigation }) => {
   }, [])
   return (
     <FormContainer title='&#x1F4E6; Checkout &#x1F4E6;'>
-      <Text>{`${countries[0].name}`}</Text>
       <KeyboardAwareScrollView
         enableOnAndroid={true}
         viewIsInsideTabBar={true}

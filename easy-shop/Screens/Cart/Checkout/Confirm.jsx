@@ -1,42 +1,149 @@
-import { FlatList, StyleSheet, Text, View, Image } from 'react-native'
-import React, { useMemo } from 'react'
+import React, { useEffect, useState } from 'react'
+import {
+  Modal,
+  StyleSheet,
+  Text,
+  View,
+  FlatList,
+  TouchableOpacity,
+  Image,
+  Dimensions,
+} from 'react-native'
+import AnimatedInput from '../../../Components/AnimatedInput'
 import countries from 'world_countries_lists/data/countries/en/countries.json'
 import flags from 'world_countries_lists/data/flags/24x24/flags-24x24.json'
-import { VStack } from 'native-base'
 
-const countryList = ({ item }) => {
-  return (
-    <View style={{ flexDirection: 'row' }}>
-      <Image
-        source={{ uri: flags[item.alpha2] }}
-        style={{ width: 24, height: 24 }}
-      />
-      <Text>{`${item.alpha2.toUpperCase()} - ${item.name}`}</Text>
-    </View>
-  )
-}
+const { width } = Dimensions.get('window')
 
 const Confirm = () => {
+  const [modalVisible, setModalVisible] = useState(false)
+  const [country, setCountry] = useState('')
+  const [flagImg, setFlagImg] = useState('')
+
   return (
-    <View style={{ marginBottom: 70 }}>
+    <View style={styles.centeredView}>
       <Text
         style={{
-          marginTop: 30,
           fontSize: 30,
           textAlign: 'center',
         }}
       >
         &#x1F4AF; Confirm &#x1F4AF;
       </Text>
-      <FlatList
-        keyExtractor={(item) => item.id}
-        data={countries}
-        renderItem={countryList}
-      />
+      <Modal animationType='slide' transparent={true} visible={modalVisible}>
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <FlatList
+              showsVerticalScrollIndicator={false}
+              style={{ width: '100%' }}
+              keyExtractor={(item) => item.alpha3}
+              data={countries}
+              renderItem={({ item }) => (
+                <TouchableOpacity
+                  style={{ flexDirection: 'row', alignItems: 'center' }}
+                  onPress={() => {
+                    setCountry(item.alpha3.toUpperCase())
+                    setModalVisible(false)
+                    setFlagImg(item.alpha2)
+                  }}
+                >
+                  <Image
+                    source={{ uri: flags[item.alpha2] }}
+                    style={{ width: 24, height: 24 }}
+                  />
+                  <Text
+                    style={{ fontSize: 16, marginVertical: 5, marginLeft: 5 }}
+                  >{`${item.alpha3.toUpperCase()} - ${item.name}`}</Text>
+                </TouchableOpacity>
+              )}
+            />
+          </View>
+        </View>
+      </Modal>
+      <View style={styles.centeredView}>
+        <View
+          style={{
+            width: width,
+            alignItems: 'center',
+            flexDirection: 'row',
+            backgroundColor: 'green',
+            marginLeft: '50%',
+          }}
+        >
+          <Image
+            source={{ uri: flags[flagImg] || null }}
+            style={{
+              width: 24,
+              height: 24,
+              position: 'absolute',
+              zIndex: 100,
+              marginLeft: 5,
+            }}
+          />
+          <AnimatedInput
+            style={{ paddingLeft: 35 }}
+            onFocus={() => setModalVisible(true)}
+            width='46%'
+            fontSize={16}
+            borderWidth={2}
+            placeHolder={'Country'}
+            value={country}
+            onChangeText={(text) => setCountry(text)}
+          />
+        </View>
+      </View>
     </View>
   )
 }
 
-export default Confirm
+const styles = StyleSheet.create({
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 22,
+  },
+  modalView: {
+    position: 'absolute',
+    bottom: 0,
+    width: '100%',
+    height: '90%',
+    marginTop: 20,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    borderBottomEndRadius: 0,
+    borderBottomStartRadius: 0,
+    padding: 35,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  button: {
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2,
+  },
+  buttonOpen: {
+    backgroundColor: '#F194FF',
+  },
+  buttonClose: {
+    backgroundColor: '#2196F3',
+  },
+  textStyle: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: 'center',
+  },
+})
 
-const styles = StyleSheet.create({})
+export default Confirm
