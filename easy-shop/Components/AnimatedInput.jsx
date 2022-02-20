@@ -1,4 +1,11 @@
-import { TextInput, StyleSheet, Animated, Dimensions } from 'react-native'
+import {
+  TextInput,
+  StyleSheet,
+  Animated,
+  Dimensions,
+  TouchableWithoutFeedback,
+  View,
+} from 'react-native'
 import React, { useState, useRef, useEffect } from 'react'
 import Svg, { Line } from 'react-native-svg'
 
@@ -248,49 +255,99 @@ const AnimatedInput = (props) => {
           />
         </Svg>
       </Animated.View>
-
-      <TextInput
-        placeholder={null}
-        name={props.name}
-        id={props.id}
-        value={props.value}
-        autoCorrect={props.autoCorrect}
-        onChangeText={props.onChangeText}
-        secureTextEntry={props.secureTextEntry}
-        keyboardType={props.keyboardType}
-        selectionColor={props.placeHolderColor || '#7dd3fc'}
-        onEndEditing={props.onEndEditing}
-        style={{
-          color: props.textInputColor || props.placeHolderColor,
-          paddingHorizontal: props.fontSize / 2,
-          fontSize: props.fontSize || 16,
-          marginVertical: height / 2 || 20,
-          borderWidth: props.borderWidth || 2,
-          borderColor: props.borderColor || '#0369a1',
-          height: height * 1.3 || 40,
-          width: props.marginLeft
-            ? inputWidth - props.marginLeft
-            : props.marginRight
-            ? inputWidth - props.marginRight
-            : props.marginHorizontal
-            ? inputWidth - props.marginHorizontal * 2
-            : inputWidth,
-          marginHorizontal: props.marginHorizontal,
-          marginLeft: props.marginLeft,
-          marginRight: props.marginRight,
-          ...props.style,
-        }}
-        onFocus={() => {
-          movePlaceHolder()
-          props.onFocus && props.onFocus()
-        }}
-        onBlur={() => {
-          setValue(props.value)
-          if (props.onBlur) props.onBlur()
-          movePlaceHolderBack()
-        }}
-        onPressIn={props.onPressIn}
-      />
+      {props.isSelectable ? (
+        <TouchableWithoutFeedback onPress={props.onPress}>
+          <View pointerEvents='box-only'>
+            <TextInput
+              caretHidden={props.isSelectable && true}
+              placeholder={null}
+              name={props.name}
+              id={props.id}
+              value={props.value}
+              autoCorrect={props.autoCorrect}
+              onChangeText={props.onChangeText}
+              secureTextEntry={props.secureTextEntry}
+              keyboardType={props.keyboardType}
+              selectionColor={props.placeHolderColor || '#7dd3fc'}
+              onEndEditing={props.onEndEditing}
+              style={{
+                color: props.textInputColor || props.placeHolderColor,
+                paddingHorizontal: props.fontSize / 2,
+                fontSize: props.fontSize || 16,
+                marginVertical: height / 2 || 20,
+                borderWidth: props.borderWidth || 2,
+                borderColor: props.borderColor || '#0369a1',
+                height: height * 1.3 || 40,
+                width: props.marginLeft
+                  ? inputWidth - props.marginLeft
+                  : props.marginRight
+                  ? inputWidth - props.marginRight
+                  : props.marginHorizontal
+                  ? inputWidth - props.marginHorizontal * 2
+                  : inputWidth,
+                marginHorizontal: props.marginHorizontal,
+                marginLeft: props.marginLeft,
+                marginRight: props.marginRight,
+                ...props.style,
+              }}
+              onFocus={() => {
+                movePlaceHolder()
+                props.onFocus && props.onFocus()
+              }}
+              onBlur={() => {
+                setValue(props.value)
+                if (props.onBlur) props.onBlur()
+                movePlaceHolderBack()
+              }}
+              onPressIn={props.onPressIn}
+            />
+          </View>
+        </TouchableWithoutFeedback>
+      ) : (
+        <TextInput
+          caretHidden={props.isSelectable && true}
+          placeholder={null}
+          name={props.name}
+          id={props.id}
+          value={props.value}
+          autoCorrect={props.autoCorrect}
+          onChangeText={props.onChangeText}
+          secureTextEntry={props.secureTextEntry}
+          keyboardType={props.keyboardType}
+          selectionColor={props.placeHolderColor || '#7dd3fc'}
+          onEndEditing={props.onEndEditing}
+          style={{
+            color: props.textInputColor || props.placeHolderColor,
+            paddingHorizontal: props.fontSize / 2,
+            fontSize: props.fontSize || 16,
+            marginVertical: height / 2 || 20,
+            borderWidth: props.borderWidth || 2,
+            borderColor: props.borderColor || '#0369a1',
+            height: height * 1.3 || 40,
+            width: props.marginLeft
+              ? inputWidth - props.marginLeft
+              : props.marginRight
+              ? inputWidth - props.marginRight
+              : props.marginHorizontal
+              ? inputWidth - props.marginHorizontal * 2
+              : inputWidth,
+            marginHorizontal: props.marginHorizontal,
+            marginLeft: props.marginLeft,
+            marginRight: props.marginRight,
+            ...props.style,
+          }}
+          onFocus={() => {
+            movePlaceHolder()
+            props.onFocus && props.onFocus()
+          }}
+          onBlur={() => {
+            setValue(props.value)
+            if (props.onBlur) props.onBlur()
+            movePlaceHolderBack()
+          }}
+          onPressIn={props.onPressIn}
+        />
+      )}
       <Animated.View
         pointerEvents='none'
         style={{

@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   Image,
   Dimensions,
+  Button,
 } from 'react-native'
 import AnimatedInput from '../../../Components/AnimatedInput'
 import countries from 'world_countries_lists/data/countries/en/countries.json'
@@ -33,7 +34,12 @@ const Confirm = () => {
       >
         &#x1F4AF; Confirm &#x1F4AF;
       </Text>
-      <Modal animationType='slide' transparent={true} visible={modalVisible}>
+      <Modal
+        animationType='slide'
+        transparent={true}
+        visible={modalVisible}
+        useNativeDriver={true}
+      >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             <FlatList
@@ -64,6 +70,8 @@ const Confirm = () => {
         </View>
       </Modal>
       <View style={styles.centeredView}>
+        <Button title='test' onPress={() => setModalVisible(true)} />
+
         <View
           style={{
             width: width,
@@ -86,7 +94,7 @@ const Confirm = () => {
           <AnimatedInput
             isSelectable={true}
             style={{ paddingLeft: 35 }}
-            onFocus={() => setModalVisible(true)}
+            onPress={() => setModalVisible(true)}
             width='46%'
             fontSize={16}
             borderWidth={2}
