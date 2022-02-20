@@ -1,5 +1,5 @@
 import { TextInput, StyleSheet, Animated, Dimensions } from 'react-native'
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import Svg, { Line } from 'react-native-svg'
 
 const { width } = Dimensions.get('window')
@@ -12,7 +12,7 @@ const AnimatedInput = (props) => {
       ? props.width
       : width
   const height = props.fontSize * 1.9
-  const [textInput, setTextInput] = useState('')
+  const [value, setValue] = useState(null)
 
   const AnimatedLineTopFocus = Animated.createAnimatedComponent(Line)
   const AnimatedLineRightFocus = Animated.createAnimatedComponent(Line)
@@ -30,6 +30,7 @@ const AnimatedInput = (props) => {
   const leftBorderLine = useRef(new Animated.Value(0)).current
 
   const movePlaceHolder = () => {
+    if (props.isSelectable) return
     Animated.timing(translationPlaceHolder, {
       toValue: height / -1.5 || -20,
       useNativeDriver: true,
@@ -174,6 +175,12 @@ const AnimatedInput = (props) => {
     outputRange: ['100%', '0%'],
   })
 
+  useEffect(() => {
+    if (props.isSelectable) {
+      movePlaceHolderBack()
+    }
+  }, [props.value, movePlaceHolderBack])
+
   return (
     <Animated.View
       style={{
@@ -252,6 +259,7 @@ const AnimatedInput = (props) => {
         secureTextEntry={props.secureTextEntry}
         keyboardType={props.keyboardType}
         selectionColor={props.placeHolderColor || '#7dd3fc'}
+        onEndEditing={props.onEndEditing}
         style={{
           color: props.textInputColor || props.placeHolderColor,
           paddingHorizontal: props.fontSize / 2,
@@ -273,10 +281,14 @@ const AnimatedInput = (props) => {
           ...props.style,
         }}
         onFocus={() => {
-          props.onFocus()
           movePlaceHolder()
+          props.onFocus && props.onFocus()
         }}
-        onBlur={movePlaceHolderBack}
+        onBlur={() => {
+          setValue(props.value)
+          if (props.onBlur) props.onBlur()
+          movePlaceHolderBack()
+        }}
         onPressIn={props.onPressIn}
       />
       <Animated.View

@@ -19,7 +19,10 @@ const Confirm = () => {
   const [modalVisible, setModalVisible] = useState(false)
   const [country, setCountry] = useState('')
   const [flagImg, setFlagImg] = useState('')
-
+  useEffect(() => {
+    setCountry(country)
+  }, [country])
+  console.log(country)
   return (
     <View style={styles.centeredView}>
       <Text
@@ -42,8 +45,8 @@ const Confirm = () => {
                 <TouchableOpacity
                   style={{ flexDirection: 'row', alignItems: 'center' }}
                   onPress={() => {
-                    setCountry(item.alpha3.toUpperCase())
                     setModalVisible(false)
+                    setCountry(item.alpha3.toUpperCase())
                     setFlagImg(item.alpha2)
                   }}
                 >
@@ -81,6 +84,7 @@ const Confirm = () => {
             }}
           />
           <AnimatedInput
+            isSelectable={true}
             style={{ paddingLeft: 35 }}
             onFocus={() => setModalVisible(true)}
             width='46%'
@@ -89,6 +93,9 @@ const Confirm = () => {
             placeHolder={'Country'}
             value={country}
             onChangeText={(text) => setCountry(text)}
+            onBlur={() => {
+              setCountry(country)
+            }}
           />
         </View>
       </View>
