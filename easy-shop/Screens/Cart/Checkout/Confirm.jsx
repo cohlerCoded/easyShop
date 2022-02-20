@@ -39,6 +39,10 @@ const Confirm = () => {
         transparent={true}
         visible={modalVisible}
         useNativeDriver={true}
+        onRequestClose={() => {
+          setCountry(country)
+          setModalVisible(false)
+        }}
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
