@@ -38,7 +38,6 @@ const Confirm = () => {
         animationType='slide'
         transparent={true}
         visible={modalVisible}
-        useNativeDriver={true}
         onRequestClose={() => {
           setCountry(country)
           setModalVisible(false)

@@ -8,6 +8,7 @@ import {
 } from 'react-native'
 import React, { useState, useRef, useEffect } from 'react'
 import Svg, { Line } from 'react-native-svg'
+import PropTypes from 'prop-types'
 
 const { width } = Dimensions.get('window')
 
@@ -385,5 +386,29 @@ const AnimatedInput = (props) => {
 const styles = StyleSheet.create({
   text: {},
 })
+
+AnimatedInput.propTypes = {
+  fontSize: PropTypes.number,
+  width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  marginLeft: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  marginRight: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  marginHorizontal: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  placeHolder: PropTypes.string,
+  placeHolderColor: PropTypes.string,
+  borderColor: PropTypes.string,
+  backgroundColor: PropTypes.string,
+  textInputColor: PropTypes.string,
+  isSelectable: PropTypes.bool,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  name: PropTypes.string,
+  id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  autoCorrect: PropTypes.bool,
+  onChangeText: PropTypes.func,
+  secureTextEntry: PropTypes.bool,
+  keyboardType: PropTypes.string,
+  onEndEditing: PropTypes.func,
+  onBlur: PropTypes.func,
+  onFocus: PropTypes.func,
+}
 
 export default AnimatedInput
