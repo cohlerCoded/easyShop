@@ -2,12 +2,19 @@ import React from 'react'
 import { StyleSheet, View, Dimensions, ScrollView } from 'react-native'
 import { Text, VStack, HStack, Image, Divider } from 'native-base'
 import { TouchableOpacity } from 'react-native-gesture-handler'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 const { width } = Dimensions.get('window')
 
 const SearchedProducts = ({ productsFiltered, navigation }) => {
   return (
-    <ScrollView style={{ width: width }} keyboardShouldPersistTaps='never'>
+    <KeyboardAwareScrollView
+      style={{ width: width }}
+      keyboardShouldPersistTaps='never'
+      enableOnAndroid={true}
+      viewIsInsideTabBar={true}
+      extraScrollHeight={20}
+    >
       {productsFiltered.length > 0 ? (
         productsFiltered.map((item) => (
           <TouchableOpacity
@@ -47,7 +54,7 @@ const SearchedProducts = ({ productsFiltered, navigation }) => {
           </Text>
         </View>
       )}
-    </ScrollView>
+    </KeyboardAwareScrollView>
   )
 }
 

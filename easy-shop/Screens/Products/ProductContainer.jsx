@@ -2,40 +2,21 @@ import React, { useEffect, useState } from 'react'
 import {
   StyleSheet,
   View,
-  ActivityIndicator,
   FlatList,
   SafeAreaView,
-  Image,
-  TouchableOpacity,
   Dimensions,
   Keyboard,
-  ScrollView,
 } from 'react-native'
-import {
-  Container,
-  Center,
-  Icon,
-  Item,
-  Input,
-  Text,
-  Heading,
-  VStack,
-  Box,
-  Divider,
-  KeyboardAvoidingView,
-} from 'native-base'
+import { Icon, Input, Text, VStack, Box, Divider } from 'native-base'
 import data from '../../assets/products.json'
-import categories from '../../assets/categories.json'
 import ProductList from './ProductList'
 import SearchedProducts from './SearchedProducts'
-import { Ionicons, MaterialIcons } from '@expo/vector-icons'
-import { FontAwesome5 } from '@expo/vector-icons'
+import { Ionicons } from '@expo/vector-icons'
 import Banner from '../../Components/Banner'
 import CategoryFilter from './CategoryFilter'
 import productCategories from '../../assets/categories.json'
 
 const { height } = Dimensions.get('window')
-const { width } = Dimensions.get('window')
 
 const ProductContainer = ({ navigation }) => {
   const [products, setProducts] = useState([])
@@ -215,7 +196,7 @@ const ProductContainer = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    marginBottom: 150,
+    height: height - 230,
   },
   center: {
     alignItems: 'center',
