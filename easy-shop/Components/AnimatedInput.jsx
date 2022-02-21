@@ -5,6 +5,9 @@ import {
   Dimensions,
   TouchableWithoutFeedback,
   View,
+  Modal,
+  FlatList,
+  TouchableOpacity,
 } from 'react-native'
 import React, { useState, useRef, useEffect } from 'react'
 import Svg, { Line } from 'react-native-svg'
@@ -21,7 +24,7 @@ const AnimatedInput = (props) => {
       : width
   const height = props.fontSize * 1.9
   const [value, setValue] = useState(null)
-
+  const [modalVisible, setModalVisible] = useState(false)
   const AnimatedLineTopFocus = Animated.createAnimatedComponent(Line)
   const AnimatedLineRightFocus = Animated.createAnimatedComponent(Line)
   const AnimatedLineBottomFocus = Animated.createAnimatedComponent(Line)
@@ -128,36 +131,6 @@ const AnimatedInput = (props) => {
     ]).start()
   }
 
-  const showSelectionList = () => (
-    <Modal
-      animationType='slide'
-      transparent={true}
-      visible={modalVisible}
-      onRequestClose={() => {
-        Alert.alert('Modal has been closed.')
-        setModalVisible(!modalVisible)
-      }}
-    >
-      <View style={styles.centeredView}>
-        <View style={styles.modalView}>
-          <FlatList
-            showsVerticalScrollIndicator={false}
-            style={{ width: '100%' }}
-            keyExtractor={(item, i) => i}
-            data={props.states}
-            renderItem={({ item }) => <Text>{item}</Text>}
-          />
-          <Pressable
-            style={[styles.button, styles.buttonClose]}
-            onPress={() => setModalVisible(!modalVisible)}
-          >
-            <Text style={styles.textStyle}>Hide Modal</Text>
-          </Pressable>
-        </View>
-      </View>
-    </Modal>
-  )
-
   const color = translationPlaceHolderColor.interpolate({
     inputRange: [0, 1],
     outputRange: [
@@ -196,6 +169,39 @@ const AnimatedInput = (props) => {
         width: '100%',
       }}
     >
+      <Modal
+        animationType='slide'
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <View style={styles.centeredView}>
+          <TouchableWithoutFeedback
+            onPress={() => setModalVisible(false)}
+            style={{ height: '100%', zIndex: 1000, position: 'absolute' }}
+          >
+            <View style={styles.modalView}>
+              <FlatList
+                showsVerticalScrollIndicator={false}
+                style={{ width: '100%' }}
+                keyExtractor={props.keyExtractor}
+                data={props.data}
+                renderItem={(item) => (
+                  <TouchableOpacity
+                    style={{ flexDirection: 'row', alignItems: 'center' }}
+                    onPress={() => {
+                      props.onCloseSelect(item)
+                      setModalVisible(false)
+                    }}
+                  >
+                    {props.renderItem(item)}
+                  </TouchableOpacity>
+                )}
+              />
+            </View>
+          </TouchableWithoutFeedback>
+        </View>
+      </Modal>
       <Animated.View
         pointerEvents='none'
         style={{
@@ -257,7 +263,7 @@ const AnimatedInput = (props) => {
         </Svg>
       </Animated.View>
       {props.isSelectable ? (
-        <TouchableWithoutFeedback onPress={props.onPress}>
+        <TouchableWithoutFeedback onPress={() => setModalVisible(true)}>
           <View pointerEvents='box-only'>
             <TextInput
               caretHidden={props.isSelectable && true}
@@ -384,7 +390,33 @@ const AnimatedInput = (props) => {
   )
 }
 const styles = StyleSheet.create({
-  text: {},
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 22,
+  },
+  modalView: {
+    position: 'absolute',
+    bottom: 0,
+    width: '100%',
+    height: '90%',
+    marginTop: 20,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    borderBottomEndRadius: 0,
+    borderBottomStartRadius: 0,
+    padding: 35,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
 })
 
 AnimatedInput.propTypes = {
@@ -409,6 +441,7 @@ AnimatedInput.propTypes = {
   onEndEditing: PropTypes.func,
   onBlur: PropTypes.func,
   onFocus: PropTypes.func,
+  onCloseSelect: PropTypes.func,
 }
 
 export default AnimatedInput

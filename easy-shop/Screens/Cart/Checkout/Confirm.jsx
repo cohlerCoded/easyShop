@@ -1,15 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import {
-  Modal,
-  StyleSheet,
-  Text,
-  View,
-  FlatList,
-  TouchableOpacity,
-  Image,
-  Dimensions,
-  Button,
-} from 'react-native'
+import { Modal, StyleSheet, Text, View, Image, Dimensions } from 'react-native'
 import AnimatedInput from '../../../Components/AnimatedInput'
 import countries from 'world_countries_lists/data/countries/en/countries.json'
 import flags from 'world_countries_lists/data/flags/24x24/flags-24x24.json'
@@ -17,7 +7,6 @@ import flags from 'world_countries_lists/data/flags/24x24/flags-24x24.json'
 const { width } = Dimensions.get('window')
 
 const Confirm = () => {
-  const [modalVisible, setModalVisible] = useState(false)
   const [country, setCountry] = useState('')
   const [flagImg, setFlagImg] = useState('')
   useEffect(() => {
@@ -34,7 +23,7 @@ const Confirm = () => {
       >
         &#x1F4AF; Confirm &#x1F4AF;
       </Text>
-      <Modal
+      {/* <Modal
         animationType='slide'
         transparent={true}
         visible={modalVisible}
@@ -71,10 +60,8 @@ const Confirm = () => {
             />
           </View>
         </View>
-      </Modal>
+      </Modal> */}
       <View style={styles.centeredView}>
-        <Button title='test' onPress={() => setModalVisible(true)} />
-
         <View
           style={{
             width: width,
@@ -95,7 +82,6 @@ const Confirm = () => {
             }}
           />
           <AnimatedInput
-            isSelectable={true}
             style={{ paddingLeft: 35 }}
             onPress={() => setModalVisible(true)}
             width='46%'
@@ -107,6 +93,24 @@ const Confirm = () => {
             onBlur={() => {
               setCountry(country)
             }}
+            isSelectable={true}
+            onCloseSelect={({ item }) => {
+              setCountry(item.alpha3.toUpperCase())
+              setFlagImg(item.alpha2)
+            }}
+            data={countries}
+            keyExtractor={(item) => item.alpha3}
+            renderItem={({ item }) => (
+              <>
+                <Image
+                  source={{ uri: flags[item.alpha2] }}
+                  style={{ width: 24, height: 24 }}
+                />
+                <Text
+                  style={{ fontSize: 16, marginVertical: 5, marginLeft: 5 }}
+                >{`${item.alpha3.toUpperCase()} - ${item.name}`}</Text>
+              </>
+            )}
           />
         </View>
       </View>
@@ -141,26 +145,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
-  },
-  button: {
-    borderRadius: 20,
-    padding: 10,
-    elevation: 2,
-  },
-  buttonOpen: {
-    backgroundColor: '#F194FF',
-  },
-  buttonClose: {
-    backgroundColor: '#2196F3',
-  },
-  textStyle: {
-    color: 'white',
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  modalText: {
-    marginBottom: 15,
-    textAlign: 'center',
   },
 })
 
