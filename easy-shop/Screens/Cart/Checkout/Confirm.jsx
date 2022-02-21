@@ -94,6 +94,7 @@ const Confirm = () => {
               setCountry(country)
             }}
             isSelectable={true}
+            selectColor='rgba(125, 211, 252, 0.3)'
             onCloseSelect={({ item }) => {
               setCountry(item.alpha3.toUpperCase())
               setFlagImg(item.alpha2)
@@ -107,7 +108,12 @@ const Confirm = () => {
                   style={{ width: 24, height: 24 }}
                 />
                 <Text
-                  style={{ fontSize: 16, marginVertical: 5, marginLeft: 5 }}
+                  style={{
+                    fontSize: 16,
+                    marginVertical: 5,
+                    marginLeft: 5,
+                    width: '80%',
+                  }}
                 >{`${item.alpha3.toUpperCase()} - ${item.name}`}</Text>
               </>
             )}

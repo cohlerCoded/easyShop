@@ -12,6 +12,7 @@ import {
 import React, { useState, useRef, useEffect } from 'react'
 import Svg, { Line } from 'react-native-svg'
 import PropTypes from 'prop-types'
+import { CheckIcon } from 'native-base'
 
 const { width } = Dimensions.get('window')
 
@@ -176,11 +177,21 @@ const AnimatedInput = (props) => {
         onRequestClose={() => setModalVisible(false)}
       >
         <View style={styles.centeredView}>
-          <TouchableWithoutFeedback
-            onPress={() => setModalVisible(false)}
-            style={{ height: '100%', zIndex: 1000, position: 'absolute' }}
-          >
-            <View style={styles.modalView}>
+          <View style={styles.modalView}>
+            <TouchableOpacity
+              onPress={() => setModalVisible(false)}
+              style={{ height: '100%', width: '100%' }}
+            >
+              <View
+                style={{
+                  alignSelf: 'center',
+                  height: 10,
+                  width: 100,
+                  backgroundColor: '#eee',
+                  marginVertical: 15,
+                  borderRadius: 50,
+                }}
+              />
               <FlatList
                 showsVerticalScrollIndicator={false}
                 style={{ width: '100%' }}
@@ -188,18 +199,31 @@ const AnimatedInput = (props) => {
                 data={props.data}
                 renderItem={(item) => (
                   <TouchableOpacity
-                    style={{ flexDirection: 'row', alignItems: 'center' }}
+                    style={{
+                      paddingVertical: 5,
+                      paddingHorizontal: 15,
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      borderRadius: 5,
+                      backgroundColor:
+                        props.value === item.item.alpha3.toUpperCase()
+                          ? props.selectColor
+                          : 'white',
+                    }}
                     onPress={() => {
                       props.onCloseSelect(item)
-                      setModalVisible(false)
+                      setTimeout(() => setModalVisible(false), 500)
                     }}
                   >
                     {props.renderItem(item)}
+                    {props.value === item.item.alpha3.toUpperCase() && (
+                      <CheckIcon size='5' style={{ marginLeft: 10 }} />
+                    )}
                   </TouchableOpacity>
                 )}
               />
-            </View>
-          </TouchableWithoutFeedback>
+            </TouchableOpacity>
+          </View>
         </View>
       </Modal>
       <Animated.View
@@ -378,7 +402,6 @@ const AnimatedInput = (props) => {
             paddingHorizontal: props.fontSize / 4,
             textAlign: 'center',
             backgroundColor: props.backgroundColor || '#f1eff1',
-            // backgroundColor: 'green',
             fontSize: props.fontSize || 16,
             color: color,
           }}
@@ -406,7 +429,8 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     borderBottomEndRadius: 0,
     borderBottomStartRadius: 0,
-    padding: 35,
+    paddingHorizontal: 20,
+    paddingBottom: 20,
     alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: {
@@ -429,6 +453,7 @@ AnimatedInput.propTypes = {
   placeHolderColor: PropTypes.string,
   borderColor: PropTypes.string,
   backgroundColor: PropTypes.string,
+  selectColor: PropTypes.string,
   textInputColor: PropTypes.string,
   isSelectable: PropTypes.bool,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
