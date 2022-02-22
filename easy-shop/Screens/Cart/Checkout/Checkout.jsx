@@ -47,6 +47,9 @@ const Checkout = ({ navigation }) => {
       setFirstName('')
     }
   }, [])
+
+  console.log(firstName)
+
   return (
     <FormContainer title='&#x1F4E6; Checkout &#x1F4E6;'>
       <KeyboardAwareScrollView

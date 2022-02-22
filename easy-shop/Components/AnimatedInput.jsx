@@ -26,15 +26,19 @@ const AnimatedInput = (props) => {
       : width
   const height = props.fontSize * 1.9
 
-  const [value, setValue] = useState(null)
   const [modalVisible, setModalVisible] = useState(false)
   const [term, setTerm] = useState('')
-  const [dataList, setDataList] = useState(props.data)
+  const [validation, setValidation] = useState(false)
 
   const AnimatedLineTopFocus = Animated.createAnimatedComponent(Line)
   const AnimatedLineRightFocus = Animated.createAnimatedComponent(Line)
   const AnimatedLineBottomFocus = Animated.createAnimatedComponent(Line)
   const AnimatedLineLeftFocus = Animated.createAnimatedComponent(Line)
+
+  const AnimatedLineTopValidation = Animated.createAnimatedComponent(Line)
+  const AnimatedLineRightValidation = Animated.createAnimatedComponent(Line)
+  const AnimatedLineBottomValidation = Animated.createAnimatedComponent(Line)
+  const AnimatedLineLeftValidation = Animated.createAnimatedComponent(Line)
 
   const translationPlaceHolder = useRef(new Animated.Value(0)).current
   const translationPlaceHolderSize = useRef(new Animated.Value(1)).current
@@ -45,6 +49,11 @@ const AnimatedInput = (props) => {
   const rightBorderLine = useRef(new Animated.Value(0)).current
   const bottomBorderLine = useRef(new Animated.Value(0)).current
   const leftBorderLine = useRef(new Animated.Value(0)).current
+
+  const validationTopBorderLine = useRef(new Animated.Value(0)).current
+  const validationRightBorderLine = useRef(new Animated.Value(0)).current
+  const validationBottomBorderLine = useRef(new Animated.Value(0)).current
+  const validationLeftBorderLine = useRef(new Animated.Value(0)).current
 
   const movePlaceHolder = () => {
     if (props.isSelectable) return
@@ -135,6 +144,28 @@ const AnimatedInput = (props) => {
         duration: 125,
       }),
     ]).start()
+    Animated.sequence([
+      Animated.timing(validationLeftBorderLine, {
+        toValue: 1,
+        useNativeDriver: true,
+        duration: 25,
+      }),
+      Animated.timing(validationBottomBorderLine, {
+        toValue: 1,
+        useNativeDriver: true,
+        duration: 125,
+      }),
+      Animated.timing(validationRightBorderLine, {
+        toValue: 1,
+        useNativeDriver: true,
+        duration: 25,
+      }),
+      Animated.timing(validationRightBorderLine, {
+        toValue: 1,
+        useNativeDriver: true,
+        duration: 125,
+      }),
+    ]).start()
   }
 
   const color = translationPlaceHolderColor.interpolate({
@@ -162,17 +193,28 @@ const AnimatedInput = (props) => {
     outputRange: ['100%', '0%'],
   })
 
+  const validationTopBorder = validationTopBorderLine.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['0%', '100%'],
+  })
+  const validationRightBorder = validationRightBorderLine.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['0%', '100%'],
+  })
+  const validationBottomBorder = validationBottomBorderLine.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['100%', '0%'],
+  })
+  const validationLeftBorder = validationLeftBorderLine.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['100%', '0%'],
+  })
+
   useEffect(() => {
     if (props.isSelectable) {
       movePlaceHolderBack()
     }
   }, [props.value, movePlaceHolderBack])
-
-  useEffect(() => {
-    term.length && props.selectSearchFilterFunction
-      ? setDataList(props.selectSearchFilterFunction(term))
-      : setDataList(props.data)
-  }, [term, setDataList])
 
   return (
     <Animated.View
@@ -216,10 +258,9 @@ const AnimatedInput = (props) => {
                 style={{ width: '100%' }}
                 keyExtractor={props.keyExtractor}
                 data={
-                  dataList
-                  // term.length && props.selectSearchFilterFunction
-                  //   ? props.selectSearchFilterFunction(term)
-                  //   : props.data
+                  term.length && props.selectSearchFilterFunction
+                    ? props.selectSearchFilterFunction(term)
+                    : props.data
                 }
                 renderItem={(item) => (
                   <TouchableOpacity
@@ -250,6 +291,9 @@ const AnimatedInput = (props) => {
           </View>
         </View>
       </Modal>
+
+      {/* FOCUS/UNFOCUS TRACE */}
+
       <Animated.View
         pointerEvents='none'
         style={{
@@ -310,6 +354,84 @@ const AnimatedInput = (props) => {
           />
         </Svg>
       </Animated.View>
+      {/* VALID/INVALID TRACE */}
+
+      <Animated.View
+        pointerEvents='none'
+        style={{
+          zIndex: 3,
+          marginTop: height / 2 || 20,
+          height: '100%',
+          width: '100%',
+          position: 'absolute',
+        }}
+      >
+        <Svg
+          height={height * 1.3 + props.borderWidth || 40}
+          width={
+            props.marginLeft || props.marginRight
+              ? inputWidth + props.borderWidth - props.marginLeft ||
+                props.marginRight
+              : props.marginHorizontal
+              ? inputWidth + props.borderWidth - props.marginHorizontal * 2
+              : inputWidth + props.borderWidth
+          }
+          style={{
+            marginHorizontal: props.marginHorizontal,
+            marginLeft: props.marginLeft,
+            marginRight: props.marginRight,
+          }}
+        >
+          <AnimatedLineTopValidation
+            x1='0%'
+            y1='0%'
+            x2={validationTopBorder}
+            y2='0%'
+            stroke={
+              validation === true
+                ? props.isValidColor || 'green'
+                : props.isNotValidColor || 'red'
+            }
+            strokeWidth={props.borderWidth * 4}
+          />
+          <AnimatedLineRightValidation
+            x1='100%'
+            y1='0%'
+            x2='100%'
+            y2={validationRightBorder}
+            stroke={
+              validation === true
+                ? props.isValidColor || 'green'
+                : props.isNotValidColor || 'red'
+            }
+            strokeWidth={props.borderWidth * 4}
+          />
+          <AnimatedLineBottomValidation
+            x1='0%'
+            y1='0%'
+            x2={validationBottomBorder}
+            y2='0%'
+            stroke={
+              validation === true
+                ? props.isValidColor || 'green'
+                : props.isNotValidColor || 'red'
+            }
+            strokeWidth={props.borderWidth * 4}
+          />
+          <AnimatedLineLeftValidation
+            x1='0%'
+            y1={validationLeftBorder}
+            x2='0%'
+            y2={validationLeftBorder}
+            stroke={
+              validation === true
+                ? props.isValidColor || 'green'
+                : props.isNotValidColor || 'red'
+            }
+            strokeWidth={props.borderWidth * 4}
+          />
+        </Svg>
+      </Animated.View>
       {props.isSelectable ? (
         <TouchableWithoutFeedback onPress={() => setModalVisible(true)}>
           <View pointerEvents='box-only'>
@@ -350,7 +472,6 @@ const AnimatedInput = (props) => {
                 props.onFocus && props.onFocus()
               }}
               onBlur={() => {
-                setValue(props.value)
                 if (props.onBlur) props.onBlur()
                 movePlaceHolderBack()
               }}
@@ -396,7 +517,6 @@ const AnimatedInput = (props) => {
             props.onFocus && props.onFocus()
           }}
           onBlur={() => {
-            setValue(props.value)
             if (props.onBlur) props.onBlur()
             movePlaceHolderBack()
           }}
