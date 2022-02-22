@@ -99,6 +99,14 @@ const Confirm = () => {
               setCountry(item.alpha3.toUpperCase())
               setFlagImg(item.alpha2)
             }}
+            searchBar
+            selectSearchFilterFunction={(term) =>
+              countries.filter(
+                (country) =>
+                  country.name.toLowerCase().includes(term.toLowerCase()) ||
+                  country.alpha3.includes(term.toLowerCase())
+              )
+            }
             data={countries}
             keyExtractor={(item) => item.alpha3}
             renderItem={({ item }) => (

@@ -13,6 +13,7 @@ import React, { useState, useRef, useEffect } from 'react'
 import Svg, { Line } from 'react-native-svg'
 import PropTypes from 'prop-types'
 import { CheckIcon } from 'native-base'
+import SearchBar from './SearchBar'
 
 const { width } = Dimensions.get('window')
 
@@ -24,8 +25,12 @@ const AnimatedInput = (props) => {
       ? props.width
       : width
   const height = props.fontSize * 1.9
+
   const [value, setValue] = useState(null)
   const [modalVisible, setModalVisible] = useState(false)
+  const [term, setTerm] = useState('')
+  const [dataList, setDataList] = useState(props.data)
+
   const AnimatedLineTopFocus = Animated.createAnimatedComponent(Line)
   const AnimatedLineRightFocus = Animated.createAnimatedComponent(Line)
   const AnimatedLineBottomFocus = Animated.createAnimatedComponent(Line)
@@ -163,6 +168,12 @@ const AnimatedInput = (props) => {
     }
   }, [props.value, movePlaceHolderBack])
 
+  useEffect(() => {
+    term.length && props.selectSearchFilterFunction
+      ? setDataList(props.selectSearchFilterFunction(term))
+      : setDataList(props.data)
+  }, [term, setDataList])
+
   return (
     <Animated.View
       style={{
@@ -192,11 +203,24 @@ const AnimatedInput = (props) => {
                   borderRadius: 50,
                 }}
               />
+              {props.searchBar && (
+                <SearchBar
+                  icon={'search'}
+                  term={term}
+                  onTermChange={(text) => setTerm(text)}
+                  onTermSubmit={() => setTerm(term)}
+                />
+              )}
               <FlatList
                 showsVerticalScrollIndicator={false}
                 style={{ width: '100%' }}
                 keyExtractor={props.keyExtractor}
-                data={props.data}
+                data={
+                  dataList
+                  // term.length && props.selectSearchFilterFunction
+                  //   ? props.selectSearchFilterFunction(term)
+                  //   : props.data
+                }
                 renderItem={(item) => (
                   <TouchableOpacity
                     style={{
@@ -423,7 +447,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     width: '100%',
-    height: '90%',
+    height: '87%',
     marginTop: 20,
     backgroundColor: 'white',
     borderRadius: 20,
@@ -456,6 +480,7 @@ AnimatedInput.propTypes = {
   selectColor: PropTypes.string,
   textInputColor: PropTypes.string,
   isSelectable: PropTypes.bool,
+  searchBar: PropTypes.bool,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   name: PropTypes.string,
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
@@ -467,6 +492,7 @@ AnimatedInput.propTypes = {
   onBlur: PropTypes.func,
   onFocus: PropTypes.func,
   onCloseSelect: PropTypes.func,
+  selectSearchFilterFunction: PropTypes.func,
 }
 
 export default AnimatedInput
