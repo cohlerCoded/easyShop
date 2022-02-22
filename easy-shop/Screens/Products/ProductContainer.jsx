@@ -15,6 +15,7 @@ import { Ionicons } from '@expo/vector-icons'
 import Banner from '../../Components/Banner'
 import CategoryFilter from './CategoryFilter'
 import productCategories from '../../assets/categories.json'
+import SearchBar from '../../Components/SearchBar'
 
 const { height } = Dimensions.get('window')
 
@@ -23,6 +24,7 @@ const ProductContainer = ({ navigation }) => {
   const [productsFiltered, setProductsFiltered] = useState([])
   const [categories, setCategories] = useState([])
   const [focus, setFocus] = useState()
+  const [searchTerm, setSearchTerm] = useState('')
   const [productsCtg, setProductsCtg] = useState([])
   const [active, setActive] = useState()
   const [initialState, setInitialState] = useState([])
@@ -81,9 +83,7 @@ const ProductContainer = ({ navigation }) => {
     <SafeAreaView style={styles.container}>
       <VStack
         alignSelf='center'
-        marginY={5}
         space={5}
-        width='80%'
         divider={
           <Box px='2'>
             <Divider />
@@ -91,48 +91,20 @@ const ProductContainer = ({ navigation }) => {
         }
       >
         <VStack width='100%' alignItems='center'>
-          <Input
-            placeholder='Search'
-            fontSize='16'
-            selectionColor='#eee'
-            color='#eee'
-            variant='filled'
-            width='100%'
-            bg='#707070'
-            borderRadius='10'
-            py='1'
-            px='2'
-            placeholderTextColor='#b8b8b8'
-            _hover={{ bg: 'gray.200', borderWidth: 0 }}
-            borderWidth='0'
-            _web={{
-              _focus: { style: { boxShadow: 'none' } },
+          <SearchBar
+            icon={'search'}
+            term={searchTerm}
+            onTermChange={(text) => {
+              setSearchTerm(text)
+              setFocus(true)
+              searchProduct(searchTerm)
             }}
-            InputLeftElement={
-              <Icon
-                ml='2'
-                size='5'
-                color='#b8b8b8'
-                as={<Ionicons name='ios-search' />}
-              />
-            }
-            InputRightElement={
-              focus && (
-                <Icon
-                  mr='2'
-                  size='5'
-                  color='#b8b8b8'
-                  as={<Ionicons name='ios-close' />}
-                  onPress={() => {
-                    Keyboard.dismiss()
-                    setFocus(false)
-                  }}
-                />
-              )
-            }
             onFocus={() => setFocus(true)}
-            // onBlur={() => setFocus(false)}
-            onChangeText={searchProduct}
+            closeSearch={() => {
+              setSearchTerm('')
+              setFocus(false)
+              Keyboard.dismiss()
+            }}
           />
         </VStack>
       </VStack>
