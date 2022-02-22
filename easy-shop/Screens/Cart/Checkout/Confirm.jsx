@@ -23,44 +23,6 @@ const Confirm = () => {
       >
         &#x1F4AF; Confirm &#x1F4AF;
       </Text>
-      {/* <Modal
-        animationType='slide'
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          setCountry(country)
-          setModalVisible(false)
-        }}
-      >
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <FlatList
-              showsVerticalScrollIndicator={false}
-              style={{ width: '100%' }}
-              keyExtractor={(item) => item.alpha3}
-              data={countries}
-              renderItem={({ item }) => (
-                <TouchableOpacity
-                  style={{ flexDirection: 'row', alignItems: 'center' }}
-                  onPress={() => {
-                    setModalVisible(false)
-                    setCountry(item.alpha3.toUpperCase())
-                    setFlagImg(item.alpha2)
-                  }}
-                >
-                  <Image
-                    source={{ uri: flags[item.alpha2] }}
-                    style={{ width: 24, height: 24 }}
-                  />
-                  <Text
-                    style={{ fontSize: 16, marginVertical: 5, marginLeft: 5 }}
-                  >{`${item.alpha3.toUpperCase()} - ${item.name}`}</Text>
-                </TouchableOpacity>
-              )}
-            />
-          </View>
-        </View>
-      </Modal> */}
       <View style={styles.centeredView}>
         <View
           style={{

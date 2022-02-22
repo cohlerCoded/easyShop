@@ -144,29 +144,33 @@ const AnimatedInput = (props) => {
         duration: 125,
       }),
     ]).start()
-    Animated.sequence([
-      Animated.timing(validationLeftBorderLine, {
-        toValue: 1,
-        useNativeDriver: true,
-        duration: 25,
-        // delay: 25,
-      }),
-      Animated.timing(validationBottomBorderLine, {
-        toValue: 1,
-        useNativeDriver: true,
-        duration: 125,
-      }),
-      Animated.timing(validationRightBorderLine, {
-        toValue: 1,
-        useNativeDriver: true,
-        duration: 25,
-      }),
-      Animated.timing(validationTopBorderLine, {
-        toValue: 1,
-        useNativeDriver: true,
-        duration: 125,
-      }),
-    ]).start()
+    {
+      validation === true ||
+        (validation === false &&
+          Animated.sequence([
+            Animated.timing(validationLeftBorderLine, {
+              toValue: 1,
+              useNativeDriver: true,
+              duration: 25,
+              // delay: 25,
+            }),
+            Animated.timing(validationBottomBorderLine, {
+              toValue: 1,
+              useNativeDriver: true,
+              duration: 125,
+            }),
+            Animated.timing(validationRightBorderLine, {
+              toValue: 1,
+              useNativeDriver: true,
+              duration: 25,
+            }),
+            Animated.timing(validationTopBorderLine, {
+              toValue: 1,
+              useNativeDriver: true,
+              duration: 125,
+            }),
+          ]).start())
+    }
   }
 
   const color = translationPlaceHolderColor.interpolate({
