@@ -259,6 +259,7 @@ const AnimatedInput = (props) => {
                 />
               )}
               <FlatList
+                keyboardShouldPersistTaps='handled'
                 showsVerticalScrollIndicator={false}
                 style={{ width: '100%' }}
                 keyExtractor={props.keyExtractor}

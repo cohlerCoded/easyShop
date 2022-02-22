@@ -55,6 +55,8 @@ const Checkout = ({ navigation }) => {
   return (
     <FormContainer title='&#x1F4E6; Checkout &#x1F4E6;'>
       <KeyboardAwareScrollView
+        keyboardShouldPersistTaps='handled'
+        nestedScrollEnabled={true}
         enableOnAndroid={true}
         viewIsInsideTabBar={true}
         extraHeight={200}
