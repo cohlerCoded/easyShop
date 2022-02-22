@@ -18,9 +18,13 @@ const Checkout = ({ navigation }) => {
   const [address1, setAddress1] = useState('')
   const [address2, setAddress2] = useState('')
   const [city, setCity] = useState('')
-  const [country, setCountry] = useState('')
   const [zip, setZip] = useState('')
   const [phone, setPhone] = useState('')
+  const [country, setCountry] = useState('')
+  const [flagImg, setFlagImg] = useState('')
+  useEffect(() => {
+    setCountry(country)
+  }, [country])
 
   const countryList = ({ item }) => (
     <Select.Item
@@ -47,8 +51,6 @@ const Checkout = ({ navigation }) => {
       setFirstName('')
     }
   }, [])
-
-  console.log(firstName)
 
   return (
     <FormContainer title='&#x1F4E6; Checkout &#x1F4E6;'>
@@ -176,114 +178,61 @@ const Checkout = ({ navigation }) => {
           }}
         >
           <HStack width='50%' alignItems='center'>
-            <Select
-              onOpen={() => setTimeout(() => setSelectFocus(true), 180)}
-              onClose={() => setSelectFocus(false)}
-              width='75%'
-              borderColor='#0369a1'
-              borderRadius={0}
-              borderWidth={2}
-              height={10}
-              selectedValue={country}
-              accessibilityLabel='Country'
-              placeholderTextColor='rgb(125, 211, 252)'
-              fontSize='16'
-              placeholder='Country'
-              _selectedItem={{
-                bg: 'teal.600',
-                endIcon: <CheckIcon size='5' />,
+            <Image
+              source={{ uri: flags[flagImg] || null }}
+              style={{
+                width: 24,
+                height: 24,
+                position: 'absolute',
+                zIndex: 100,
+                marginLeft: 5,
               }}
-              onValueChange={(itemValue) => {
-                setCountry(itemValue)
-                setSelectFocus(false)
-              }}
-            >
-              {countries.map((country, i) => (
-                <Select.Item
-                  key={i}
-                  leftIcon={
-                    <Image
-                      source={{ uri: flags[country.alpha2] }}
-                      style={{ width: 24, height: 24 }}
-                    />
-                  }
-                  label={
-                    selectFocus === true
-                      ? `${country.alpha2.toUpperCase()} - ${country.name}`
-                      : country.alpha2.toUpperCase()
-                  }
-                  value={country.alpha2.toUpperCase()}
-                />
-              ))}
-            </Select>
-          </HStack>
-          <HStack width='50%'>
+            />
             <AnimatedInput
+              style={{ paddingLeft: 35 }}
+              onPress={() => setModalVisible(true)}
               width='46%'
               fontSize={16}
               borderWidth={2}
-              placeHolder={'Phone'}
-              value={phone}
-              onChangeText={(text) => setPhone(text)}
-            />
-          </HStack>
-        </VStack>
-        <VStack
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'center',
-            marginHorizontal: 5,
-            width: '100%',
-          }}
-        >
-          <HStack width='50%' alignItems='center'>
-            <Select
-              onOpen={() => setTimeout(() => setSelectFocus(true), 180)}
-              onClose={() => setSelectFocus(false)}
-              width='75%'
-              borderColor='#0369a1'
-              borderRadius={0}
-              borderWidth={2}
-              height={10}
-              selectedValue={country}
-              accessibilityLabel='Country'
-              placeholderTextColor='rgb(125, 211, 252)'
-              fontSize='16'
-              placeholder='Country'
-              _selectedItem={{
-                bg: 'teal.600',
-                endIcon: <CheckIcon size='5' />,
+              placeHolder={'Country'}
+              value={country}
+              onChangeText={(text) => setCountry(text)}
+              onBlur={() => {
+                setCountry(country)
               }}
-              onValueChange={(itemValue) => {
-                setCountry(itemValue)
-                setSelectFocus(false)
+              isSelectable={true}
+              selectColor='rgba(125, 211, 252, 0.3)'
+              onCloseSelect={({ item }) => {
+                setCountry(item.alpha3.toUpperCase())
+                setFlagImg(item.alpha2)
               }}
-            >
-              {
-                <FlatList
-                  keyExtractor={(item) => item.id}
-                  data={countries}
-                  renderItem={countryList}
-                />
+              searchBar
+              selectSearchFilterFunction={(term) =>
+                countries.filter(
+                  (country) =>
+                    country.name.toLowerCase().includes(term.toLowerCase()) ||
+                    country.alpha3.includes(term.toLowerCase())
+                )
               }
-              {/* {countries.map((country, i) => (
-                <Select.Item
-                  key={i}
-                  leftIcon={
-                    <Image
-                      source={{ uri: flags[country.alpha2] }}
-                      style={{ width: 24, height: 24 }}
-                    />
-                  }
-                  label={
-                    selectFocus === true
-                      ? `${country.alpha2.toUpperCase()} - ${country.name}`
-                      : country.alpha2.toUpperCase()
-                  }
-                  value={country.alpha2.toUpperCase()}
-                />
-              ))} */}
-            </Select>
+              data={countries}
+              keyExtractor={(item) => item.alpha3}
+              renderItem={({ item }) => (
+                <>
+                  <Image
+                    source={{ uri: flags[item.alpha2] }}
+                    style={{ width: 24, height: 24 }}
+                  />
+                  <Text
+                    style={{
+                      fontSize: 16,
+                      marginVertical: 5,
+                      marginLeft: 5,
+                      width: '80%',
+                    }}
+                  >{`${item.alpha3.toUpperCase()} - ${item.name}`}</Text>
+                </>
+              )}
+            />
           </HStack>
           <HStack width='50%'>
             <AnimatedInput
