@@ -28,7 +28,7 @@ const AnimatedInput = (props) => {
 
   const [modalVisible, setModalVisible] = useState(false)
   const [term, setTerm] = useState('')
-  const [validation, setValidation] = useState(false)
+  const [validation, setValidation] = useState(null)
 
   const AnimatedLineTopFocus = Animated.createAnimatedComponent(Line)
   const AnimatedLineRightFocus = Animated.createAnimatedComponent(Line)
@@ -149,6 +149,7 @@ const AnimatedInput = (props) => {
         toValue: 1,
         useNativeDriver: true,
         duration: 25,
+        // delay: 25,
       }),
       Animated.timing(validationBottomBorderLine, {
         toValue: 1,
@@ -160,7 +161,7 @@ const AnimatedInput = (props) => {
         useNativeDriver: true,
         duration: 25,
       }),
-      Animated.timing(validationRightBorderLine, {
+      Animated.timing(validationTopBorderLine, {
         toValue: 1,
         useNativeDriver: true,
         duration: 125,
@@ -195,19 +196,19 @@ const AnimatedInput = (props) => {
 
   const validationTopBorder = validationTopBorderLine.interpolate({
     inputRange: [0, 1],
-    outputRange: ['0%', '100%'],
+    outputRange: ['100%', '0%'],
   })
   const validationRightBorder = validationRightBorderLine.interpolate({
     inputRange: [0, 1],
-    outputRange: ['0%', '100%'],
+    outputRange: ['100%', '0%'],
   })
   const validationBottomBorder = validationBottomBorderLine.interpolate({
     inputRange: [0, 1],
-    outputRange: ['100%', '0%'],
+    outputRange: ['0%', '100%'],
   })
   const validationLeftBorder = validationLeftBorderLine.interpolate({
     inputRange: [0, 1],
-    outputRange: ['100%', '0%'],
+    outputRange: ['0%', '100%'],
   })
 
   useEffect(() => {
@@ -383,9 +384,9 @@ const AnimatedInput = (props) => {
           }}
         >
           <AnimatedLineTopValidation
-            x1='0%'
+            x1={validationTopBorder}
             y1='0%'
-            x2={validationTopBorder}
+            x2='100%'
             y2='0%'
             stroke={
               validation === true
@@ -396,7 +397,7 @@ const AnimatedInput = (props) => {
           />
           <AnimatedLineRightValidation
             x1='100%'
-            y1='0%'
+            y1='100%'
             x2='100%'
             y2={validationRightBorder}
             stroke={
@@ -408,9 +409,9 @@ const AnimatedInput = (props) => {
           />
           <AnimatedLineBottomValidation
             x1='0%'
-            y1='0%'
+            y1='100%'
             x2={validationBottomBorder}
-            y2='0%'
+            y2='100%'
             stroke={
               validation === true
                 ? props.isValidColor || 'green'
@@ -420,7 +421,7 @@ const AnimatedInput = (props) => {
           />
           <AnimatedLineLeftValidation
             x1='0%'
-            y1={validationLeftBorder}
+            y1='0%'
             x2='0%'
             y2={validationLeftBorder}
             stroke={
@@ -547,7 +548,12 @@ const AnimatedInput = (props) => {
             textAlign: 'center',
             backgroundColor: props.backgroundColor || '#f1eff1',
             fontSize: props.fontSize || 16,
-            color: color,
+            color:
+              validation === true
+                ? props.isValidColor || 'green'
+                : validation === false
+                ? props.isNotValidColor || 'red'
+                : color,
           }}
         >
           {props.placeHolder}
