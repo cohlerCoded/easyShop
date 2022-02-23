@@ -86,6 +86,7 @@ const Checkout = ({ navigation }) => {
               fontSize={16}
               borderWidth={2}
               placeHolder={'Last Name'}
+              minLength={4}
               value={lastName}
               onChangeText={(text) => setLastName(text)}
             />

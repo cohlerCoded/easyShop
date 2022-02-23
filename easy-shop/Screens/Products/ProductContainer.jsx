@@ -100,6 +100,7 @@ const ProductContainer = ({ navigation }) => {
               searchProduct(searchTerm)
             }}
             onFocus={() => setFocus(true)}
+            onBlur={() => setFocus(false)}
             closeSearch={() => {
               setSearchTerm('')
               setFocus(false)
@@ -108,7 +109,7 @@ const ProductContainer = ({ navigation }) => {
           />
         </VStack>
       </VStack>
-      {focus == true ? (
+      {focus === true && searchTerm.length ? (
         <SearchedProducts
           productsFiltered={productsFiltered}
           navigation={navigation}

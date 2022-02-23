@@ -25,11 +25,14 @@ const SearchBar = ({
         style={styles.searchInput}
         value={term}
         onFocus={() => {
-          setIsFocused(true), onFocus()
+          onFocus && setIsFocused(true), onFocus()
         }}
         onChangeText={onTermChange}
         onEndEditing={onTermSubmit}
-        onBlur={onTermSubmit}
+        onBlur={() => {
+          onTermSubmit
+          setIsFocused(false)
+        }}
       />
       {isFocused && (
         <TouchableOpacity onPress={closeSearch} style={{ alignSelf: 'center' }}>

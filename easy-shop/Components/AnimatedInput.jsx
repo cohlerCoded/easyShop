@@ -28,8 +28,20 @@ const AnimatedInput = (props) => {
 
   const [modalVisible, setModalVisible] = useState(false)
   const [term, setTerm] = useState('')
-  const [validation, setValidation] = useState(null)
+  const [validation, setValidation] = useState()
+  const [validationColor, setValidationColor] = useState()
 
+  //VALIDATION
+
+  // const validate = () => {
+  //   if (props.minLength) {
+  //     props.value.length > props.minLength
+  //       ? setValidation(true)
+  //       : setValidation(false)
+  //   } else {
+  //     return
+  //   }
+  // }
   const AnimatedLineTopFocus = Animated.createAnimatedComponent(Line)
   const AnimatedLineRightFocus = Animated.createAnimatedComponent(Line)
   const AnimatedLineBottomFocus = Animated.createAnimatedComponent(Line)
@@ -102,6 +114,7 @@ const AnimatedInput = (props) => {
   }
 
   const movePlaceHolderBack = () => {
+    console.log(validationColor)
     Animated.timing(translationPlaceHolder, {
       toValue: props.value.length < 1 ? 0 : height / -1.5 || -20,
       useNativeDriver: true,
@@ -145,31 +158,30 @@ const AnimatedInput = (props) => {
       }),
     ]).start()
     {
-      validation === true ||
-        (validation === false &&
-          Animated.sequence([
-            Animated.timing(validationLeftBorderLine, {
-              toValue: 1,
-              useNativeDriver: true,
-              duration: 25,
-              // delay: 25,
-            }),
-            Animated.timing(validationBottomBorderLine, {
-              toValue: 1,
-              useNativeDriver: true,
-              duration: 125,
-            }),
-            Animated.timing(validationRightBorderLine, {
-              toValue: 1,
-              useNativeDriver: true,
-              duration: 25,
-            }),
-            Animated.timing(validationTopBorderLine, {
-              toValue: 1,
-              useNativeDriver: true,
-              duration: 125,
-            }),
-          ]).start())
+      validation !== undefined &&
+        Animated.sequence([
+          Animated.timing(validationLeftBorderLine, {
+            toValue: 1,
+            useNativeDriver: true,
+            duration: 25,
+            // delay: 25,
+          }),
+          Animated.timing(validationBottomBorderLine, {
+            toValue: 1,
+            useNativeDriver: true,
+            duration: 125,
+          }),
+          Animated.timing(validationRightBorderLine, {
+            toValue: 1,
+            useNativeDriver: true,
+            duration: 25,
+          }),
+          Animated.timing(validationTopBorderLine, {
+            toValue: 1,
+            useNativeDriver: true,
+            duration: 125,
+          }),
+        ]).start()
     }
   }
 
@@ -220,6 +232,19 @@ const AnimatedInput = (props) => {
       movePlaceHolderBack()
     }
   }, [props.value, movePlaceHolderBack])
+  useEffect(() => {
+    if (props.minLength && !props.isSelectable) {
+      if (props.value.length > props.minLength) {
+        setValidation(true)
+        setValidationColor(props.isValidColor || 'green')
+      } else {
+        setValidation(false)
+        setValidationColor(props.isNotValidColor || 'red')
+      }
+    } else {
+      return
+    }
+  }, [props.minLength, props.value, setValidation, setValidationColor])
 
   return (
     <Animated.View
@@ -452,7 +477,7 @@ const AnimatedInput = (props) => {
               secureTextEntry={props.secureTextEntry}
               keyboardType={props.keyboardType}
               selectionColor={props.placeHolderColor || '#7dd3fc'}
-              onEndEditing={props.onEndEditing}
+              // onEndEditing={props.onEndEditing}
               style={{
                 color: props.textInputColor || props.placeHolderColor,
                 paddingHorizontal: props.fontSize / 2,
@@ -553,12 +578,14 @@ const AnimatedInput = (props) => {
             textAlign: 'center',
             backgroundColor: props.backgroundColor || '#f1eff1',
             fontSize: props.fontSize || 16,
-            color:
-              validation === true
-                ? props.isValidColor || 'green'
-                : validation === false
-                ? props.isNotValidColor || 'red'
-                : color,
+            color: color,
+            // validation === undefined
+            //   ? color
+            //   : validation === true
+            //   ? props.isValidColor || 'green'
+            //   : validation === false
+            //   ? props.isNotValidColor || 'red'
+            //   : color,
           }}
         >
           {props.placeHolder}
