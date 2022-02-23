@@ -6,8 +6,10 @@ import {
   SafeAreaView,
   Dimensions,
   Keyboard,
+  BackHandler,
+  TouchableOpacity,
 } from 'react-native'
-import { Icon, Input, Text, VStack, Box, Divider } from 'native-base'
+import { Icon, Input, Text, VStack, Box, Divider, HStack } from 'native-base'
 import data from '../../assets/products.json'
 import ProductList from './ProductList'
 import SearchedProducts from './SearchedProducts'
@@ -78,7 +80,7 @@ const ProductContainer = ({ navigation }) => {
           ]
     }
   }
-
+  console.log(navigation.setParams)
   return (
     <SafeAreaView style={styles.container}>
       <VStack
@@ -90,23 +92,39 @@ const ProductContainer = ({ navigation }) => {
           </Box>
         }
       >
-        <VStack width='100%' alignItems='center'>
-          <SearchBar
-            icon={'search'}
-            term={searchTerm}
-            onTermChange={(text) => {
-              setSearchTerm(text)
-              setFocus(true)
-              searchProduct(searchTerm)
-            }}
-            onFocus={() => setFocus(true)}
-            onBlur={() => setFocus(false)}
-            closeSearch={() => {
-              setSearchTerm('')
-              setFocus(false)
-              Keyboard.dismiss()
-            }}
-          />
+        <VStack
+          style={{
+            width: '100%',
+            alignItems: 'center',
+            flexDirection: 'row',
+            justifyContent: 'space-evenly',
+          }}
+        >
+          {focus && (
+            <View>
+              <TouchableOpacity onPress={() => setFocus(false)}>
+                <Ionicons name='chevron-back' style={styles.backIcon} />
+              </TouchableOpacity>
+            </View>
+          )}
+          <View style={{ width: focus ? '95%' : '100%' }}>
+            <SearchBar
+              icon={'search'}
+              term={searchTerm}
+              onTermChange={(text) => {
+                setSearchTerm(text)
+                setFocus(true)
+                searchProduct(searchTerm)
+              }}
+              onFocus={() => setFocus(true)}
+              onBlur={() => setFocus(false)}
+              closeSearch={() => {
+                setSearchTerm('')
+                setFocus(false)
+                Keyboard.dismiss()
+              }}
+            />
+          </View>
         </VStack>
       </VStack>
       {focus === true && searchTerm.length ? (
@@ -181,6 +199,11 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     flexWrap: 'wrap',
     backgroundColor: 'gainsboro',
+  },
+  backIcon: {
+    color: 'black',
+    fontSize: 36,
+    marginLeft: 10,
   },
 })
 

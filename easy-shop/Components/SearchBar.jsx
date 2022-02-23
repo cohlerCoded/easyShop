@@ -25,7 +25,8 @@ const SearchBar = ({
         style={styles.searchInput}
         value={term}
         onFocus={() => {
-          onFocus && setIsFocused(true), onFocus()
+          setIsFocused(true)
+          onFocus && onFocus()
         }}
         onChangeText={onTermChange}
         onEndEditing={onTermSubmit}

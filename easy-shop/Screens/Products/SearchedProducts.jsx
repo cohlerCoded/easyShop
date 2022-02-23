@@ -16,8 +16,9 @@ const SearchedProducts = ({ productsFiltered, navigation }) => {
       extraScrollHeight={20}
     >
       {productsFiltered.length > 0 ? (
-        productsFiltered.map((item) => (
+        productsFiltered.map((item, i) => (
           <TouchableOpacity
+            key={i}
             onPress={() => {
               navigation.navigate('Product Details', { item })
             }}
