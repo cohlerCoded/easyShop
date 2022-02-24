@@ -114,7 +114,6 @@ const AnimatedInput = (props) => {
   }
 
   const movePlaceHolderBack = () => {
-    console.log(validationColor)
     Animated.timing(translationPlaceHolder, {
       toValue: props.value.length < 1 ? 0 : height / -1.5 || -20,
       useNativeDriver: true,
@@ -182,16 +181,23 @@ const AnimatedInput = (props) => {
             duration: 125,
           }),
         ]).start()
+      if (!props.isSelectable && props.minLength) {
+        validation === true
+          ? setValidationColor(props.isValidColor || 'green')
+          : setValidationColor(props.isNotValidColor || 'red')
+      }
     }
   }
 
-  const color = translationPlaceHolderColor.interpolate({
-    inputRange: [0, 1],
-    outputRange: [
-      props.placeHolderColor || 'rgb(125, 211, 252)',
-      props.borderColor || 'rgb(3, 105, 161)',
-    ],
-  })
+  const color =
+    validationColor ||
+    translationPlaceHolderColor.interpolate({
+      inputRange: [0, 1],
+      outputRange: [
+        props.placeHolderColor || 'rgb(125, 211, 252)',
+        props.borderColor || 'rgb(3, 105, 161)',
+      ],
+    })
 
   const topBorder = topBorderLine.interpolate({
     inputRange: [0, 1],
@@ -233,19 +239,23 @@ const AnimatedInput = (props) => {
     }
   }, [props.value, movePlaceHolderBack])
   useEffect(() => {
+    if (validation !== undefined) {
+      if (validation === false)
+        setValidationColor(props.isNotValidColor || 'red')
+      if (validation === true) setValidationColor(props.isValidColor || 'green')
+    }
     if (props.minLength && !props.isSelectable) {
       if (props.value.length > props.minLength) {
         setValidation(true)
-        setValidationColor(props.isValidColor || 'green')
       } else {
         setValidation(false)
-        setValidationColor(props.isNotValidColor || 'red')
       }
     } else {
       return
     }
-  }, [props.minLength, props.value, setValidation, setValidationColor])
+  }, [validation, setValidation, setValidationColor, movePlaceHolderBack])
 
+  console.log(validationColor)
   return (
     <Animated.View
       style={{
