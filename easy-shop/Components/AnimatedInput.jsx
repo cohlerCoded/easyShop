@@ -30,18 +30,10 @@ const AnimatedInput = (props) => {
   const [term, setTerm] = useState('')
   const [validation, setValidation] = useState()
   const [validationColor, setValidationColor] = useState()
+  const [borderColor, setBorderColor] = useState()
+  const [firstValidation, setFirstValidation] = useState(true)
 
-  //VALIDATION
-
-  // const validate = () => {
-  //   if (props.minLength) {
-  //     props.value.length > props.minLength
-  //       ? setValidation(true)
-  //       : setValidation(false)
-  //   } else {
-  //     return
-  //   }
-  // }
+  //TODO Focus color
   const AnimatedLineTopFocus = Animated.createAnimatedComponent(Line)
   const AnimatedLineRightFocus = Animated.createAnimatedComponent(Line)
   const AnimatedLineBottomFocus = Animated.createAnimatedComponent(Line)
@@ -67,6 +59,193 @@ const AnimatedInput = (props) => {
   const validationBottomBorderLine = useRef(new Animated.Value(0)).current
   const validationLeftBorderLine = useRef(new Animated.Value(0)).current
 
+  const color =
+    validationColor ||
+    translationPlaceHolderColor.interpolate({
+      inputRange: [0, 1],
+      outputRange: [
+        props.placeHolderColor || 'rgb(125, 211, 252)',
+        props.borderColor || 'rgb(3, 105, 161)',
+      ],
+    })
+
+  const topBorder = topBorderLine.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['0%', '100%'],
+  })
+  const rightBorder = rightBorderLine.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['0%', '100%'],
+  })
+  const bottomBorder = bottomBorderLine.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['100%', '0%'],
+  })
+  const leftBorder = leftBorderLine.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['100%', '0%'],
+  })
+
+  const validationTopBorder = validationTopBorderLine.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['100%', '0%'],
+  })
+  const validationRightBorder = validationRightBorderLine.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['100%', '0%'],
+  })
+  const validationBottomBorder = validationBottomBorderLine.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['0%', '100%'],
+  })
+  const validationLeftBorder = validationLeftBorderLine.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['0%', '100%'],
+  })
+
+  const validationSequence = () => {
+    if (!props.isSelectable) {
+      if (firstValidation) {
+        Animated.sequence([
+          Animated.timing(leftBorderLine, {
+            toValue: 0,
+            useNativeDriver: true,
+            duration: 25,
+          }),
+          Animated.timing(bottomBorderLine, {
+            toValue: 0,
+            useNativeDriver: true,
+            duration: 125,
+          }),
+          Animated.timing(rightBorderLine, {
+            toValue: 0,
+            useNativeDriver: true,
+            duration: 25,
+          }),
+          Animated.timing(topBorderLine, {
+            toValue: 0,
+            useNativeDriver: true,
+            duration: 125,
+          }),
+        ]).start()
+        Animated.sequence([
+          Animated.timing(validationLeftBorderLine, {
+            toValue: 1,
+            useNativeDriver: true,
+            duration: 25,
+            // delay: 25,
+          }),
+          Animated.timing(validationBottomBorderLine, {
+            toValue: 1,
+            useNativeDriver: true,
+            duration: 125,
+          }),
+          Animated.timing(validationRightBorderLine, {
+            toValue: 1,
+            useNativeDriver: true,
+            duration: 25,
+          }),
+          Animated.timing(validationTopBorderLine, {
+            toValue: 1,
+            useNativeDriver: true,
+            duration: 125,
+          }),
+        ]).start()
+        if (!props.isSelectable && props.minLength) {
+          validation === true
+            ? setValidationColor(props.isValidColor || 'green')
+            : setValidationColor(props.isNotValidColor || 'red')
+        }
+
+        setFirstValidation(false)
+      }
+    }
+  }
+
+  const changeValidationSequence = () => {
+    if (validationTopBorderLine === 1) {
+      Animated.sequence([
+        Animated.timing(validationTopBorderLine, {
+          toValue: 0,
+          useNativeDriver: true,
+          duration: 125,
+        }),
+        Animated.timing(validationRightBorderLine, {
+          toValue: 0,
+          useNativeDriver: true,
+          duration: 25,
+        }),
+        Animated.timing(validationBottomBorderLine, {
+          toValue: 0,
+          useNativeDriver: true,
+          duration: 125,
+        }),
+        Animated.timing(validationLeftBorderLine, {
+          toValue: 0,
+          useNativeDriver: true,
+          duration: 25,
+          // delay: 25,
+        }),
+      ]).start()
+      if (!props.isSelectable && props.minLength) {
+        validation === true
+          ? setValidationColor(props.isValidColor || 'green')
+          : setValidationColor(props.isNotValidColor || 'red')
+      }
+    } else {
+      Animated.sequence([
+        Animated.timing(leftBorderLine, {
+          toValue: 0,
+          useNativeDriver: true,
+          duration: 25,
+        }),
+        Animated.timing(bottomBorderLine, {
+          toValue: 0,
+          useNativeDriver: true,
+          duration: 125,
+        }),
+        Animated.timing(rightBorderLine, {
+          toValue: 0,
+          useNativeDriver: true,
+          duration: 25,
+        }),
+        Animated.timing(topBorderLine, {
+          toValue: 0,
+          useNativeDriver: true,
+          duration: 125,
+        }),
+      ]).start()
+      Animated.sequence([
+        Animated.timing(validationLeftBorderLine, {
+          toValue: 1,
+          useNativeDriver: true,
+          duration: 25,
+          // delay: 25,
+        }),
+        Animated.timing(validationBottomBorderLine, {
+          toValue: 1,
+          useNativeDriver: true,
+          duration: 125,
+        }),
+        Animated.timing(validationRightBorderLine, {
+          toValue: 1,
+          useNativeDriver: true,
+          duration: 25,
+        }),
+        Animated.timing(validationTopBorderLine, {
+          toValue: 1,
+          useNativeDriver: true,
+          duration: 125,
+        }),
+      ]).start()
+      if (!props.isSelectable && props.minLength) {
+        validation === true
+          ? setValidationColor(props.isValidColor || 'green')
+          : setValidationColor(props.isNotValidColor || 'red')
+      }
+    }
+  }
+
   const movePlaceHolder = () => {
     if (props.isSelectable) return
     Animated.timing(translationPlaceHolder, {
@@ -89,6 +268,7 @@ const AnimatedInput = (props) => {
       useNativeDriver: false,
       duration: 250,
     }).start()
+    if (validation !== undefined && firstValidation === false) return
     Animated.sequence([
       Animated.timing(topBorderLine, {
         toValue: 1,
@@ -156,82 +336,10 @@ const AnimatedInput = (props) => {
         duration: 125,
       }),
     ]).start()
-    {
-      validation !== undefined &&
-        Animated.sequence([
-          Animated.timing(validationLeftBorderLine, {
-            toValue: 1,
-            useNativeDriver: true,
-            duration: 25,
-            // delay: 25,
-          }),
-          Animated.timing(validationBottomBorderLine, {
-            toValue: 1,
-            useNativeDriver: true,
-            duration: 125,
-          }),
-          Animated.timing(validationRightBorderLine, {
-            toValue: 1,
-            useNativeDriver: true,
-            duration: 25,
-          }),
-          Animated.timing(validationTopBorderLine, {
-            toValue: 1,
-            useNativeDriver: true,
-            duration: 125,
-          }),
-        ]).start()
-      if (!props.isSelectable && props.minLength) {
-        validation === true
-          ? setValidationColor(props.isValidColor || 'green')
-          : setValidationColor(props.isNotValidColor || 'red')
-      }
+    if (validation) {
+      validationSequence()
     }
   }
-
-  const color =
-    validationColor ||
-    translationPlaceHolderColor.interpolate({
-      inputRange: [0, 1],
-      outputRange: [
-        props.placeHolderColor || 'rgb(125, 211, 252)',
-        props.borderColor || 'rgb(3, 105, 161)',
-      ],
-    })
-
-  const topBorder = topBorderLine.interpolate({
-    inputRange: [0, 1],
-    outputRange: ['0%', '100%'],
-  })
-  const rightBorder = rightBorderLine.interpolate({
-    inputRange: [0, 1],
-    outputRange: ['0%', '100%'],
-  })
-  const bottomBorder = bottomBorderLine.interpolate({
-    inputRange: [0, 1],
-    outputRange: ['100%', '0%'],
-  })
-  const leftBorder = leftBorderLine.interpolate({
-    inputRange: [0, 1],
-    outputRange: ['100%', '0%'],
-  })
-
-  const validationTopBorder = validationTopBorderLine.interpolate({
-    inputRange: [0, 1],
-    outputRange: ['100%', '0%'],
-  })
-  const validationRightBorder = validationRightBorderLine.interpolate({
-    inputRange: [0, 1],
-    outputRange: ['100%', '0%'],
-  })
-  const validationBottomBorder = validationBottomBorderLine.interpolate({
-    inputRange: [0, 1],
-    outputRange: ['0%', '100%'],
-  })
-  const validationLeftBorder = validationLeftBorderLine.interpolate({
-    inputRange: [0, 1],
-    outputRange: ['0%', '100%'],
-  })
 
   useEffect(() => {
     if (props.isSelectable) {
@@ -239,11 +347,6 @@ const AnimatedInput = (props) => {
     }
   }, [props.value, movePlaceHolderBack])
   useEffect(() => {
-    if (validation !== undefined) {
-      if (validation === false)
-        setValidationColor(props.isNotValidColor || 'red')
-      if (validation === true) setValidationColor(props.isValidColor || 'green')
-    }
     if (props.minLength && !props.isSelectable) {
       if (props.value.length > props.minLength) {
         setValidation(true)
@@ -253,9 +356,12 @@ const AnimatedInput = (props) => {
     } else {
       return
     }
-  }, [validation, setValidation, setValidationColor, movePlaceHolderBack])
+    if (firstValidation === false) {
+      changeValidationSequence()
+    }
+  }, [validation, setValidation, validationSequence])
 
-  console.log(validationColor)
+  // console.log(validation === !validation)
   return (
     <Animated.View
       style={{
@@ -428,11 +534,7 @@ const AnimatedInput = (props) => {
             y1='0%'
             x2='100%'
             y2='0%'
-            stroke={
-              validation === true
-                ? props.isValidColor || 'green'
-                : props.isNotValidColor || 'red'
-            }
+            stroke={validationColor}
             strokeWidth={props.borderWidth * 4}
           />
           <AnimatedLineRightValidation
@@ -440,11 +542,7 @@ const AnimatedInput = (props) => {
             y1='100%'
             x2='100%'
             y2={validationRightBorder}
-            stroke={
-              validation === true
-                ? props.isValidColor || 'green'
-                : props.isNotValidColor || 'red'
-            }
+            stroke={validationColor}
             strokeWidth={props.borderWidth * 4}
           />
           <AnimatedLineBottomValidation
@@ -452,11 +550,7 @@ const AnimatedInput = (props) => {
             y1='100%'
             x2={validationBottomBorder}
             y2='100%'
-            stroke={
-              validation === true
-                ? props.isValidColor || 'green'
-                : props.isNotValidColor || 'red'
-            }
+            stroke={validationColor}
             strokeWidth={props.borderWidth * 4}
           />
           <AnimatedLineLeftValidation
@@ -464,11 +558,7 @@ const AnimatedInput = (props) => {
             y1='0%'
             x2='0%'
             y2={validationLeftBorder}
-            stroke={
-              validation === true
-                ? props.isValidColor || 'green'
-                : props.isNotValidColor || 'red'
-            }
+            stroke={validationColor}
             strokeWidth={props.borderWidth * 4}
           />
         </Svg>
