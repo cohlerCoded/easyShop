@@ -133,7 +133,6 @@ const AnimatedInput = (props) => {
             toValue: 1,
             useNativeDriver: true,
             duration: 25,
-            // delay: 25,
           }),
           Animated.timing(validationBottomBorderLine, {
             toValue: 1,
@@ -163,85 +162,86 @@ const AnimatedInput = (props) => {
   }
 
   const changeValidationSequence = () => {
-    if (validationTopBorderLine === 1) {
-      Animated.sequence([
-        Animated.timing(validationTopBorderLine, {
-          toValue: 0,
-          useNativeDriver: true,
-          duration: 125,
-        }),
-        Animated.timing(validationRightBorderLine, {
-          toValue: 0,
-          useNativeDriver: true,
-          duration: 25,
-        }),
-        Animated.timing(validationBottomBorderLine, {
-          toValue: 0,
-          useNativeDriver: true,
-          duration: 125,
-        }),
-        Animated.timing(validationLeftBorderLine, {
-          toValue: 0,
-          useNativeDriver: true,
-          duration: 25,
-          // delay: 25,
-        }),
-      ]).start()
-      if (!props.isSelectable && props.minLength) {
-        validation === true
-          ? setValidationColor(props.isValidColor || 'green')
-          : setValidationColor(props.isNotValidColor || 'red')
-      }
-    } else {
-      Animated.sequence([
-        Animated.timing(leftBorderLine, {
-          toValue: 0,
-          useNativeDriver: true,
-          duration: 25,
-        }),
-        Animated.timing(bottomBorderLine, {
-          toValue: 0,
-          useNativeDriver: true,
-          duration: 125,
-        }),
-        Animated.timing(rightBorderLine, {
-          toValue: 0,
-          useNativeDriver: true,
-          duration: 25,
-        }),
-        Animated.timing(topBorderLine, {
-          toValue: 0,
-          useNativeDriver: true,
-          duration: 125,
-        }),
-      ]).start()
-      Animated.sequence([
-        Animated.timing(validationLeftBorderLine, {
-          toValue: 1,
-          useNativeDriver: true,
-          duration: 25,
-          // delay: 25,
-        }),
-        Animated.timing(validationBottomBorderLine, {
-          toValue: 1,
-          useNativeDriver: true,
-          duration: 125,
-        }),
-        Animated.timing(validationRightBorderLine, {
-          toValue: 1,
-          useNativeDriver: true,
-          duration: 25,
-        }),
-        Animated.timing(validationTopBorderLine, {
-          toValue: 1,
-          useNativeDriver: true,
-          duration: 125,
-        }),
-      ]).start()
-      if (!props.isSelectable && props.minLength) {
-        validation === true
-          ? setValidationColor(props.isValidColor || 'green')
-          : setValidationColor(props.isNotValidColor || 'red')
+    console.log(validationTopBorderLine)
+    if (firstValidation === false) {
+      if (validationTopBorderLine === 1) {
+        Animated.sequence([
+          Animated.timing(validationTopBorderLine, {
+            toValue: 0,
+            useNativeDriver: true,
+            duration: 125,
+          }),
+          Animated.timing(validationRightBorderLine, {
+            toValue: 0,
+            useNativeDriver: true,
+            duration: 25,
+          }),
+          Animated.timing(validationBottomBorderLine, {
+            toValue: 0,
+            useNativeDriver: true,
+            duration: 125,
+          }),
+          Animated.timing(validationLeftBorderLine, {
+            toValue: 0,
+            useNativeDriver: true,
+            duration: 25,
+          }),
+        ]).start()
+        if (!props.isSelectable && props.minLength) {
+          validation === true
+            ? setValidationColor(props.isValidColor || 'green')
+            : setValidationColor(props.isNotValidColor || 'red')
+        }
+      } else {
+        Animated.sequence([
+          Animated.timing(leftBorderLine, {
+            toValue: 0,
+            useNativeDriver: true,
+            duration: 25,
+          }),
+          Animated.timing(bottomBorderLine, {
+            toValue: 0,
+            useNativeDriver: true,
+            duration: 125,
+          }),
+          Animated.timing(rightBorderLine, {
+            toValue: 0,
+            useNativeDriver: true,
+            duration: 25,
+          }),
+          Animated.timing(topBorderLine, {
+            toValue: 0,
+            useNativeDriver: true,
+            duration: 125,
+          }),
+        ]).start()
+        Animated.sequence([
+          Animated.timing(validationLeftBorderLine, {
+            toValue: 1,
+            useNativeDriver: true,
+            duration: 25,
+          }),
+          Animated.timing(validationBottomBorderLine, {
+            toValue: 1,
+            useNativeDriver: true,
+            duration: 125,
+          }),
+          Animated.timing(validationRightBorderLine, {
+            toValue: 1,
+            useNativeDriver: true,
+            duration: 25,
+          }),
+          Animated.timing(validationTopBorderLine, {
+            toValue: 1,
+            useNativeDriver: true,
+            duration: 125,
+          }),
+        ]).start()
+        if (!props.isSelectable && props.minLength) {
+          validation === true
+            ? setValidationColor(props.isValidColor || 'green')
+            : setValidationColor(props.isNotValidColor || 'red')
+        }
       }
     }
   }
@@ -348,7 +348,7 @@ const AnimatedInput = (props) => {
   }, [props.value, movePlaceHolderBack])
   useEffect(() => {
     if (props.minLength && !props.isSelectable) {
-      if (props.value.length > props.minLength) {
+      if (props.value.length >= props.minLength) {
         setValidation(true)
       } else {
         setValidation(false)
@@ -359,9 +359,7 @@ const AnimatedInput = (props) => {
     if (firstValidation === false) {
       changeValidationSequence()
     }
-  }, [validation, setValidation, validationSequence])
-
-  // console.log(validation === !validation)
+  }, [validation, setValidation, changeValidationSequence])
   return (
     <Animated.View
       style={{
@@ -679,13 +677,6 @@ const AnimatedInput = (props) => {
             backgroundColor: props.backgroundColor || '#f1eff1',
             fontSize: props.fontSize || 16,
             color: color,
-            // validation === undefined
-            //   ? color
-            //   : validation === true
-            //   ? props.isValidColor || 'green'
-            //   : validation === false
-            //   ? props.isNotValidColor || 'red'
-            //   : color,
           }}
         >
           {props.placeHolder}
