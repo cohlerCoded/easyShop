@@ -28,7 +28,7 @@ const AnimatedInput = (props) => {
 
   const [modalVisible, setModalVisible] = useState(false)
   const [term, setTerm] = useState('')
-  const [validation, setValidation] = useState()
+  const [validation, setValidation] = useState(false)
   const [requiresValidation, setRequiresValidation] = useState(false)
   const [validationColor, setValidationColor] = useState()
   const [validationTrueColor, setValidationTrueColor] = useState(
@@ -206,16 +206,15 @@ const AnimatedInput = (props) => {
       }),
     ]).start()
 
-  const validationSequence = async () => {
+  const validationSequence = () => {
     if (!props.isSelectable) {
-      if (firstValidation) {
-        moveFocusLineCounterClockwise()
-        await moveValidationLineCounterClocwise()
-        if (!props.isSelectable && props.minLength) {
-          validation === true
-            ? setValidationColor(props.isValidColor || 'green')
-            : setValidationColor(props.isNotValidColor || 'red')
-        }
+      // if (firstValidation) {
+      moveFocusLineCounterClockwise()
+      moveValidationLineCounterClocwise()
+      if (!props.isSelectable && requiresValidation) {
+        if (validation === true) setValidationColor(validationTrueColor)
+        if (validation === false) setValidationColor(validationFalseColor)
+        // }
 
         setFirstValidation(false)
       }
@@ -228,9 +227,8 @@ const AnimatedInput = (props) => {
       moveFocusLineClocwise()
 
       if (!props.isSelectable && props.minLength) {
-        validation === true
-          ? setValidationColor(props.isValidColor || 'green')
-          : setValidationColor(props.isNotValidColor || 'red')
+        if (validation === true) setValidationColor(validationTrueColor)
+        if (validation === false) setValidationColor(validationFalseColor)
       }
     }
   }
@@ -285,9 +283,7 @@ const AnimatedInput = (props) => {
     if (!requiresValidation || firstValidation) {
       moveFocusLineCounterClockwise()
     }
-    if (validation) {
-      validationSequence()
-    }
+    validationSequence()
   }
 
   useEffect(() => {
@@ -300,20 +296,16 @@ const AnimatedInput = (props) => {
     if (props.minLength && !props.isSelectable) {
       if (props.value.length >= props.minLength) {
         setValidation(true)
-      } else {
-        setValidation(false)
       }
-    } else {
-      return
     }
-  }, [validation, setValidation, changeValidationSequence])
+  }, [validation, setValidation, props.value])
   useEffect(() => {
     if (firstValidation === false) {
       changeValidationSequence()
     }
   }, [validation])
 
-  console.log(validationTopBorderLine)
+  console.log(validation)
   return (
     <Animated.View
       style={{
