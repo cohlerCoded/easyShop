@@ -72,6 +72,7 @@ const Checkout = ({ navigation }) => {
         >
           <HStack width='50%'>
             <AnimatedInput
+              textInputColor={'#000'}
               width='46%'
               fontSize={16}
               borderWidth={2}
@@ -82,6 +83,7 @@ const Checkout = ({ navigation }) => {
           </HStack>
           <HStack width='50%'>
             <AnimatedInput
+              textInputColor={'#000'}
               width='46%'
               fontSize={16}
               borderWidth={2}
@@ -94,6 +96,7 @@ const Checkout = ({ navigation }) => {
         </VStack>
 
         <AnimatedInput
+          textInputColor={'#000'}
           fontSize={16}
           borderWidth={2}
           placeHolder={'Address 1'}
@@ -103,6 +106,7 @@ const Checkout = ({ navigation }) => {
         />
 
         <AnimatedInput
+          textInputColor={'#000'}
           marginHorizontal={5}
           fontSize={16}
           borderWidth={2}
@@ -120,6 +124,7 @@ const Checkout = ({ navigation }) => {
         >
           <HStack width='50%'>
             <AnimatedInput
+              textInputColor={'#000'}
               width='46%'
               fontSize={16}
               borderWidth={2}
@@ -163,6 +168,7 @@ const Checkout = ({ navigation }) => {
           </HStack>
           <HStack width='25%'>
             <AnimatedInput
+              textInputColor={'#000'}
               width='20%'
               fontSize={16}
               borderWidth={2}
@@ -192,6 +198,7 @@ const Checkout = ({ navigation }) => {
               }}
             />
             <AnimatedInput
+              textInputColor={'#000'}
               style={{ paddingLeft: 35 }}
               onPress={() => setModalVisible(true)}
               width='46%'
@@ -239,6 +246,7 @@ const Checkout = ({ navigation }) => {
           </HStack>
           <HStack width='50%'>
             <AnimatedInput
+              textInputColor={'#000'}
               width='46%'
               fontSize={16}
               borderWidth={2}
