@@ -29,6 +29,7 @@ const AnimatedInput = (props) => {
   const [modalVisible, setModalVisible] = useState(false)
   const [term, setTerm] = useState('')
   const [validation, setValidation] = useState(false)
+  const [validationStore, setValidationStore] = useState(false)
   const [requiresValidation, setRequiresValidation] = useState(false)
   const [validationColor, setValidationColor] = useState()
   const [validationTrueColor, setValidationTrueColor] = useState(
@@ -222,6 +223,8 @@ const AnimatedInput = (props) => {
   }
 
   const changeValidationSequence = async () => {
+    console.log('validation changed')
+    return setValidationStore(validation)
     if (firstValidation === false) {
       await moveValidationLineClocwise()
       moveFocusLineClocwise()
@@ -296,14 +299,23 @@ const AnimatedInput = (props) => {
     if (props.minLength && !props.isSelectable) {
       if (props.value.length >= props.minLength) {
         setValidation(true)
+      } else {
+        setValidation(false)
       }
     }
-  }, [validation, setValidation, props.value])
-  useEffect(() => {
-    if (firstValidation === false) {
+    if (
+      !firstValidation &&
+      requiresValidation &&
+      validation !== validationStore
+    ) {
       changeValidationSequence()
     }
-  }, [validation])
+  }, [validation, setValidation, props.value])
+  // useEffect(() => {
+  //   if (firstValidation === false) {
+  //     changeValidationSequence()
+  //   }
+  // }, [validation])
 
   console.log(validation)
   return (
