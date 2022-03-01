@@ -211,18 +211,13 @@ const AnimatedInput = (props) => {
     ]).start()
 
   const validationSequence = () => {
-    if (!props.isSelectable) {
-      // if (firstValidation) {
-      // moveFocusLineCounterClockwise()
-      moveValidationLineCounterClocwise()
-      if (!props.isSelectable && requiresValidation) {
-        if (validation === true) setValidationColor(validationTrueColor)
-        if (validation === false) setValidationColor(validationFalseColor)
-        // }
-
-        setFirstValidation(false)
-      }
+    moveValidationLineCounterClocwise()
+    if (!props.isSelectable && requiresValidation) {
+      if (validation === true) setValidationColor(validationTrueColor)
+      if (validation === false) setValidationColor(validationFalseColor)
     }
+
+    setFirstValidation(false)
   }
 
   const changeValidationSequence = () => {
@@ -239,14 +234,10 @@ const AnimatedInput = (props) => {
       moveValidationLineCounterClocwise()
       moveFocusLineCounterClockwise()
     }
+    if (validation === true) setValidationColor(validationTrueColor)
+    if (validation === false) setValidationColor(validationFalseColor)
     console.log('validation changed')
     return setValidationStore(validation)
-    if (firstValidation === false) {
-      if (!props.isSelectable && props.minLength) {
-        if (validation === true) setValidationColor(validationTrueColor)
-        if (validation === false) setValidationColor(validationFalseColor)
-      }
-    }
   }
 
   const movePlaceHolder = () => {
@@ -332,13 +323,8 @@ const AnimatedInput = (props) => {
       changeValidationSequence()
     }
   }, [validation, setValidation, props.value])
-  // useEffect(() => {
-  //   if (firstValidation === false) {
-  //     changeValidationSequence()
-  //   }
-  // }, [validation])
 
-  console.log(props.placeHolder, focusBorderValue)
+  props.placeHolder === 'Last Name' && console.log(requiresValidation)
   return (
     <Animated.View
       style={{
@@ -511,7 +497,7 @@ const AnimatedInput = (props) => {
             y1='0%'
             x2='100%'
             y2='0%'
-            stroke={validationColor}
+            stroke={validationBorderColor}
             strokeWidth={props.borderWidth * 4}
           />
           <AnimatedLineRightValidation
@@ -519,7 +505,7 @@ const AnimatedInput = (props) => {
             y1='100%'
             x2='100%'
             y2={validationRightBorder}
-            stroke={validationColor}
+            stroke={validationBorderColor}
             strokeWidth={props.borderWidth * 4}
           />
           <AnimatedLineBottomValidation
@@ -527,7 +513,7 @@ const AnimatedInput = (props) => {
             y1='100%'
             x2={validationBottomBorder}
             y2='100%'
-            stroke={validationColor}
+            stroke={validationBorderColor}
             strokeWidth={props.borderWidth * 4}
           />
           <AnimatedLineLeftValidation
@@ -535,7 +521,7 @@ const AnimatedInput = (props) => {
             y1='0%'
             x2='0%'
             y2={validationLeftBorder}
-            stroke={validationColor}
+            stroke={validationBorderColor}
             strokeWidth={props.borderWidth * 4}
           />
         </Svg>
@@ -553,7 +539,7 @@ const AnimatedInput = (props) => {
               onChangeText={props.onChangeText}
               secureTextEntry={props.secureTextEntry}
               keyboardType={props.keyboardType}
-              selectionColor={focusBorderColor}
+              selectionColor={props.placeHolderColor || 'rgb(125, 211, 252)'}
               // onEndEditing={props.onEndEditing}
               style={{
                 color: props.textInputColor || focusBorderColor,
@@ -598,7 +584,7 @@ const AnimatedInput = (props) => {
           onChangeText={props.onChangeText}
           secureTextEntry={props.secureTextEntry}
           keyboardType={props.keyboardType}
-          selectionColor={focusBorderColor}
+          selectionColor={props.placeHolderColor || 'rgb(125, 211, 252)'}
           onEndEditing={props.onEndEditing}
           style={{
             color: props.textInputColor || focusBorderColor,
