@@ -211,13 +211,12 @@ const AnimatedInput = (props) => {
     ]).start()
 
   const validationSequence = () => {
-    moveValidationLineCounterClocwise()
     if (!props.isSelectable && requiresValidation) {
       if (validation === true) setValidationColor(validationTrueColor)
       if (validation === false) setValidationColor(validationFalseColor)
+      setFirstValidation(false)
+      changeValidationSequence()
     }
-
-    setFirstValidation(false)
   }
 
   const changeValidationSequence = () => {
@@ -235,13 +234,7 @@ const AnimatedInput = (props) => {
       moveFocusLineCounterClockwise()
     }
     setValidationColor(validation ? validationTrueColor : validationFalseColor)
-
-    console.log('validation changed')
     return setValidationStore(validation)
-    if (firstValidation === false) {
-      if (!props.isSelectable && props.minLength) {
-      }
-    }
   }
 
   const movePlaceHolder = () => {
@@ -294,7 +287,7 @@ const AnimatedInput = (props) => {
     if (!requiresValidation || firstValidation) {
       moveFocusLineCounterClockwise()
     }
-    validationSequence()
+    firstValidation && validationSequence()
   }
 
   useEffect(() => {
@@ -328,7 +321,6 @@ const AnimatedInput = (props) => {
     }
   }, [validation, setValidation, props.value])
 
-  props.placeHolder === 'Last Name' && console.log(requiresValidation)
   return (
     <Animated.View
       style={{
