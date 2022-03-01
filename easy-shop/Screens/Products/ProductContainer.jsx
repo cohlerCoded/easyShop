@@ -187,7 +187,7 @@ const ProductContainer = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    height: height - 230,
+    height: height - 215,
   },
   center: {
     alignItems: 'center',

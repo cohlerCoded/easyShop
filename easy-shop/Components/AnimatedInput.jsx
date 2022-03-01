@@ -234,10 +234,14 @@ const AnimatedInput = (props) => {
       moveValidationLineCounterClocwise()
       moveFocusLineCounterClockwise()
     }
-    if (validation === true) setValidationColor(validationTrueColor)
-    if (validation === false) setValidationColor(validationFalseColor)
+    setValidationColor(validation ? validationTrueColor : validationFalseColor)
+
     console.log('validation changed')
     return setValidationStore(validation)
+    if (firstValidation === false) {
+      if (!props.isSelectable && props.minLength) {
+      }
+    }
   }
 
   const movePlaceHolder = () => {
