@@ -83,6 +83,7 @@ const Checkout = ({ navigation }) => {
           </HStack>
           <HStack width='50%'>
             <AnimatedInput
+              required
               textInputColor={'#000'}
               width='46%'
               fontSize={16}

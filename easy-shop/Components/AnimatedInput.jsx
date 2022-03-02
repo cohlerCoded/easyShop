@@ -8,6 +8,7 @@ import {
   Modal,
   FlatList,
   TouchableOpacity,
+  Text,
 } from 'react-native'
 import React, { useState, useRef, useEffect } from 'react'
 import Svg, { Line } from 'react-native-svg'
@@ -643,6 +644,35 @@ const AnimatedInput = (props) => {
           {props.placeHolder}
         </Animated.Text>
       </Animated.View>
+      <Text
+        style={{
+          position: 'absolute',
+          bottom: -2,
+          left: 5,
+          fontSize: 12,
+          color: validationFalseColor,
+        }}
+      >
+        {props.required &&
+          !firstValidation &&
+          props.value.length === 0 &&
+          'Required Field'}
+      </Text>
+      <Text
+        style={{
+          position: 'absolute',
+          bottom: -2,
+          left: 5,
+          fontSize: 12,
+          color: validationFalseColor,
+        }}
+      >
+        {props.minLength &&
+          !firstValidation &&
+          props.value.length !== 0 &&
+          props.value.length < props.minLength &&
+          `Must be at least ${props.minLength} characters.`}
+      </Text>
     </Animated.View>
   )
 }
@@ -691,6 +721,7 @@ AnimatedInput.propTypes = {
   textInputColor: PropTypes.string,
   isSelectable: PropTypes.bool,
   searchBar: PropTypes.bool,
+  required: PropTypes.bool,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   name: PropTypes.string,
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
