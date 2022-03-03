@@ -712,7 +712,6 @@ AnimatedInput.propTypes = {
   textInputColor: PropTypes.string,
   isSelectable: PropTypes.bool,
   searchBar: PropTypes.bool,
-  required: PropTypes.bool,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   name: PropTypes.string,
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
@@ -725,6 +724,18 @@ AnimatedInput.propTypes = {
   onFocus: PropTypes.func,
   onCloseSelect: PropTypes.func,
   selectSearchFilterFunction: PropTypes.func,
+  //Validation
+  required: PropTypes.bool,
+  minLength: PropTypes.number,
+  maxLength: PropTypes.number,
+  hasUpperCase: PropTypes.bool,
+  hasLowerCase: PropTypes.bool,
+  hasNumber: PropTypes.bool,
+  hasSpecialCharacter: PropTypes.bool,
+  isEmail: PropTypes.bool,
+  isPhone: PropTypes.bool,
+  isDate: PropTypes.bool,
+  isNumber: PropTypes.bool,
 }
 
 export default AnimatedInput
