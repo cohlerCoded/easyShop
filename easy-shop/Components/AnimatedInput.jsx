@@ -644,29 +644,13 @@ const AnimatedInput = (props) => {
           {props.placeHolder}
         </Animated.Text>
       </Animated.View>
-      <Text
-        style={{
-          position: 'absolute',
-          bottom: -2,
-          left: 5,
-          fontSize: 12,
-          color: validationFalseColor,
-        }}
-      >
+      <Text style={styles.errorMessage}>
         {props.required &&
           !firstValidation &&
           props.value.length === 0 &&
           'Required Field'}
       </Text>
-      <Text
-        style={{
-          position: 'absolute',
-          bottom: -2,
-          left: 5,
-          fontSize: 12,
-          color: validationFalseColor,
-        }}
-      >
+      <Text style={styles.errorMessage}>
         {props.minLength &&
           !firstValidation &&
           props.value.length !== 0 &&
@@ -704,6 +688,13 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
+  },
+  errorMessage: {
+    position: 'absolute',
+    bottom: -2,
+    left: 5,
+    fontSize: 12,
+    color: validationFalseColor,
   },
 })
 
