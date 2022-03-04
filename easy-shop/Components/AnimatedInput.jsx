@@ -18,6 +18,24 @@ import SearchBar from './SearchBar'
 
 const { width } = Dimensions.get('window')
 
+//HELPER FUNCTIONS
+const phoneNumberFormater = (number) => {
+  return number.length <= 1 && number[0] === '('
+    ? ''
+    : number.length === 1
+    ? '(' + number
+    : number.length === 4
+    ? number + ') '
+    : number.length <= 5 && number[4] === ')'
+    ? number.slice(0, 4)
+    : number.length === 9
+    ? number + ' - '
+    : number.length <= 11 && number[10] === '-'
+    ? number.slice(0, 9)
+    : number
+}
+
+//COMPONENT
 const AnimatedInput = (props) => {
   const inputWidth =
     props.width && typeof props.width === 'string'
@@ -29,6 +47,7 @@ const AnimatedInput = (props) => {
 
   const [modalVisible, setModalVisible] = useState(false)
   const [term, setTerm] = useState('')
+  const [localValue, setLocalValue] = useState('')
   const [validation, setValidation] = useState(false)
   const [validationStore, setValidationStore] = useState(false)
   const [requiresValidation, setRequiresValidation] = useState(false)
@@ -290,6 +309,9 @@ const AnimatedInput = (props) => {
     }
     firstValidation && validationSequence()
   }
+  useEffect(() => {
+    setValidationFalseColor(props.isNotValidColor || 'red')
+  }, [])
 
   useEffect(() => {
     if (props.isSelectable) {
@@ -321,7 +343,7 @@ const AnimatedInput = (props) => {
       changeValidationSequence()
     }
   }, [validation, setValidation, props.value])
-
+  props.placeHolder === 'Phone' && console.log(phoneNumberFormater(props.value))
   return (
     <Animated.View
       style={{
@@ -531,9 +553,11 @@ const AnimatedInput = (props) => {
               placeholder={null}
               name={props.name}
               id={props.id}
-              value={props.value}
+              value={
+                props.isPhone ? phoneNumberFormater(localValue) : props.value
+              }
               autoCorrect={props.autoCorrect}
-              onChangeText={props.onChangeText}
+              onChangeText={props.isPhone ? setLocalValue : props.onChangeText}
               secureTextEntry={props.secureTextEntry}
               keyboardType={props.keyboardType}
               selectionColor={props.placeHolderColor || 'rgb(125, 211, 252)'}
@@ -576,9 +600,9 @@ const AnimatedInput = (props) => {
           placeholder={null}
           name={props.name}
           id={props.id}
-          value={props.value}
+          value={props.isPhone ? phoneNumberFormater(localValue) : props.value}
           autoCorrect={props.autoCorrect}
-          onChangeText={props.onChangeText}
+          onChangeText={props.isPhone ? setLocalValue : props.onChangeText}
           secureTextEntry={props.secureTextEntry}
           keyboardType={props.keyboardType}
           selectionColor={props.placeHolderColor || 'rgb(125, 211, 252)'}
@@ -694,7 +718,7 @@ const styles = StyleSheet.create({
     bottom: -2,
     left: 5,
     fontSize: 12,
-    color: validationFalseColor,
+    color: 'red',
   },
 })
 

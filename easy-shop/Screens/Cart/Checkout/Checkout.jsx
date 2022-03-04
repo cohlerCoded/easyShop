@@ -173,6 +173,7 @@ const Checkout = ({ navigation }) => {
               width='20%'
               fontSize={16}
               borderWidth={2}
+              keyboardType='numeric'
               placeHolder={'Zip'}
               value={zip}
               onChangeText={(text) => setZip(text)}
@@ -247,12 +248,14 @@ const Checkout = ({ navigation }) => {
           </HStack>
           <HStack width='50%'>
             <AnimatedInput
+              isPhone={true}
               textInputColor={'#000'}
               width='46%'
               fontSize={16}
               borderWidth={2}
               placeHolder={'Phone'}
               value={phone}
+              keyboardType='numeric'
               onChangeText={(text) => setPhone(text)}
             />
           </HStack>
