@@ -134,12 +134,12 @@ const Checkout = ({ navigation }) => {
               onChangeText={(text) => setCity(text)}
             />
           </HStack>
-          <HStack width='25%'>
+          <HStack width='25%' marginHorizontal={7.5}>
             <AnimatedInput
               textInputColor={'#000'}
-              style={{ paddingLeft: 35, marginHorizontal: 5 }}
+              style={{ paddingLeft: 35 }}
               onPress={() => setModalVisible(true)}
-              width='80%'
+              width='25%'
               fontSize={16}
               borderWidth={2}
               placeHolder={'State'}
