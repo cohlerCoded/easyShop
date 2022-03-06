@@ -605,6 +605,7 @@ const AnimatedInput = (props) => {
               ? (text) => props.onChangeText(phoneNumberFormater(text))
               : props.onChangeText
           }
+          maxLength={props.isPhone ? 16 : props.maxLength}
           secureTextEntry={props.secureTextEntry}
           keyboardType={props.keyboardType}
           selectionColor={props.placeHolderColor || 'rgb(125, 211, 252)'}

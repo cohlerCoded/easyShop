@@ -173,6 +173,7 @@ const Checkout = ({ navigation }) => {
               width='20%'
               fontSize={16}
               borderWidth={2}
+              maxLength={5}
               keyboardType='numeric'
               placeHolder={'Zip'}
               value={zip}
