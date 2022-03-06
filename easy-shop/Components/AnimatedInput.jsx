@@ -343,7 +343,7 @@ const AnimatedInput = (props) => {
       changeValidationSequence()
     }
   }, [validation, setValidation, props.value])
-  props.placeHolder === 'Phone' && console.log(phoneNumberFormater(props.value))
+  props.placeHolder === 'Phone' && console.log(props.onChangeText)
   return (
     <Animated.View
       style={{
@@ -553,11 +553,9 @@ const AnimatedInput = (props) => {
               placeholder={null}
               name={props.name}
               id={props.id}
-              value={
-                props.isPhone ? phoneNumberFormater(localValue) : props.value
-              }
+              value={props.value}
               autoCorrect={props.autoCorrect}
-              onChangeText={props.isPhone ? setLocalValue : props.onChangeText}
+              onChangeText={props.onChangeText}
               secureTextEntry={props.secureTextEntry}
               keyboardType={props.keyboardType}
               selectionColor={props.placeHolderColor || 'rgb(125, 211, 252)'}
@@ -600,9 +598,13 @@ const AnimatedInput = (props) => {
           placeholder={null}
           name={props.name}
           id={props.id}
-          value={props.isPhone ? phoneNumberFormater(localValue) : props.value}
+          value={props.value}
           autoCorrect={props.autoCorrect}
-          onChangeText={props.isPhone ? setLocalValue : props.onChangeText}
+          onChangeText={
+            props.isPhone
+              ? (text) => props.onChangeText(phoneNumberFormater(text))
+              : props.onChangeText
+          }
           secureTextEntry={props.secureTextEntry}
           keyboardType={props.keyboardType}
           selectionColor={props.placeHolderColor || 'rgb(125, 211, 252)'}

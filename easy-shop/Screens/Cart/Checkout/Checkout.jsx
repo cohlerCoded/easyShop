@@ -256,7 +256,7 @@ const Checkout = ({ navigation }) => {
               placeHolder={'Phone'}
               value={phone}
               keyboardType='numeric'
-              onChangeText={(text) => setPhone(text)}
+              onChangeText={setPhone}
             />
           </HStack>
         </VStack>
