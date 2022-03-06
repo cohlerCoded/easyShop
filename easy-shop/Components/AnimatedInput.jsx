@@ -343,7 +343,7 @@ const AnimatedInput = (props) => {
       changeValidationSequence()
     }
   }, [validation, setValidation, props.value])
-  props.placeHolder === 'Phone' && console.log(props.onChangeText)
+  console.log(props.selectedValue)
   return (
     <Animated.View
       style={{
@@ -400,8 +400,8 @@ const AnimatedInput = (props) => {
                       alignItems: 'center',
                       borderRadius: 5,
                       backgroundColor:
-                        props.value === item.item.alpha3.toUpperCase()
-                          ? props.selectColor
+                        props.value === props.selectedValue(item)
+                          ? props.selectColor || 'rgba(125, 211, 252, 0.3)'
                           : 'white',
                     }}
                     onPress={() => {
@@ -410,7 +410,7 @@ const AnimatedInput = (props) => {
                     }}
                   >
                     {props.renderItem(item)}
-                    {props.value === item.item.alpha3.toUpperCase() && (
+                    {props.value === props.selectedValue(item) && (
                       <CheckIcon size='5' style={{ marginLeft: 10 }} />
                     )}
                   </TouchableOpacity>
@@ -740,6 +740,7 @@ AnimatedInput.propTypes = {
   isSelectable: PropTypes.bool,
   searchBar: PropTypes.bool,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  selectedValue: PropTypes.func,
   name: PropTypes.string,
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   autoCorrect: PropTypes.bool,
@@ -752,6 +753,7 @@ AnimatedInput.propTypes = {
   onCloseSelect: PropTypes.func,
   selectSearchFilterFunction: PropTypes.func,
   //Validation
+  //!!!TODO!!!//
   required: PropTypes.bool,
   minLength: PropTypes.number,
   maxLength: PropTypes.number,

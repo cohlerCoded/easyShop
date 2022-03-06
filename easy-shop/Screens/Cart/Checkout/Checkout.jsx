@@ -123,7 +123,7 @@ const Checkout = ({ navigation }) => {
             marginHorizontal: 5,
           }}
         >
-          <HStack width='50%'>
+          <HStack width='46%'>
             <AnimatedInput
               textInputColor={'#000'}
               width='46%'
@@ -135,37 +135,40 @@ const Checkout = ({ navigation }) => {
             />
           </HStack>
           <HStack width='25%'>
-            <Select
-              onOpen={() => setTimeout(() => setSelectFocus(true), 180)}
-              onClose={() => setSelectFocus(false)}
-              marginLeft={-0.5}
+            <AnimatedInput
+              textInputColor={'#000'}
+              style={{ paddingLeft: 35, marginHorizontal: 5 }}
+              onPress={() => setModalVisible(true)}
               width='80%'
-              borderColor='#0369a1'
-              borderRadius={0}
+              fontSize={16}
               borderWidth={2}
-              height={10}
-              selectedValue={state}
-              accessibilityLabel='State'
-              placeholderTextColor='rgb(125, 211, 252)'
-              fontSize='16'
-              placeholder='State'
-              _selectedItem={{
-                bg: 'teal.600',
-                endIcon: <CheckIcon size='5' />,
+              placeHolder={'State'}
+              value={state}
+              selectedValue={({ item }) => item.slice(0, 2)}
+              onChangeText={setState}
+              onBlur={setState}
+              isSelectable={true}
+              selectColor='rgba(125, 211, 252, 0.3)'
+              onCloseSelect={({ item }) => {
+                setState(item.slice(0, 2))
               }}
-              onValueChange={(itemValue) => {
-                setState(itemValue)
-                setSelectFocus(false)
-              }}
-            >
-              {states.map((state, i) => (
-                <Select.Item
-                  label={selectFocus === true ? state : state.slice(0, 2)}
-                  value={state}
-                  key={i}
-                />
-              ))}
-            </Select>
+              data={states}
+              keyExtractor={(item) => item}
+              renderItem={({ item }) => (
+                <>
+                  <Text
+                    style={{
+                      fontSize: 16,
+                      marginVertical: 5,
+                      marginLeft: 5,
+                      width: '80%',
+                    }}
+                  >
+                    {item}
+                  </Text>
+                </>
+              )}
+            />
           </HStack>
           <HStack width='25%'>
             <AnimatedInput
@@ -214,6 +217,7 @@ const Checkout = ({ navigation }) => {
                 setCountry(country)
               }}
               isSelectable={true}
+              selectedValue={({ item }) => item.alpha3.toUpperCase()}
               selectColor='rgba(125, 211, 252, 0.3)'
               onCloseSelect={({ item }) => {
                 setCountry(item.alpha3.toUpperCase())
