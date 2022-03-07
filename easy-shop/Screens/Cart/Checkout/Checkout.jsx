@@ -11,7 +11,7 @@ import { states } from '../../../assets/states'
 
 const Checkout = ({ navigation }) => {
   const cartItems = useSelector((state) => state.cartItems)
-  const [selectFocus, setSelectFocus] = useState(false)
+
   const [state, setState] = useState('')
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
@@ -25,23 +25,6 @@ const Checkout = ({ navigation }) => {
   useEffect(() => {
     setCountry(country)
   }, [country])
-
-  const countryList = ({ item }) => (
-    <Select.Item
-      leftIcon={
-        <Image
-          source={{ uri: flags[item.alpha2] }}
-          style={{ width: 24, height: 24 }}
-        />
-      }
-      label={
-        selectFocus === true
-          ? `${item.alpha2.toUpperCase()} - ${item.name}`
-          : item.alpha2.toUpperCase()
-      }
-      value={item.alpha2.toUpperCase()}
-    />
-  )
 
   useEffect(() => {
     setState('')

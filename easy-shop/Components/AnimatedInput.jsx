@@ -343,7 +343,7 @@ const AnimatedInput = (props) => {
       changeValidationSequence()
     }
   }, [validation, setValidation, props.value])
-  console.log(props.selectedValue)
+
   return (
     <Animated.View
       style={{
