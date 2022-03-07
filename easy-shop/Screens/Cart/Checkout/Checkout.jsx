@@ -12,12 +12,13 @@ import { states } from '../../../assets/states'
 const Checkout = ({ navigation }) => {
   const cartItems = useSelector((state) => state.cartItems)
 
-  const [state, setState] = useState('')
+  const [orderItems, setOrderItems] = useState()
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
   const [address1, setAddress1] = useState('')
   const [address2, setAddress2] = useState('')
   const [city, setCity] = useState('')
+  const [state, setState] = useState('')
   const [zip, setZip] = useState('')
   const [phone, setPhone] = useState('')
   const [country, setCountry] = useState('')
@@ -27,13 +28,16 @@ const Checkout = ({ navigation }) => {
   }, [country])
 
   useEffect(() => {
+    setOrderItems(cartItems)
     setState('')
     setFirstName('')
     return () => {
+      setOrderItems()
       setState('')
       setFirstName('')
     }
   }, [])
+  console.log(orderItems)
 
   return (
     <FormContainer title='&#x1F4E6; Checkout &#x1F4E6;'>
@@ -61,7 +65,7 @@ const Checkout = ({ navigation }) => {
               borderWidth={2}
               placeHolder={'First Name'}
               value={firstName}
-              onChangeText={(text) => setFirstName(text)}
+              onChangeText={setFirstName}
             />
           </HStack>
           <HStack width='50%'>
@@ -74,7 +78,7 @@ const Checkout = ({ navigation }) => {
               placeHolder={'Last Name'}
               minLength={4}
               value={lastName}
-              onChangeText={(text) => setLastName(text)}
+              onChangeText={setLastName}
             />
           </HStack>
         </VStack>
@@ -86,7 +90,7 @@ const Checkout = ({ navigation }) => {
           placeHolder={'Address 1'}
           marginHorizontal={5}
           value={address1}
-          onChangeText={(text) => setAddress1(text)}
+          onChangeText={setAddress1}
         />
 
         <AnimatedInput
@@ -96,7 +100,7 @@ const Checkout = ({ navigation }) => {
           borderWidth={2}
           placeHolder={'Address 2'}
           value={address2}
-          onChangeText={(text) => setAddress2(text)}
+          onChangeText={setAddress2}
         />
         <VStack
           alignItems='center'
@@ -114,7 +118,7 @@ const Checkout = ({ navigation }) => {
               borderWidth={2}
               placeHolder={'City'}
               value={city}
-              onChangeText={(text) => setCity(text)}
+              onChangeText={setCity}
             />
           </HStack>
           <HStack width='25%' marginHorizontal={7.5}>
@@ -163,7 +167,7 @@ const Checkout = ({ navigation }) => {
               keyboardType='numeric'
               placeHolder={'Zip'}
               value={zip}
-              onChangeText={(text) => setZip(text)}
+              onChangeText={setZip}
             />
           </HStack>
         </VStack>
