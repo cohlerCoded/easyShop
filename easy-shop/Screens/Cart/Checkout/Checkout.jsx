@@ -8,6 +8,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import countries from 'world_countries_lists/data/countries/en/countries.json'
 import flags from 'world_countries_lists/data/flags/24x24/flags-24x24.json'
 import { states } from '../../../assets/states'
+import EasyButton from '../../../Components/EasyButton'
 
 const Checkout = ({ navigation }) => {
   const cartItems = useSelector((state) => state.cartItems)
@@ -23,21 +24,27 @@ const Checkout = ({ navigation }) => {
   const [phone, setPhone] = useState('')
   const [country, setCountry] = useState('')
   const [flagImg, setFlagImg] = useState('')
-  useEffect(() => {
-    setCountry(country)
-  }, [country])
-
+  const checkOut = () => {
+    const order = {
+      city,
+      country,
+      dateOrdered: Date.now(),
+      orderItems,
+      phone,
+      shippingAddress1: address,
+      shippingAddress2: address2,
+      state,
+      user,
+      zip,
+    }
+    navigation.navigate('Payment', { order: order })
+  }
   useEffect(() => {
     setOrderItems(cartItems)
-    setState('')
-    setFirstName('')
     return () => {
       setOrderItems()
-      setState('')
-      setFirstName('')
     }
   }, [])
-  console.log(orderItems)
 
   return (
     <FormContainer title='&#x1F4E6; Checkout &#x1F4E6;'>
@@ -124,7 +131,7 @@ const Checkout = ({ navigation }) => {
           <HStack width='25%' marginHorizontal={7.5}>
             <AnimatedInput
               textInputColor={'#000'}
-              style={{ paddingLeft: 35 }}
+              style={{ textAlign: 'center' }}
               onPress={() => setModalVisible(true)}
               width='25%'
               fontSize={16}
@@ -251,6 +258,11 @@ const Checkout = ({ navigation }) => {
               onChangeText={setPhone}
             />
           </HStack>
+        </VStack>
+        <VStack alignItems='center' marginTop={5}>
+          <EasyButton primary large onPress={() => checkOut()}>
+            <Text style={{ color: 'white' }}>Confirm</Text>
+          </EasyButton>
         </VStack>
       </KeyboardAwareScrollView>
     </FormContainer>
