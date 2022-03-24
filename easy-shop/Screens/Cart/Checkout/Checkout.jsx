@@ -31,10 +31,9 @@ const Checkout = ({ navigation }) => {
       dateOrdered: Date.now(),
       orderItems,
       phone,
-      shippingAddress1: address,
+      shippingAddress1: address1,
       shippingAddress2: address2,
       state,
-      user,
       zip,
     }
     navigation.navigate('Payment', { order: order })
