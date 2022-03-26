@@ -10,7 +10,7 @@ const methods = [
 
 const Payment = (props) => {
   const order = props.route.params
-  const [selected, setSelected] = useState()
+  const [value, setValue] = useState()
   const [card, setCard] = useState()
   return (
     <Container>
@@ -29,21 +29,19 @@ const Payment = (props) => {
       </Heading>
 
       <VStack>
-        {methods.map((item, index) => {
-          return (
-            <Radio.Group
-              key={item.name}
-              onPress={() => setSelected(item.value)}
-            >
-              <HStack>
-                <Text>{item.name}</Text>
-              </HStack>
-              <HStack>
-                <Radio selected={selected == item.value} />
-              </HStack>
-            </Radio.Group>
-          )
-        })}
+        <Radio.Group
+          name='myRadioGroup'
+          accessibilityLabel='favorite number'
+          value={value}
+          onChange={(nextValue) => {
+            setValue(nextValue)
+          }}
+        >
+          <Radio value={1}>Bank Transfer</Radio>
+          <Radio value={2}>Credit Card</Radio>
+          <Radio value={3}>PayPal</Radio>
+          <Radio value={4}>Crypto</Radio>
+        </Radio.Group>
       </VStack>
     </Container>
   )
