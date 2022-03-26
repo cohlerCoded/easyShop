@@ -13,22 +13,24 @@ const Payment = (props) => {
   const [value, setValue] = useState()
   const [card, setCard] = useState()
   return (
-    <Container>
-      <Heading>
-        <View>
-          <Text
-            style={{
-              marginTop: 30,
-              fontSize: 30,
-              textAlign: 'center',
-            }}
-          >
-            &#x1F4B8; Payment &#x1F4B8;
-          </Text>
-        </View>
-      </Heading>
+    <View>
+      <Text
+        style={{
+          marginTop: 30,
+          fontSize: 30,
+          textAlign: 'center',
+        }}
+      >
+        &#x1F4B8; Payment &#x1F4B8;
+      </Text>
 
-      <VStack>
+      <VStack
+        style={{
+          marginTop: 20,
+          marginLeft: 15,
+          textAlign: 'center',
+        }}
+      >
         <Radio.Group
           name='myRadioGroup'
           accessibilityLabel='favorite number'
@@ -43,7 +45,7 @@ const Payment = (props) => {
           <Radio value={4}>Crypto</Radio>
         </Radio.Group>
       </VStack>
-    </Container>
+    </View>
   )
 }
 
