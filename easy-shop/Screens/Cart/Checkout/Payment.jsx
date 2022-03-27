@@ -1,11 +1,21 @@
-import { Container, VStack, Heading, Radio, HStack } from 'native-base'
+import {
+  Container,
+  VStack,
+  Heading,
+  Radio,
+  HStack,
+  Icon,
+  Divider,
+} from 'native-base'
 import React, { useState } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { AntDesign } from '@expo/vector-icons'
 
 const methods = [
-  { name: 'Cash on Delivery', value: 1 },
-  { name: 'Bank Transfer', value: 2 },
-  { name: 'Card Payment', value: 3 },
+  { name: 'Bank Transfer', value: 1 },
+  { name: 'Card Payment', value: 2 },
+  { name: 'PayPal', value: 3 },
+  { name: 'Crypto', value: 4 },
 ]
 
 const Payment = (props) => {
@@ -39,11 +49,41 @@ const Payment = (props) => {
             setValue(nextValue)
           }}
         >
-          <Radio value={1}>Bank Transfer</Radio>
-          <Radio value={2}>Credit Card</Radio>
+          <Radio
+            value={1}
+            icon={
+              <Icon as={<AntDesign name='check' size={24} color='black' />} />
+            }
+          >
+            Bank Transfer
+          </Radio>
+          <Radio value={2}>Card Payment</Radio>
           <Radio value={3}>PayPal</Radio>
           <Radio value={4}>Crypto</Radio>
         </Radio.Group>
+        {methods.map((method) => (
+          <VStack>
+            <TouchableOpacity
+              onPress={() => setValue(method.value)}
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                marginHorizontal: 30,
+                marginVertical: 5,
+              }}
+            >
+              <HStack>
+                <Text style={{ fontSize: 16 }}>{method.name}</Text>
+              </HStack>
+              <HStack>
+                {method.value === value && (
+                  <AntDesign name='check' size={20} color='green' />
+                )}
+              </HStack>
+            </TouchableOpacity>
+            <Divider my='2' />
+          </VStack>
+        ))}
       </VStack>
     </View>
   )
