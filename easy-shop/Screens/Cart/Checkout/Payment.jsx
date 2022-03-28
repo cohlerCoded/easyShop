@@ -9,6 +9,8 @@ import {
 } from 'native-base'
 import React, { useState } from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { CardView, CreditCardInput } from 'react-native-credit-card-input'
 import { AntDesign } from '@expo/vector-icons'
 
 const methods = [
@@ -23,44 +25,31 @@ const Payment = (props) => {
   const [value, setValue] = useState()
   const [card, setCard] = useState()
   return (
-    <View>
+    <KeyboardAwareScrollView
+      keyboardShouldPersistTaps='handled'
+      nestedScrollEnabled={true}
+      enableOnAndroid={true}
+      viewIsInsideTabBar={true}
+      extraHeight={200}
+      removeClippedSubviews={false}
+    >
       <Text
         style={{
-          marginTop: 30,
-          fontSize: 30,
+          marginTop: 15,
+          fontSize: 20,
           textAlign: 'center',
         }}
       >
-        &#x1F4B8; Payment &#x1F4B8;
+        &#x1F4B8; Select Payment Method &#x1F4B8;
       </Text>
 
       <VStack
         style={{
-          marginTop: 20,
-          marginLeft: 15,
+          marginTop: 15,
+          marginHorizontal: 10,
           textAlign: 'center',
         }}
       >
-        <Radio.Group
-          name='myRadioGroup'
-          accessibilityLabel='favorite number'
-          value={value}
-          onChange={(nextValue) => {
-            setValue(nextValue)
-          }}
-        >
-          <Radio
-            value={1}
-            icon={
-              <Icon as={<AntDesign name='check' size={24} color='black' />} />
-            }
-          >
-            Bank Transfer
-          </Radio>
-          <Radio value={2}>Card Payment</Radio>
-          <Radio value={3}>PayPal</Radio>
-          <Radio value={4}>Crypto</Radio>
-        </Radio.Group>
         {methods.map((method) => (
           <VStack>
             <TouchableOpacity
@@ -69,7 +58,7 @@ const Payment = (props) => {
                 flexDirection: 'row',
                 justifyContent: 'space-between',
                 marginHorizontal: 30,
-                marginVertical: 5,
+                // marginVertical: 5,
               }}
             >
               <HStack>
@@ -85,7 +74,8 @@ const Payment = (props) => {
           </VStack>
         ))}
       </VStack>
-    </View>
+      <CardView scale={0.75} name='test' brand='american express' />
+    </KeyboardAwareScrollView>
   )
 }
 
