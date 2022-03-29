@@ -7,7 +7,7 @@ import {
   Icon,
   Divider,
 } from 'native-base'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { CardView, CreditCardInput } from 'react-native-credit-card-input'
@@ -26,6 +26,14 @@ const Payment = (props) => {
   const [value, setValue] = useState()
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
+  const [cardNumber, setCardNumber] = useState('')
+  const [expiration, setExpiration] = useState('')
+  const [cvc, setCVC] = useState('')
+  const [focused, setFocused] = useState(false)
+  useEffect(() => {
+    console.log(cardNumber.slice(0, 2))
+  }, [cardNumber])
+
   return (
     <KeyboardAwareScrollView
       keyboardShouldPersistTaps='handled'
@@ -79,8 +87,27 @@ const Payment = (props) => {
       <VStack alignItems='center'>
         <CardView
           name={`${firstName || 'Your'} ${lastName || 'Name'}`}
-          brand='american-express'
-          focused='cvc'
+          number={cardNumber}
+          expiry={expiration}
+          cvc={cvc}
+          brand={
+            parseInt(cardNumber.slice(0, 4)) > 3527 &&
+            parseInt(cardNumber.slice(0, 4)) < 3590
+              ? 'jcb'
+              : cardNumber.slice(0, 2) === '36' ||
+                cardNumber.slice(0, 2) === '54'
+              ? 'diners-club'
+              : cardNumber[0] === '3'
+              ? 'american-express'
+              : cardNumber[0] === '4'
+              ? 'visa'
+              : cardNumber[0] === '5'
+              ? 'master-card'
+              : cardNumber[0] === '6'
+              ? 'discover'
+              : 'placeholder'
+          }
+          focused={focused === false ? 'notCVC' : 'cvc'}
         />
       </VStack>
       <VStack>
@@ -90,9 +117,10 @@ const Payment = (props) => {
           marginHorizontal={5}
           fontSize={16}
           borderWidth={2}
-          placeHolder={'First Name'}
-          value={firstName}
-          onChangeText={setFirstName}
+          placeHolder={'Card Number'}
+          value={cardNumber}
+          onChangeText={setCardNumber}
+          keyboardType='numeric'
         />
       </VStack>
       <VStack
@@ -143,8 +171,8 @@ const Payment = (props) => {
             fontSize={16}
             borderWidth={2}
             placeHolder={'Experiation'}
-            value={firstName}
-            onChangeText={setFirstName}
+            value={expiration}
+            onChangeText={setExpiration}
           />
         </HStack>
         <HStack width='50%'>
@@ -155,9 +183,11 @@ const Payment = (props) => {
             fontSize={16}
             borderWidth={2}
             placeHolder={'CVC'}
-            minLength={4}
-            value={lastName}
-            onChangeText={setLastName}
+            value={cvc}
+            onChangeText={setCVC}
+            keyboardType='numeric'
+            onFocus={() => setFocused(true)}
+            onBlur={() => setFocused(false)}
           />
         </HStack>
       </VStack>
