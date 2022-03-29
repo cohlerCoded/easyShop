@@ -12,6 +12,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { CardView, CreditCardInput } from 'react-native-credit-card-input'
 import { AntDesign } from '@expo/vector-icons'
+import AnimatedInput from '../../../Components/AnimatedInput'
 
 const methods = [
   { name: 'Bank Transfer', value: 1 },
@@ -23,7 +24,8 @@ const methods = [
 const Payment = (props) => {
   const order = props.route.params
   const [value, setValue] = useState()
-  const [card, setCard] = useState()
+  const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
   return (
     <KeyboardAwareScrollView
       keyboardShouldPersistTaps='handled'
@@ -43,7 +45,7 @@ const Payment = (props) => {
         &#x1F4B8; Select Payment Method &#x1F4B8;
       </Text>
 
-      <VStack
+      {/* <VStack
         style={{
           marginTop: 15,
           marginHorizontal: 10,
@@ -73,8 +75,92 @@ const Payment = (props) => {
             <Divider my='2' />
           </VStack>
         ))}
+      </VStack> */}
+      <VStack alignItems='center'>
+        <CardView
+          name={`${firstName || 'Your'} ${lastName || 'Name'}`}
+          brand='american-express'
+          focused='cvc'
+        />
       </VStack>
-      <CardView scale={0.75} name='test' brand='american express' />
+      <VStack>
+        <AnimatedInput
+          textInputColor={'#000'}
+          width={'99%'}
+          marginHorizontal={5}
+          fontSize={16}
+          borderWidth={2}
+          placeHolder={'First Name'}
+          value={firstName}
+          onChangeText={setFirstName}
+        />
+      </VStack>
+      <VStack
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'center',
+          marginHorizontal: 5,
+          width: '100%',
+        }}
+      >
+        <HStack width='50%'>
+          <AnimatedInput
+            textInputColor={'#000'}
+            width='46%'
+            fontSize={16}
+            borderWidth={2}
+            placeHolder={'First Name'}
+            value={firstName}
+            onChangeText={setFirstName}
+          />
+        </HStack>
+        <HStack width='50%'>
+          <AnimatedInput
+            required
+            textInputColor={'#000'}
+            width='46%'
+            fontSize={16}
+            borderWidth={2}
+            placeHolder={'Last Name'}
+            minLength={4}
+            value={lastName}
+            onChangeText={setLastName}
+          />
+        </HStack>
+      </VStack>
+      <VStack
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'center',
+          marginHorizontal: 5,
+          width: '100%',
+        }}
+      >
+        <HStack width='50%'>
+          <AnimatedInput
+            textInputColor={'#000'}
+            width='46%'
+            fontSize={16}
+            borderWidth={2}
+            placeHolder={'Experiation'}
+            value={firstName}
+            onChangeText={setFirstName}
+          />
+        </HStack>
+        <HStack width='50%'>
+          <AnimatedInput
+            required
+            textInputColor={'#000'}
+            width='46%'
+            fontSize={16}
+            borderWidth={2}
+            placeHolder={'CVC'}
+            minLength={4}
+            value={lastName}
+            onChangeText={setLastName}
+          />
+        </HStack>
+      </VStack>
     </KeyboardAwareScrollView>
   )
 }
