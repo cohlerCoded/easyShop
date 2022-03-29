@@ -34,6 +34,14 @@ const phoneNumberFormater = (number) => {
     ? number.slice(0, 9)
     : number
 }
+const ccDateFormater = (number) => {
+  console.log(number.length)
+  return number.length === 2
+    ? number + '/'
+    : number.length < 3
+    ? number.slice(0, 2)
+    : number
+}
 
 //COMPONENT
 const AnimatedInput = (props) => {
@@ -603,6 +611,8 @@ const AnimatedInput = (props) => {
           onChangeText={
             props.isPhone
               ? (text) => props.onChangeText(phoneNumberFormater(text))
+              : props.isCCDate
+              ? (text) => props.onChangeText(ccDateFormater(text))
               : props.onChangeText
           }
           maxLength={props.isPhone ? 16 : props.maxLength}
@@ -765,6 +775,7 @@ AnimatedInput.propTypes = {
   isPhone: PropTypes.bool,
   isDate: PropTypes.bool,
   isNumber: PropTypes.bool,
+  isCCDate: PropTypes.bool,
 }
 
 export default AnimatedInput

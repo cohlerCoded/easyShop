@@ -29,6 +29,7 @@ const Payment = (props) => {
   const [cardNumber, setCardNumber] = useState('')
   const [expiration, setExpiration] = useState('')
   const [cvc, setCVC] = useState('')
+  const [zip, setZip] = useState('')
   const [focused, setFocused] = useState(false)
   useEffect(() => {
     console.log(cardNumber.slice(0, 2))
@@ -164,22 +165,34 @@ const Payment = (props) => {
           width: '100%',
         }}
       >
-        <HStack width='50%'>
+        <HStack width='33.33%'>
           <AnimatedInput
             textInputColor={'#000'}
-            width='46%'
+            width='32%'
             fontSize={16}
             borderWidth={2}
-            placeHolder={'Experiation'}
-            value={expiration}
-            onChangeText={setExpiration}
+            placeHolder={'Zip Code'}
+            value={zip}
+            onChangeText={setZip}
           />
         </HStack>
-        <HStack width='50%'>
+        <HStack width='33.33%'>
+          <AnimatedInput
+            textInputColor={'#000'}
+            width='32%'
+            fontSize={16}
+            borderWidth={2}
+            placeHolder={'Expiration'}
+            value={expiration}
+            onChangeText={setExpiration}
+            isCCDate
+          />
+        </HStack>
+        <HStack width='33.33%'>
           <AnimatedInput
             required
             textInputColor={'#000'}
-            width='46%'
+            width='30%'
             fontSize={16}
             borderWidth={2}
             placeHolder={'CVC'}
