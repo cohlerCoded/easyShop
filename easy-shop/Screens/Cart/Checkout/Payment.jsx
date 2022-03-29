@@ -113,6 +113,7 @@ const Payment = (props) => {
       </VStack>
       <VStack>
         <AnimatedInput
+          required
           textInputColor={'#000'}
           width={'99%'}
           marginHorizontal={5}
@@ -134,6 +135,7 @@ const Payment = (props) => {
       >
         <HStack width='50%'>
           <AnimatedInput
+            required
             textInputColor={'#000'}
             width='46%'
             fontSize={16}
@@ -174,6 +176,9 @@ const Payment = (props) => {
             placeHolder={'Zip Code'}
             value={zip}
             onChangeText={setZip}
+            maxLength={5}
+            keyboardType='numeric'
+            required
           />
         </HStack>
         <HStack width='33.33%'>
@@ -184,8 +189,11 @@ const Payment = (props) => {
             borderWidth={2}
             placeHolder={'Expiration'}
             value={expiration}
+            maxLength={5}
             onChangeText={setExpiration}
             isCCDate
+            keyboardType='numeric'
+            required
           />
         </HStack>
         <HStack width='33.33%'>
@@ -197,6 +205,7 @@ const Payment = (props) => {
             borderWidth={2}
             placeHolder={'CVC'}
             value={cvc}
+            maxLength={4}
             onChangeText={setCVC}
             keyboardType='numeric'
             onFocus={() => setFocused(true)}

@@ -36,8 +36,8 @@ const phoneNumberFormater = (number) => {
 }
 const ccDateFormater = (number) => {
   console.log(number.length)
-  return number.length === 2
-    ? number + '/'
+  return number.length > 2 && number[2] !== '/'
+    ? number.slice(0, 2) + '/' + number.slice(2)
     : number.length < 3
     ? number.slice(0, 2)
     : number
