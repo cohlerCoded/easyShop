@@ -327,7 +327,7 @@ const AnimatedInput = (props) => {
     }
   }, [props.value, movePlaceHolderBack])
   useEffect(() => {
-    if (props.minLength) setRequiresValidation(true)
+    if (props.minLength || props.required) setRequiresValidation(true)
     if (props.minLength && !props.isSelectable && firstValidation) {
       if (props.value.length >= props.minLength) {
         setValidation(true)
