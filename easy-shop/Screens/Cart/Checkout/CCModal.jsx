@@ -4,6 +4,7 @@ import { StyleSheet, Text } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { CardView } from 'react-native-credit-card-input'
 import AnimatedInput from '../../../Components/AnimatedInput'
+import { AntDesign } from '@expo/vector-icons'
 
 const CCModal = (props) => {
   const [firstName, setFirstName] = useState('')
@@ -20,12 +21,17 @@ const CCModal = (props) => {
   return (
     <KeyboardAwareScrollView
       keyboardShouldPersistTaps='handled'
-      nestedScrollEnabled={true}
       enableOnAndroid={true}
       viewIsInsideTabBar={true}
       extraHeight={200}
-      removeClippedSubviews={false}
     >
+      <AntDesign
+        name='closecircleo'
+        size={30}
+        color='black'
+        style={{ position: 'absolute', top: 30, right: 30 }}
+        onPress={() => props.setModalVisible(false)}
+      />
       <VStack alignItems='center' marginTop={40}>
         <CardView
           name={`${firstName || 'Your'} ${lastName || 'Name'}`}
