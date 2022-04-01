@@ -1,31 +1,11 @@
-import {
-  Container,
-  VStack,
-  Heading,
-  Radio,
-  HStack,
-  Icon,
-  Divider,
-} from 'native-base'
+import { VStack, HStack } from 'native-base'
 import React, { useState, useEffect } from 'react'
-import { Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, Text } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import { CardView, CreditCardInput } from 'react-native-credit-card-input'
-import { AntDesign } from '@expo/vector-icons'
+import { CardView } from 'react-native-credit-card-input'
 import AnimatedInput from '../../../Components/AnimatedInput'
-import CCModal from './CCModal'
 
-const methods = [
-  { name: 'Bank Transfer', value: 1 },
-  { name: 'Card Payment', value: 2 },
-  { name: 'PayPal', value: 3 },
-  { name: 'Crypto', value: 4 },
-]
-
-const Payment = (props) => {
-  const order = props.route.params
-  const [modalVisible, setModalVisible] = useState(false)
-  const [value, setValue] = useState()
+const CCModal = (props) => {
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
   const [cardNumber, setCardNumber] = useState('')
@@ -46,59 +26,7 @@ const Payment = (props) => {
       extraHeight={200}
       removeClippedSubviews={false}
     >
-      <Text
-        style={{
-          marginTop: 15,
-          fontSize: 20,
-          textAlign: 'center',
-        }}
-      >
-        &#x1F4B8; Select Payment Method &#x1F4B8;
-      </Text>
-
-      <VStack
-        style={{
-          marginTop: 15,
-          marginHorizontal: 10,
-          textAlign: 'center',
-        }}
-      >
-        {methods.map((method) => (
-          <VStack>
-            <TouchableOpacity
-              onPress={() => {
-                setValue(method.value)
-                setModalVisible(true)
-              }}
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                marginHorizontal: 30,
-                // marginVertical: 5,
-              }}
-            >
-              <HStack>
-                <Text style={{ fontSize: 16 }}>{method.name}</Text>
-              </HStack>
-              <HStack>
-                {method.value === value && (
-                  <AntDesign name='check' size={20} color='green' />
-                )}
-              </HStack>
-            </TouchableOpacity>
-            <Divider my='2' />
-          </VStack>
-        ))}
-      </VStack>
-      <Modal
-        animationType='slide'
-        transparent={false}
-        visible={modalVisible}
-        onRequestClose={() => setModalVisible(false)}
-      >
-        <CCModal />
-      </Modal>
-      {/* <VStack alignItems='center'>
+      <VStack alignItems='center' marginTop={40}>
         <CardView
           name={`${firstName || 'Your'} ${lastName || 'Name'}`}
           number={cardNumber}
@@ -127,6 +55,7 @@ const Payment = (props) => {
       <VStack>
         <AnimatedInput
           required
+          backgroundColor={'#fff'}
           textInputColor={'#000'}
           width={'99%'}
           marginHorizontal={5}
@@ -149,6 +78,7 @@ const Payment = (props) => {
         <HStack width='50%'>
           <AnimatedInput
             required
+            backgroundColor={'#fff'}
             textInputColor={'#000'}
             width='46%'
             fontSize={16}
@@ -161,6 +91,7 @@ const Payment = (props) => {
         <HStack width='50%'>
           <AnimatedInput
             required
+            backgroundColor={'#fff'}
             textInputColor={'#000'}
             width='46%'
             fontSize={16}
@@ -182,6 +113,7 @@ const Payment = (props) => {
       >
         <HStack width='33.33%'>
           <AnimatedInput
+            backgroundColor={'#fff'}
             textInputColor={'#000'}
             width='32%'
             fontSize={16}
@@ -196,6 +128,7 @@ const Payment = (props) => {
         </HStack>
         <HStack width='33.33%'>
           <AnimatedInput
+            backgroundColor={'#fff'}
             textInputColor={'#000'}
             width='32%'
             fontSize={16}
@@ -212,6 +145,7 @@ const Payment = (props) => {
         <HStack width='33.33%'>
           <AnimatedInput
             required
+            backgroundColor={'#fff'}
             textInputColor={'#000'}
             width='30%'
             fontSize={16}
@@ -225,11 +159,11 @@ const Payment = (props) => {
             onBlur={() => setFocused(false)}
           />
         </HStack>
-      </VStack> */}
+      </VStack>
     </KeyboardAwareScrollView>
   )
 }
 
-export default Payment
+export default CCModal
 
 const styles = StyleSheet.create({})
