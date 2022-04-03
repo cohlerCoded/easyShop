@@ -94,14 +94,14 @@ const Payment = (props) => {
         animationType='slide'
         transparent={false}
         visible={modalVisible}
-        transparent={false}
+        transparent={true}
         onRequestClose={() => setModalVisible(false)}
       >
-        {/* <View style={styles.centeredView}> */}
-        {/* <View style={styles.modalView}> */}
-        <CCModal setModalVisible={setModalVisible} />
-        {/* </View> */}
-        {/* </View> */}
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <CCModal setModalVisible={setModalVisible} />
+          </View>
+        </View>
       </Modal>
 
       {/* <VStack alignItems='center'>
@@ -248,16 +248,13 @@ const styles = StyleSheet.create({
   modalView: {
     position: 'absolute',
     bottom: 0,
-    marginTop: 20,
-    width: '100%',
-    height: '90%',
+    // marginTop: 20,
+    // width: '100%',
+    height: '100%',
     backgroundColor: 'white',
     borderRadius: 20,
     borderBottomEndRadius: 0,
     borderBottomStartRadius: 0,
-    paddingHorizontal: 20,
-    paddingBottom: 20,
-    alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: {
       width: 0,

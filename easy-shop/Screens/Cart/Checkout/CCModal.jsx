@@ -5,6 +5,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { CardView } from 'react-native-credit-card-input'
 import AnimatedInput from '../../../Components/AnimatedInput'
 import { AntDesign } from '@expo/vector-icons'
+import EasyButton from '../../../Components/EasyButton'
 
 const CCModal = (props) => {
   const [firstName, setFirstName] = useState('')
@@ -14,6 +15,7 @@ const CCModal = (props) => {
   const [cvc, setCVC] = useState('')
   const [zip, setZip] = useState('')
   const [focused, setFocused] = useState(false)
+  const [extraHeight, setExtraHeight] = useState(false)
   useEffect(() => {
     console.log(cardNumber.slice(0, 2))
   }, [cardNumber])
@@ -23,16 +25,24 @@ const CCModal = (props) => {
       keyboardShouldPersistTaps='handled'
       enableOnAndroid={true}
       viewIsInsideTabBar={true}
-      extraHeight={200}
+      extraHeight={60}
     >
       <AntDesign
         name='closecircleo'
         size={30}
         color='black'
-        style={{ position: 'absolute', top: 30, right: 30 }}
+        style={{
+          position: 'absolute',
+          top: extraHeight === true ? 100 : 20,
+          right: 20,
+        }}
         onPress={() => props.setModalVisible(false)}
       />
-      <VStack alignItems='center' marginTop={40}>
+      <VStack
+        alignItems='center'
+        marginTop={20}
+        style={{ transform: [{ scale: 0.75 }] }}
+      >
         <CardView
           name={`${firstName || 'Your'} ${lastName || 'Name'}`}
           number={cardNumber}
@@ -161,10 +171,21 @@ const CCModal = (props) => {
             maxLength={4}
             onChangeText={setCVC}
             keyboardType='numeric'
-            onFocus={() => setFocused(true)}
-            onBlur={() => setFocused(false)}
+            onFocus={() => {
+              setFocused(true)
+              setExtraHeight(true)
+            }}
+            onBlur={() => {
+              setFocused(false)
+              setExtraHeight(false)
+            }}
           />
         </HStack>
+      </VStack>
+      <VStack alignItems='center' marginTop={20}>
+        <EasyButton primary large onPress={() => console.log('confirm')}>
+          <Text style={{ color: 'white' }}>Confirm</Text>
+        </EasyButton>
       </VStack>
     </KeyboardAwareScrollView>
   )
