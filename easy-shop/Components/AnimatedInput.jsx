@@ -328,21 +328,43 @@ const AnimatedInput = (props) => {
   }, [props.value, movePlaceHolderBack])
   useEffect(() => {
     if (props.minLength || props.required) setRequiresValidation(true)
-    if (props.minLength && !props.isSelectable && firstValidation) {
-      if (props.value.length >= props.minLength) {
-        setValidation(true)
-        setValidationStore(true)
-      } else {
-        setValidation(false)
-        setValidationStore(false)
-      }
-    } else if (props.minLength && !props.isSelectable) {
-      if (props.value.length >= props.minLength) {
-        setValidation(true)
-      } else {
-        setValidation(false)
+
+    if (props.minLength) {
+      if (!props.isSelectable && firstValidation) {
+        if (props.value.length >= props.minLength) {
+          setValidation(true)
+          setValidationStore(true)
+        } else {
+          setValidation(false)
+          setValidationStore(false)
+        }
+      } else if (!props.isSelectable) {
+        if (props.value.length >= props.minLength) {
+          setValidation(true)
+        } else {
+          setValidation(false)
+        }
       }
     }
+
+    if (props.required) {
+      if (!props.isSelectable && firstValidation) {
+        if (props.value.length > 0) {
+          setValidation(true)
+          setValidationStore(true)
+        } else {
+          setValidation(false)
+          setValidationStore(false)
+        }
+      } else if (!props.isSelectable) {
+        if (props.value.length > 0) {
+          setValidation(true)
+        } else {
+          setValidation(false)
+        }
+      }
+    }
+
     if (
       !firstValidation &&
       requiresValidation &&
