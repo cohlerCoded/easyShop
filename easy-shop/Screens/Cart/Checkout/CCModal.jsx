@@ -1,6 +1,6 @@
 import { VStack, HStack } from 'native-base'
 import React, { useState, useEffect } from 'react'
-import { StyleSheet, Text } from 'react-native'
+import { ScrollView, StyleSheet, Text } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { CardView } from 'react-native-credit-card-input'
 import AnimatedInput from '../../../Components/AnimatedInput'
@@ -24,7 +24,6 @@ const CCModal = (props) => {
     <KeyboardAwareScrollView
       keyboardShouldPersistTaps='handled'
       enableOnAndroid={true}
-      viewIsInsideTabBar={true}
       extraHeight={60}
     >
       <AntDesign
