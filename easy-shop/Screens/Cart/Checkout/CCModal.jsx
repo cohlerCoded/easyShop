@@ -1,11 +1,12 @@
 import { VStack, HStack } from 'native-base'
 import React, { useState, useEffect } from 'react'
-import { ScrollView, StyleSheet, Text } from 'react-native'
+import { ScrollView, StyleSheet, Text, TextInput, View } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { CardView } from 'react-native-credit-card-input'
 import AnimatedInput from '../../../Components/AnimatedInput'
 import { AntDesign } from '@expo/vector-icons'
 import EasyButton from '../../../Components/EasyButton'
+import FormContainer from '../../../Components/FormContainer'
 
 const CCModal = (props) => {
   const [firstName, setFirstName] = useState('')
@@ -23,6 +24,7 @@ const CCModal = (props) => {
   return (
     <KeyboardAwareScrollView
       keyboardShouldPersistTaps='handled'
+      nestedScrollEnabled={true}
       enableOnAndroid={true}
       extraHeight={60}
     >

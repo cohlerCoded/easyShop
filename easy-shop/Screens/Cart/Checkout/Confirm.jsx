@@ -3,12 +3,15 @@ import { Modal, StyleSheet, Text, View, Image, Dimensions } from 'react-native'
 import AnimatedInput from '../../../Components/AnimatedInput'
 import countries from 'world_countries_lists/data/countries/en/countries.json'
 import flags from 'world_countries_lists/data/flags/24x24/flags-24x24.json'
+import { HStack, VStack } from 'native-base'
 
 const { width } = Dimensions.get('window')
 
 const Confirm = () => {
   const [country, setCountry] = useState('')
   const [flagImg, setFlagImg] = useState('')
+  const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
   useEffect(() => {
     setCountry(country)
   }, [country])
@@ -33,61 +36,40 @@ const Confirm = () => {
             marginLeft: '50%',
           }}
         >
-          <Image
-            source={{ uri: flags[flagImg] || null }}
+          <VStack
             style={{
-              width: 24,
-              height: 24,
-              position: 'absolute',
-              zIndex: 100,
-              marginLeft: 5,
+              flexDirection: 'row',
+              justifyContent: 'center',
+              marginHorizontal: 5,
+              backgroundColor: 'green',
+              width: '100%',
             }}
-          />
-          <AnimatedInput
-            style={{ paddingLeft: 35 }}
-            onPress={() => setModalVisible(true)}
-            width='46%'
-            fontSize={16}
-            borderWidth={2}
-            placeHolder={'Country'}
-            value={country}
-            onChangeText={(text) => setCountry(text)}
-            onBlur={() => {
-              setCountry(country)
-            }}
-            isSelectable={true}
-            selectColor='rgba(125, 211, 252, 0.3)'
-            onCloseSelect={({ item }) => {
-              setCountry(item.alpha3.toUpperCase())
-              setFlagImg(item.alpha2)
-            }}
-            searchBar
-            selectSearchFilterFunction={(term) =>
-              countries.filter(
-                (country) =>
-                  country.name.toLowerCase().includes(term.toLowerCase()) ||
-                  country.alpha3.includes(term.toLowerCase())
-              )
-            }
-            data={countries}
-            keyExtractor={(item) => item.alpha3}
-            renderItem={({ item }) => (
-              <>
-                <Image
-                  source={{ uri: flags[item.alpha2] }}
-                  style={{ width: 24, height: 24 }}
-                />
-                <Text
-                  style={{
-                    fontSize: 16,
-                    marginVertical: 5,
-                    marginLeft: 5,
-                    width: '80%',
-                  }}
-                >{`${item.alpha3.toUpperCase()} - ${item.name}`}</Text>
-              </>
-            )}
-          />
+          >
+            <HStack width='50%'>
+              <AnimatedInput
+                textInputColor={'#000'}
+                width='46%'
+                fontSize={16}
+                borderWidth={2}
+                placeHolder={'First Name'}
+                value={firstName}
+                onChangeText={setFirstName}
+              />
+            </HStack>
+            <HStack width='50%'>
+              <AnimatedInput
+                required
+                textInputColor={'#000'}
+                width='46%'
+                fontSize={16}
+                borderWidth={2}
+                placeHolder={'Last Name'}
+                minLength={4}
+                value={lastName}
+                onChangeText={setLastName}
+              />
+            </HStack>
+          </VStack>
         </View>
       </View>
     </View>

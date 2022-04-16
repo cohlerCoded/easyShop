@@ -624,6 +624,7 @@ const AnimatedInput = (props) => {
         </TouchableWithoutFeedback>
       ) : (
         <TextInput
+          autoFocus={props.autoFocus}
           caretHidden={props.isSelectable && true}
           placeholder={null}
           name={props.name}
@@ -776,6 +777,7 @@ AnimatedInput.propTypes = {
   name: PropTypes.string,
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   autoCorrect: PropTypes.bool,
+  autoFocus: PropTypes.bool,
   onChangeText: PropTypes.func,
   secureTextEntry: PropTypes.bool,
   keyboardType: PropTypes.string,
