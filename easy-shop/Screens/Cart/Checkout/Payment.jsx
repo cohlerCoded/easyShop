@@ -121,14 +121,13 @@ const Payment = (props) => {
       >
         <Modal
           animationType='slide'
-          transparent={false}
           visible={modalVisible}
           transparent={true}
           onRequestClose={() => setModalVisible(false)}
         >
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
-              <TextInput autoFocus style={{ display: 'none' }} />
+              {/* <TextInput autoFocus style={{ display: 'none' }} /> */}
               <CCModal setModalVisible={setModalVisible} />
             </View>
           </View>

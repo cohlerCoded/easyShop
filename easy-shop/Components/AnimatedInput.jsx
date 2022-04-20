@@ -9,6 +9,7 @@ import {
   FlatList,
   TouchableOpacity,
   Text,
+  Keyboard,
 } from 'react-native'
 import React, { useState, useRef, useEffect } from 'react'
 import Svg, { Line } from 'react-native-svg'
@@ -56,6 +57,7 @@ const AnimatedInput = (props) => {
   const [modalVisible, setModalVisible] = useState(false)
   const [term, setTerm] = useState('')
   const [localValue, setLocalValue] = useState('')
+  const [focus, setFocus] = useState()
   const [validation, setValidation] = useState(false)
   const [validationStore, setValidationStore] = useState(false)
   const [requiresValidation, setRequiresValidation] = useState(false)
@@ -409,6 +411,11 @@ const AnimatedInput = (props) => {
                   term={term}
                   onTermChange={(text) => setTerm(text)}
                   onTermSubmit={() => setTerm(term)}
+                  closeSearch={() => {
+                    setTerm('')
+                    setFocus(false)
+                    Keyboard.dismiss()
+                  }}
                 />
               )}
               <FlatList
