@@ -1,12 +1,12 @@
 import React from 'react'
-import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import { createStackNavigator } from '@react-navigation/stack'
 import Cart from '../Screens/Cart/Cart'
 import CheckoutNavigator from './CheckoutNavigator'
 
-const Stack = createNativeStackNavigator()
+const Stack = createStackNavigator()
 const MyStack = () => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator screenOptions={{ keyboardHandlingEnabled: false }}>
       <Stack.Screen
         name='Cart'
         component={Cart}
