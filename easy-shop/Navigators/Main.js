@@ -16,13 +16,21 @@ const Main = () => {
   return (
     <Tab.Navigator
       initialRouteName='Home'
-      screenOptions={{
-        tabBarShowLabel: true,
-        tabBarActiveTintColor: '#7dd3fc',
-        tabBarInactiveTintColor: '#0369a1',
-        tabBarHideOnKeyboard: true,
-        tabBarStyle: { paddingTop: 10, height: 55, paddingBottom: 5 },
+      //REACT NAVIGATION V5
+      tabBarOptions={{
+        activeTintColor: '#7dd3fc',
+        inactiveTintColor: '#0369a1',
+        keyboardHidesTabBar: true,
+        style: { paddingTop: 10, height: 55, paddingBottom: 5 },
       }}
+      //REACT NAVIGATION V6
+      // screenOptions={{
+      //   tabBarShowLabel: true,
+      //   tabBarActiveTintColor: '#7dd3fc',
+      //   tabBarInactiveTintColor: '#0369a1',
+      //   tabBarHideOnKeyboard: true,
+      //   tabBarStyle: { paddingTop: 10, height: 55, paddingBottom: 5 },
+      // }}
     >
       <Tab.Screen
         name='Home'
