@@ -7,19 +7,41 @@ import AnimatedInput from '../../../Components/AnimatedInput'
 import { AntDesign } from '@expo/vector-icons'
 import EasyButton from '../../../Components/EasyButton'
 import FormContainer from '../../../Components/FormContainer'
+import { set } from 'react-native-reanimated'
 
 const CCModal = (props) => {
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
   const [cardNumber, setCardNumber] = useState('')
+  const [brand, setBrand] = useState('')
   const [expiration, setExpiration] = useState('')
   const [cvc, setCVC] = useState('')
   const [zip, setZip] = useState('')
   const [focused, setFocused] = useState(false)
   const [extraHeight, setExtraHeight] = useState(false)
+
+  const ccBrand = (num) => {
+    console.log(num)
+    return parseInt(num.slice(0, 4)) > 3527 && parseInt(num.slice(0, 4)) < 3590
+      ? 'jcb'
+      : num.slice(0, 2) === '36' || num.slice(0, 2) === '54'
+      ? 'diners-club'
+      : num[0] === '3'
+      ? 'american-express'
+      : num[0] === '4'
+      ? 'visa'
+      : num[0] === '5'
+      ? 'master-card'
+      : num[0] === '6'
+      ? 'discover'
+      : 'placeholder'
+  }
+
   useEffect(() => {
+    setBrand(ccBrand(cardNumber))
     console.log(cardNumber.slice(0, 2))
-  }, [cardNumber])
+    console.log(brand)
+  }, [cardNumber, ccBrand, setBrand])
 
   return (
     <KeyboardAwareScrollView
@@ -49,23 +71,7 @@ const CCModal = (props) => {
           number={cardNumber}
           expiry={expiration}
           cvc={cvc}
-          brand={
-            parseInt(cardNumber.slice(0, 4)) > 3527 &&
-            parseInt(cardNumber.slice(0, 4)) < 3590
-              ? 'jcb'
-              : cardNumber.slice(0, 2) === '36' ||
-                cardNumber.slice(0, 2) === '54'
-              ? 'diners-club'
-              : cardNumber[0] === '3'
-              ? 'american-express'
-              : cardNumber[0] === '4'
-              ? 'visa'
-              : cardNumber[0] === '5'
-              ? 'master-card'
-              : cardNumber[0] === '6'
-              ? 'discover'
-              : 'placeholder'
-          }
+          brand={brand}
           focused={focused === false ? 'notCVC' : 'cvc'}
         />
       </VStack>
