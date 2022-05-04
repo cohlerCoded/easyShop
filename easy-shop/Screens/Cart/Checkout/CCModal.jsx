@@ -21,25 +21,50 @@ const CCModal = (props) => {
   const [extraHeight, setExtraHeight] = useState(false)
 
   const ccBrand = (num) => {
-    console.log(num)
-    return parseInt(num.slice(0, 4)) > 3527 && parseInt(num.slice(0, 4)) < 3590
-      ? 'jcb'
-      : num.slice(0, 2) === '36' || num.slice(0, 2) === '54'
-      ? 'diners-club'
-      : num[0] === '3'
-      ? 'american-express'
-      : num[0] === '4'
-      ? 'visa'
-      : num[0] === '5'
-      ? 'master-card'
-      : num[0] === '6'
-      ? 'discover'
-      : 'placeholder'
+    if (num) {
+      return parseInt(num.slice(0, 4)) > 3527 &&
+        parseInt(num.slice(0, 4)) < 3590
+        ? 'jcb'
+        : num.slice(0, 2) === '36' || num.slice(0, 2) === '54'
+        ? 'diners-club'
+        : num[0] === '3'
+        ? 'american-express'
+        : num[0] === '4'
+        ? 'visa'
+        : num[0] === '5'
+        ? 'master-card'
+        : num[0] === '6'
+        ? 'discover'
+        : 'placeholder'
+    }
+  }
+
+  const ccMaxLength = (brand) => {
+    if (brand) {
+      return brand === 'american-express' ? 17 : 19
+    }
+  }
+  const ccNumberFormatter = (brand, number) => {
+    if (brand === 'american-express') {
+      console.log(brand)
+      return number.length > 3 && number[5] !== ' '
+        ? number + ' '
+        : number.length === 11
+        ? number + ' '
+        : number
+    } else {
+      return number
+    }
+    // return number.length > 2 && number[2] !== '/'
+    //   ? number.slice(0, 2) + '/' + number.slice(2)
+    //   : number.length < 3
+    //   ? number.slice(0, 2)
+    //   : number
   }
 
   useEffect(() => {
     setBrand(ccBrand(cardNumber))
-    console.log(cardNumber.slice(0, 2))
+
     console.log(brand)
   }, [cardNumber, ccBrand, setBrand])
 
@@ -86,7 +111,10 @@ const CCModal = (props) => {
           borderWidth={2}
           placeHolder={'Card Number'}
           value={cardNumber}
-          onChangeText={setCardNumber}
+          onChangeText={(number) =>
+            setCardNumber(ccNumberFormatter('american-express', number))
+          }
+          maxLength={ccMaxLength(brand)}
           keyboardType='numeric'
         />
       </VStack>
