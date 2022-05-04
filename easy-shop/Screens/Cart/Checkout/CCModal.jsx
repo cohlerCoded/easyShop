@@ -45,21 +45,22 @@ const CCModal = (props) => {
     }
   }
   const ccNumberFormatter = (brand, number) => {
+    let newNum = ''
     if (brand === 'american-express') {
-      console.log(brand)
-      return number.length > 3 && number[5] !== ' '
-        ? number + ' '
-        : number.length === 11
-        ? number + ' '
-        : number
+      for (let i = 0; i < number.length; i++) {
+        if (i === 4 && number[i] !== ' ') newNum += ' ' + number[i]
+        else if (i === 11 && number[i] !== ' ') newNum += ' ' + number[i]
+        else newNum += number[i]
+      }
     } else {
-      return number
+      for (let i = 0; i < number.length; i++) {
+        if (i === 4 && number[i] !== ' ') newNum += ' ' + number[i]
+        else if (i === 9 && number[i] !== ' ') newNum += ' ' + number[i]
+        else if (i === 14 && number[i] !== ' ') newNum += ' ' + number[i]
+        else newNum += number[i]
+      }
     }
-    // return number.length > 2 && number[2] !== '/'
-    //   ? number.slice(0, 2) + '/' + number.slice(2)
-    //   : number.length < 3
-    //   ? number.slice(0, 2)
-    //   : number
+    return newNum
   }
 
   useEffect(() => {
@@ -112,7 +113,7 @@ const CCModal = (props) => {
           placeHolder={'Card Number'}
           value={cardNumber}
           onChangeText={(number) =>
-            setCardNumber(ccNumberFormatter('american-express', number))
+            setCardNumber(ccNumberFormatter(brand, number))
           }
           maxLength={ccMaxLength(brand)}
           keyboardType='numeric'
