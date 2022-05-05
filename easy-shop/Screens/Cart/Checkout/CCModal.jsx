@@ -204,7 +204,7 @@ const CCModal = (props) => {
             borderWidth={2}
             placeHolder={'CVC'}
             value={cvc}
-            maxLength={4}
+            maxLength={brand === 'american-express' ? 4 : 3}
             onChangeText={setCVC}
             keyboardType='numeric'
             onFocus={() => {
